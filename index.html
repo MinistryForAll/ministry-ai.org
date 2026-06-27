@@ -3,364 +3,428 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MinistryAI — Trustworthy AI for Christian Ministry</title>
+<title>MinistryAI — AI for Your Faithful Church Stewardship</title>
+<meta name="description" content="MinistryAI is a nonprofit building trustworthy, purpose-built AI for churches and seminaries — grounded in your church's own teaching, with the shepherd at the center.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --clay:    #c0623a;
-    --clay-lt: #f0d5c8;
-    --clay-pale: #fdf7f4;
-    --wheat:   #e8c98a;
-    --wheat-lt: #fdf4e3;
-    --forest:  #3d6b52;
-    --forest-lt: #d4e8db;
-    --ink:     #1e1e1e;
-    --ink-2:   #3a3a3a;
-    --muted:   #6b6660;
-    --border:  rgba(192,98,58,0.15);
-    --white:   #ffffff;
-    --off-white: #faf8f6;
-    --warm-gray: #f5f2ef;
+    /* Deck palette */
+    --cream:    #f4eee1;
+    --cream-2:  #ece2d0;
+    --paper:    #fbf7ef;
+    --ink:      #2c2a24;
+    --ink-2:    #524c42;
+    --muted:    #8a8175;
+    --gold:     #b0822a;
+    --gold-2:   #8c6618;
+    --gold-pale:#f3e6c8;
+    --green:    #3f6b57;
+    --green-2:  #2e4f40;
+    --green-pale:#dde8df;
+    --taupe:    #6e6456;
+    --taupe-pale:#e4ddd0;
+    --navy:     #232e4b;
+    --navy-2:   #1a2238;
+    --line:     rgba(44,42,36,0.12);
+    --white:    #ffffff;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
 
   body {
-    font-family: 'Inter', sans-serif;
-    background: var(--off-white);
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--cream);
     color: var(--ink);
     font-size: 16px;
     line-height: 1.7;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
   }
+
+  h1, h2, h3, .serif { font-family: Georgia, 'Times New Roman', serif; }
 
   /* NAV */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 0 48px; height: 64px;
-    background: rgba(250,248,246,0.95);
+    padding: 0 48px; height: 66px;
+    background: rgba(244,238,225,0.92);
     backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--line);
   }
   .nav-logo {
-    font-family: 'Lora', serif;
-    font-size: 19px; font-weight: 600;
-    color: var(--ink); text-decoration: none;
+    font-family: Georgia, serif;
+    font-size: 20px; font-weight: 700;
+    color: var(--ink); text-decoration: none; letter-spacing: -0.01em;
+    display: flex; align-items: center; gap: 9px;
   }
-  .nav-logo span { color: var(--clay); }
-  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-logo span { color: var(--gold); }
+  .nav-logo svg { width: 19px; height: 19px; }
+  .nav-links { display: flex; gap: 30px; list-style: none; }
   .nav-links a {
-    font-size: 14px; font-weight: 400;
-    color: var(--muted); text-decoration: none; transition: color 0.2s;
+    font-size: 13.5px; font-weight: 400;
+    color: var(--ink-2); text-decoration: none; transition: color 0.2s;
   }
-  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover { color: var(--gold); }
   .nav-cta {
     font-size: 13px; font-weight: 500;
-    background: var(--clay); color: var(--white);
-    padding: 9px 22px; border-radius: 6px;
+    background: var(--ink); color: var(--cream);
+    padding: 10px 22px; border-radius: 4px;
     text-decoration: none; transition: background 0.2s;
   }
-  .nav-cta:hover { background: #a84e2a; }
+  .nav-cta:hover { background: var(--gold-2); }
 
   /* HERO */
   .hero {
     min-height: 100vh;
     display: flex; align-items: center;
-    padding: 120px 48px 96px;
-    background: var(--white);
+    padding: 120px 48px 90px;
+    background:
+      radial-gradient(circle at 80% 18%, rgba(176,130,42,0.10) 0%, transparent 42%),
+      var(--cream);
     position: relative; overflow: hidden;
   }
-  .hero::after {
-    content: '';
-    position: absolute; right: -120px; top: 10%;
-    width: 520px; height: 520px;
-    background: radial-gradient(circle, rgba(192,98,58,0.07) 0%, transparent 70%);
-    border-radius: 50%; pointer-events: none;
-  }
-  .hero-inner { max-width: 1100px; margin: 0 auto; width: 100%; }
+  .hero-inner { max-width: 1120px; margin: 0 auto; width: 100%; }
   .hero-tag {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 12px; font-weight: 500;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--clay); background: var(--clay-lt);
-    padding: 6px 14px; border-radius: 4px; margin-bottom: 32px;
+    display: inline-flex; align-items: center; gap: 9px;
+    font-size: 11.5px; font-weight: 600;
+    letter-spacing: 0.13em; text-transform: uppercase;
+    color: var(--gold-2); background: var(--gold-pale);
+    padding: 7px 15px; border-radius: 3px; margin-bottom: 30px;
   }
+  .hero-tag svg { width: 15px; height: 15px; }
   .hero h1 {
-    font-family: 'Lora', serif;
-    font-size: clamp(40px, 5.5vw, 68px);
-    font-weight: 600; line-height: 1.15;
-    color: var(--ink); max-width: 760px; margin-bottom: 24px;
+    font-size: clamp(42px, 6vw, 74px);
+    font-weight: 700; line-height: 1.08;
+    color: var(--ink); max-width: 860px; margin-bottom: 26px;
+    letter-spacing: -0.015em;
   }
-  .hero h1 em { font-style: italic; color: var(--clay); }
+  .hero h1 em { font-style: italic; color: var(--green); }
   .hero-sub {
-    font-size: 18px; font-weight: 300;
-    color: var(--muted); max-width: 520px;
-    line-height: 1.8; margin-bottom: 44px;
+    font-size: 19px; font-weight: 300;
+    color: var(--ink-2); max-width: 600px;
+    line-height: 1.75; margin-bottom: 42px;
   }
   .hero-actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
   .btn-primary {
     font-size: 14px; font-weight: 500;
-    background: var(--clay); color: var(--white);
-    padding: 13px 30px; border-radius: 6px;
+    background: var(--green); color: var(--white);
+    padding: 14px 30px; border-radius: 4px;
     text-decoration: none; transition: all 0.2s;
   }
-  .btn-primary:hover { background: #a84e2a; transform: translateY(-1px); }
+  .btn-primary:hover { background: var(--green-2); transform: translateY(-1px); }
   .btn-outline {
     font-size: 14px; font-weight: 400; color: var(--ink);
-    border: 1px solid rgba(30,30,30,0.2);
-    padding: 12px 28px; border-radius: 6px;
-    text-decoration: none; transition: all 0.2s;
+    border: 1px solid rgba(44,42,36,0.25);
+    padding: 13px 28px; border-radius: 4px;
+    text-decoration: none; transition: all 0.2s; background: transparent;
   }
-  .btn-outline:hover { border-color: var(--clay); color: var(--clay); }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold-2); }
   .hero-verse {
-    margin-top: 72px; padding-top: 28px;
-    border-top: 1px solid var(--border);
-    font-family: 'Lora', serif;
-    font-style: italic; font-size: 15px;
-    color: var(--muted); max-width: 480px;
+    margin-top: 64px; padding-top: 26px;
+    border-top: 1px solid var(--line);
+    font-family: Georgia, serif;
+    font-style: italic; font-size: 16px;
+    color: var(--ink-2); max-width: 540px; line-height: 1.7;
   }
   .hero-verse cite {
-    display: block; margin-top: 8px;
+    display: block; margin-top: 9px;
     font-style: normal; font-family: 'Inter', sans-serif;
-    font-size: 11px; font-weight: 500;
-    letter-spacing: 0.1em; text-transform: uppercase; color: var(--clay);
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-2);
   }
 
   /* SHARED */
-  section { padding: 88px 48px; }
-  .section-inner { max-width: 1100px; margin: 0 auto; }
+  section { padding: 92px 48px; }
+  .section-inner { max-width: 1120px; margin: 0 auto; }
   .label {
-    font-size: 11px; font-weight: 500;
-    letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--clay); margin-bottom: 14px;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--gold-2); margin-bottom: 16px;
   }
   .title {
-    font-family: 'Lora', serif;
-    font-size: clamp(28px, 3.5vw, 44px);
-    font-weight: 600; line-height: 1.2; margin-bottom: 18px;
+    font-size: clamp(29px, 3.6vw, 46px);
+    font-weight: 700; line-height: 1.18; margin-bottom: 18px;
+    letter-spacing: -0.01em;
   }
   .lead {
-    font-size: 17px; font-weight: 300;
-    color: var(--muted); line-height: 1.8; max-width: 580px;
+    font-size: 17.5px; font-weight: 300;
+    color: var(--ink-2); line-height: 1.8; max-width: 620px;
   }
+
+  /* MOMENT / STATS */
+  .moment { background: var(--paper); border-top: 1px solid var(--line); }
+  .moment-head { max-width: 720px; }
+  .stats {
+    margin-top: 52px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  }
+  .stat {
+    background: var(--cream); border: 1px solid var(--line);
+    border-radius: 12px; padding: 34px 32px;
+  }
+  .stat-num {
+    font-family: Georgia, serif; font-size: 52px;
+    font-weight: 700; color: var(--green); line-height: 1; margin-bottom: 10px;
+  }
+  .stat:nth-child(2) .stat-num { color: var(--gold-2); }
+  .stat-text { font-size: 15px; color: var(--ink-2); line-height: 1.6; }
+  .stat-src { margin-top: 18px; font-size: 11.5px; color: var(--muted); letter-spacing: 0.02em; }
 
   /* MISSION */
-  .mission { background: var(--clay); }
-  .mission .title { color: var(--white); }
-  .mission .label { color: var(--clay-lt); }
-  .mission-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 72px; align-items: start;
-  }
-  .mission-text {
-    font-size: 16px; font-weight: 300;
-    color: rgba(255,255,255,0.8); line-height: 1.85;
-  }
+  .mission { background: var(--green); }
+  .mission .title { color: var(--cream); }
+  .mission .label { color: var(--green-pale); }
+  .mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .mission-text { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.82); line-height: 1.85; }
   .mission-text + .mission-text { margin-top: 16px; }
-  .mission-cards { display: flex; flex-direction: column; gap: 14px; }
-  .mission-card {
-    padding: 20px 22px;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.18);
-    border-radius: 10px;
-    display: flex; gap: 16px; align-items: flex-start;
+  .mission-side {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16);
+    border-radius: 12px; padding: 30px 30px;
   }
-  .mission-card-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--wheat); flex-shrink: 0; margin-top: 6px;
+  .mission-side p { font-size: 15px; color: rgba(255,255,255,0.78); line-height: 1.8; }
+  .mission-side p + p { margin-top: 14px; }
+  .mission-side .pull {
+    font-family: Georgia, serif; font-style: italic; font-size: 19px;
+    color: var(--cream); line-height: 1.5; margin-bottom: 20px;
   }
-  .mission-card-title { font-size: 14px; font-weight: 500; color: var(--white); margin-bottom: 4px; }
-  .mission-card-text { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.6; }
 
-  /* OBJECTIVES */
-  .objectives { background: var(--warm-gray); }
-  .obj-header {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 64px; margin-bottom: 52px; align-items: end;
+  /* WISE / CARELESS */
+  .why { background: var(--cream); }
+  .why-head { text-align: center; max-width: 660px; margin: 0 auto 50px; }
+  .why-head .lead { margin: 0 auto; }
+  .wc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .wc {
+    border-radius: 14px; padding: 38px 34px; border: 1px solid var(--line);
   }
-  .obj-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px;
+  .wc.wise { background: var(--green-pale); border-color: rgba(63,107,87,0.25); }
+  .wc.careless { background: var(--cream-2); }
+  .wc-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.13em;
+    text-transform: uppercase; margin-bottom: 14px;
   }
-  .obj-card {
-    background: var(--white);
-    border: 1px solid rgba(30,30,30,0.08);
-    border-radius: 12px; padding: 28px 24px;
-    transition: box-shadow 0.2s, transform 0.2s;
-  }
-  .obj-card:hover { box-shadow: 0 8px 32px rgba(30,30,30,0.08); transform: translateY(-2px); }
-  .obj-num {
-    font-size: 11px; font-weight: 500;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--clay); margin-bottom: 14px;
-  }
-  .obj-title {
-    font-family: 'Lora', serif;
-    font-size: 17px; font-weight: 600;
-    margin-bottom: 10px; line-height: 1.3;
-  }
-  .obj-text { font-size: 14px; color: var(--muted); line-height: 1.75; }
+  .wc.wise .wc-label { color: var(--green-2); }
+  .wc.careless .wc-label { color: var(--taupe); }
+  .wc p { font-family: Georgia, serif; font-size: 21px; line-height: 1.45; color: var(--ink); }
+  .wc.careless p { color: var(--ink-2); }
 
-  /* PRINCIPLES */
-  .principles { background: var(--white); }
-  .principles-header {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 64px; margin-bottom: 52px; align-items: end;
+  /* AGENTS */
+  .agents { background: var(--paper); }
+  .agents-head { max-width: 720px; margin-bottom: 50px; }
+  .agent-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .agent {
+    background: var(--cream); border-radius: 12px; overflow: hidden;
+    border: 1px solid var(--line); display: flex; flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s;
   }
-  .principles-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 1px; background: rgba(30,30,30,0.08);
-    border-radius: 14px; overflow: hidden;
+  .agent:hover { transform: translateY(-3px); box-shadow: 0 14px 38px rgba(44,42,36,0.10); }
+  .agent-cap {
+    padding: 11px 24px; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.13em; text-transform: uppercase; color: var(--white);
   }
-  .principle {
-    background: var(--white); padding: 32px 28px; transition: background 0.2s;
+  .agent.pastor .agent-cap { background: var(--green); }
+  .agent.leader .agent-cap { background: var(--gold); }
+  .agent.member .agent-cap { background: var(--taupe); }
+  .agent-body { padding: 26px 24px 30px; }
+  .agent-name {
+    font-family: Georgia, serif; font-size: 23px; font-weight: 700;
+    margin-bottom: 12px; color: var(--ink);
   }
-  .principle:hover { background: var(--clay-pale); }
-  .p-num {
-    font-size: 11px; font-weight: 500;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--clay); margin-bottom: 12px;
+  .agent-text { font-size: 14.5px; color: var(--ink-2); line-height: 1.7; }
+  .agent-phase {
+    margin-top: 18px; display: inline-block; font-size: 11px;
+    font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 4px 11px; border-radius: 4px;
   }
-  .p-title { font-weight: 500; font-size: 15px; margin-bottom: 10px; }
-  .p-text { font-size: 13px; color: var(--muted); line-height: 1.7; }
-  .p-badge {
-    display: inline-block; margin-top: 14px;
-    font-size: 11px; font-weight: 500;
-    letter-spacing: 0.06em; text-transform: uppercase;
-    color: var(--forest); background: var(--forest-lt);
-    padding: 4px 10px; border-radius: 4px;
+  .agent.pastor .agent-phase { color: var(--green-2); background: var(--green-pale); }
+  .agent.leader .agent-phase { color: var(--gold-2); background: var(--gold-pale); }
+  .agent.member .agent-phase { color: var(--taupe); background: var(--taupe-pale); }
+  .agents-foot {
+    margin-top: 36px; text-align: center; font-family: Georgia, serif;
+    font-style: italic; font-size: 20px; color: var(--gold-2);
+  }
+
+  /* COMMITMENTS */
+  .commitments { background: var(--cream); }
+  .commitments-head { max-width: 720px; margin-bottom: 48px; }
+  .commit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border-radius: 14px; overflow: hidden; }
+  .commit { background: var(--paper); padding: 34px 32px; transition: background 0.2s; }
+  .commit:hover { background: var(--white); }
+  .commit-num {
+    font-family: Georgia, serif; font-size: 14px; font-weight: 700;
+    color: var(--gold); margin-bottom: 12px;
+  }
+  .commit-title { font-family: Georgia, serif; font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+  .commit-text { font-size: 14.5px; color: var(--ink-2); line-height: 1.7; }
+
+  /* TECH */
+  .tech { background: var(--paper); }
+  .tech-head { max-width: 720px; margin-bottom: 46px; }
+  .tech-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .tech-card {
+    background: var(--cream); border: 1px solid var(--line); border-left: 3px solid var(--green);
+    border-radius: 10px; padding: 26px 26px;
+  }
+  .tech-card:nth-child(2) { border-left-color: var(--gold); }
+  .tech-card:nth-child(3) { border-left-color: var(--taupe); }
+  .tech-card:nth-child(4) { border-left-color: var(--navy); }
+  .tech-title { font-family: Georgia, serif; font-size: 18px; font-weight: 700; margin-bottom: 9px; }
+  .tech-text { font-size: 14px; color: var(--ink-2); line-height: 1.7; }
+  .tech-foot {
+    margin-top: 30px; padding: 18px 24px; background: var(--ink); color: var(--cream);
+    border-radius: 8px; font-size: 14px; text-align: center; letter-spacing: 0.01em;
   }
 
   /* COMPARISON */
-  .comparison { background: var(--warm-gray); }
-  .compare-table {
-    margin-top: 48px; width: 100%;
-    border-collapse: collapse; font-size: 14px;
-  }
+  .comparison { background: var(--cream); }
+  .compare-wrap { margin-top: 44px; overflow-x: auto; }
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 640px; }
   .compare-table th {
-    text-align: left; padding: 14px 18px;
-    font-size: 12px; font-weight: 500;
+    text-align: left; padding: 14px 18px; font-size: 11.5px; font-weight: 600;
     letter-spacing: 0.06em; text-transform: uppercase;
-    border-bottom: 2px solid rgba(30,30,30,0.1); color: var(--muted);
+    border-bottom: 2px solid rgba(44,42,36,0.18); color: var(--muted);
   }
-  .compare-table th.col-ministry { color: var(--clay); }
-  .compare-table td {
-    padding: 15px 18px; vertical-align: top;
-    border-bottom: 1px solid rgba(30,30,30,0.06); line-height: 1.6;
-  }
-  .compare-table td:first-child { font-weight: 500; width: 22%; color: var(--ink-2); }
-  .compare-table td.col-general { color: var(--muted); width: 39%; }
-  .compare-table td.col-ministry { color: var(--forest); width: 39%; }
-  .compare-table tr:hover td { background: rgba(192,98,58,0.03); }
+  .compare-table th.col-ministry { color: var(--green-2); }
+  .compare-table td { padding: 15px 18px; vertical-align: top; border-bottom: 1px solid var(--line); line-height: 1.6; }
+  .compare-table td:first-child { font-weight: 600; width: 20%; color: var(--ink); }
+  .compare-table td.col-general { color: var(--muted); width: 40%; }
+  .compare-table td.col-ministry { color: var(--green-2); width: 40%; }
+  .compare-table tr:hover td { background: rgba(176,130,42,0.04); }
 
   /* PRIVACY */
-  .privacy { background: #1e2d26; }
-  .privacy .title { color: var(--white); }
-  .privacy .label { color: var(--wheat); }
-  .privacy .lead { color: rgba(255,255,255,0.6); }
-  .privacy-top {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 72px; margin-bottom: 48px; align-items: start;
-  }
-  .privacy-tiers { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .tier { padding: 24px 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); }
-  .tier.anon { background: rgba(232,201,138,0.1); border-color: rgba(232,201,138,0.2); }
-  .tier.conf { background: rgba(61,107,82,0.15); border-color: rgba(61,107,82,0.3); }
-  .tier.partial { background: rgba(192,98,58,0.12); border-color: rgba(192,98,58,0.25); }
-  .tier.full { background: rgba(255,255,255,0.04); }
-  .tier-title { font-size: 14px; font-weight: 500; margin-bottom: 8px; }
-  .tier.anon .tier-title { color: var(--wheat); }
-  .tier.conf .tier-title { color: #7ecfa0; }
-  .tier.partial .tier-title { color: var(--clay-lt); }
-  .tier.full .tier-title { color: rgba(255,255,255,0.7); }
-  .tier-text { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.65; }
+  .privacy { background: var(--navy); }
+  .privacy .title { color: var(--cream); }
+  .privacy .label { color: var(--gold); }
+  .privacy .lead { color: rgba(255,255,255,0.62); }
+  .privacy-top { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-bottom: 26px; align-items: start; }
+  .privacy-note { font-size: 11.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.42); margin: 30px 0 18px; }
+  .tiers { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .tier { padding: 24px 22px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); }
+  .tier.t1 { background: rgba(176,130,42,0.12); border-color: rgba(176,130,42,0.28); }
+  .tier.t2 { background: rgba(63,107,87,0.18); border-color: rgba(63,107,87,0.35); }
+  .tier.t3 { background: rgba(110,100,86,0.18); border-color: rgba(110,100,86,0.35); }
+  .tier.t4 { background: rgba(255,255,255,0.05); }
+  .tier-title { font-family: Georgia, serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .tier.t1 .tier-title { color: #e6c684; }
+  .tier.t2 .tier-title { color: #8fcfaa; }
+  .tier.t3 .tier-title { color: #c9bda8; }
+  .tier.t4 .tier-title { color: rgba(255,255,255,0.78); }
+  .tier-text { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.65; }
 
-  /* OUTCOMES */
-  .outcomes { background: var(--wheat-lt); }
-  .outcomes-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 28px; margin-top: 52px;
-  }
-  .outcome {
-    background: var(--white); border-radius: 14px;
-    border: 1px solid rgba(30,30,30,0.08);
-    padding: 40px 28px 32px; text-align: center;
-  }
-  .outcome-mark {
-    width: 44px; height: 44px; border-radius: 50%;
-    background: var(--clay-lt);
+  /* ADOPTION */
+  .adoption { background: var(--cream); }
+  .adoption-head { max-width: 720px; margin-bottom: 46px; }
+  .barriers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .barrier { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 32px 28px; text-align: center; }
+  .barrier-icon {
+    width: 50px; height: 50px; border-radius: 50%; margin: 0 auto 18px;
     display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 20px;
+    background: var(--gold-pale); color: var(--gold-2);
+    font-family: Georgia, serif; font-size: 24px; font-weight: 700;
   }
-  .outcome-mark svg { width: 20px; height: 20px; }
-  .outcome-title {
-    font-family: 'Lora', serif;
-    font-size: 18px; font-weight: 600;
-    margin-bottom: 12px; line-height: 1.35;
+  .barrier:nth-child(2) .barrier-icon { background: var(--green-pale); color: var(--green-2); }
+  .barrier:nth-child(3) .barrier-icon { background: var(--taupe-pale); color: var(--taupe); }
+  .barrier-title { font-family: Georgia, serif; font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+  .barrier-sub { font-size: 13px; font-weight: 600; color: var(--gold-2); margin-bottom: 12px; }
+  .barrier:nth-child(2) .barrier-sub { color: var(--green-2); }
+  .barrier:nth-child(3) .barrier-sub { color: var(--taupe); }
+  .barrier-text { font-size: 14px; color: var(--ink-2); line-height: 1.65; }
+  .adoption-foot { margin-top: 32px; text-align: center; font-family: Georgia, serif; font-style: italic; font-size: 20px; color: var(--ink); }
+  .open-band {
+    margin-top: 44px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: var(--line); border-radius: 12px; overflow: hidden;
   }
-  .outcome-text { font-size: 14px; color: var(--muted); line-height: 1.75; }
+  .open-item { background: var(--ink); color: var(--cream); padding: 26px 24px; text-align: center; }
+  .open-item strong { display: block; font-family: Georgia, serif; font-size: 18px; margin-bottom: 5px; color: var(--white); }
+  .open-item span { font-size: 13px; color: rgba(244,238,225,0.65); }
+
+  /* VISION */
+  .vision { background: var(--green-2); text-align: center; }
+  .vision .section-inner { max-width: 860px; }
+  .vision .label { color: var(--green-pale); }
+  .vision-title {
+    font-family: Georgia, serif; font-size: clamp(26px, 3.4vw, 40px);
+    font-weight: 700; color: var(--cream); line-height: 1.3; margin-bottom: 44px;
+    font-style: italic;
+  }
+  .vision-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; text-align: left; }
+  .vision-col { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 28px 26px; }
+  .vision-ref { font-size: 11.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+  .vision-h { font-family: Georgia, serif; font-size: 19px; font-weight: 700; color: var(--cream); margin-bottom: 12px; }
+  .vision-col p { font-size: 14.5px; color: rgba(255,255,255,0.75); line-height: 1.7; }
+  .vision-seal { margin-top: 38px; font-family: Georgia, serif; font-style: italic; font-size: 20px; color: var(--gold); }
+
+  /* TEAM */
+  .team { background: var(--cream); }
+  .team-head { max-width: 720px; margin-bottom: 16px; }
+  .team-sub { font-size: 15px; color: var(--ink-2); margin-bottom: 44px; }
+  .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .member {
+    background: var(--paper); border: 1px solid var(--line); border-radius: 14px;
+    padding: 32px 28px; border-top: 3px solid var(--gold);
+  }
+  .member:nth-child(1) { border-top-color: var(--green); }
+  .member:nth-child(3) { border-top-color: var(--navy); }
+  .member-name { font-family: Georgia, serif; font-size: 22px; font-weight: 700; margin-bottom: 3px; }
+  .member-role { font-size: 13px; font-weight: 600; letter-spacing: 0.04em; color: var(--gold-2); text-transform: uppercase; margin-bottom: 18px; }
+  .member:nth-child(1) .member-role { color: var(--green-2); }
+  .member:nth-child(3) .member-role { color: var(--navy); }
+  .member ul { list-style: none; }
+  .member li { font-size: 14px; color: var(--ink-2); line-height: 1.5; padding-left: 16px; position: relative; margin-bottom: 8px; }
+  .member li::before { content: ''; position: absolute; left: 0; top: 9px; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+  .member:nth-child(1) li::before { background: var(--green); }
+  .member:nth-child(3) li::before { background: var(--navy); }
+  .team-foot {
+    margin-top: 30px; padding: 26px 30px; background: var(--paper); border: 1px solid var(--line);
+    border-radius: 12px; font-size: 15px; color: var(--ink-2); line-height: 1.75; text-align: center;
+  }
 
   /* CTA */
-  .cta { background: var(--clay-pale); border-top: 1px solid var(--border); text-align: center; }
-  .cta .section-inner { max-width: 600px; }
-  .cta .title { margin-bottom: 14px; }
+  .cta { background: var(--gold-pale); border-top: 1px solid var(--line); text-align: center; }
+  .cta .section-inner { max-width: 640px; }
+  .cta .label { color: var(--gold-2); }
   .cta .lead { margin: 0 auto 36px; text-align: center; }
-  .cta-btns { display: flex; justify-content: center; gap: 14px; }
+  .cta-btns { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
 
   /* FOOTER */
-  footer { background: var(--ink); color: rgba(255,255,255,0.45); padding: 44px 48px; }
-  .footer-inner {
-    max-width: 1100px; margin: 0 auto;
-    display: flex; justify-content: space-between;
-    align-items: center; flex-wrap: wrap; gap: 20px;
-  }
-  .footer-logo {
-    font-family: 'Lora', serif;
-    font-size: 17px; font-weight: 600; color: rgba(255,255,255,0.8);
-  }
-  .footer-logo span { color: var(--clay-lt); }
-  .footer-links { display: flex; gap: 24px; list-style: none; }
-  .footer-links a {
-    font-size: 13px; color: rgba(255,255,255,0.4);
-    text-decoration: none; transition: color 0.2s;
-  }
-  .footer-links a:hover { color: rgba(255,255,255,0.75); }
-  .footer-copy { font-size: 12px; }
+  footer { background: var(--ink); color: rgba(244,238,225,0.5); padding: 46px 48px; }
+  .footer-inner { max-width: 1120px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 18px; }
+  .footer-logo { font-family: Georgia, serif; font-size: 18px; font-weight: 700; color: rgba(244,238,225,0.85); }
+  .footer-logo span { color: var(--gold); }
+  .footer-tag { font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(244,238,225,0.45); }
+  .footer-links { display: flex; gap: 22px; list-style: none; }
+  .footer-links a { font-size: 13px; color: rgba(244,238,225,0.45); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold); }
   .footer-verse {
-    width: 100%; margin-top: 20px; padding-top: 20px;
-    border-top: 1px solid rgba(255,255,255,0.08);
-    font-family: 'Lora', serif; font-style: italic;
-    font-size: 14px; color: rgba(255,255,255,0.3); text-align: center;
+    width: 100%; margin-top: 24px; padding-top: 22px; border-top: 1px solid rgba(244,238,225,0.1);
+    font-family: Georgia, serif; font-style: italic; font-size: 14.5px; color: rgba(244,238,225,0.4); text-align: center; line-height: 1.6;
   }
+  .footer-copy { width: 100%; text-align: center; margin-top: 14px; font-size: 12px; color: rgba(244,238,225,0.3); }
 
-  /* ANIMATIONS */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .hero-tag     { animation: fadeUp 0.5s ease both; }
-  .hero h1      { animation: fadeUp 0.6s ease 0.1s both; }
-  .hero-sub     { animation: fadeUp 0.6s ease 0.2s both; }
+  /* ANIMATION */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-tag { animation: fadeUp 0.5s ease both; }
+  .hero h1 { animation: fadeUp 0.6s ease 0.1s both; }
+  .hero-sub { animation: fadeUp 0.6s ease 0.2s both; }
   .hero-actions { animation: fadeUp 0.6s ease 0.3s both; }
-  .hero-verse   { animation: fadeUp 0.6s ease 0.45s both; }
+  .hero-verse { animation: fadeUp 0.6s ease 0.45s both; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; scroll-behavior: auto; } }
 
   /* RESPONSIVE */
-  @media (max-width: 860px) {
+  @media (max-width: 880px) {
     nav { padding: 0 20px; }
     .nav-links { display: none; }
     section, footer { padding-left: 20px; padding-right: 20px; }
-    .hero { padding-left: 20px; padding-right: 20px; }
-    .mission-grid, .obj-header, .principles-header,
-    .privacy-top { grid-template-columns: 1fr; gap: 32px; }
-    .principles-grid { grid-template-columns: 1fr; }
-    .privacy-tiers { grid-template-columns: 1fr; }
-    .outcomes-grid { grid-template-columns: 1fr; }
+    .hero { padding: 110px 20px 70px; }
+    section { padding-top: 64px; padding-bottom: 64px; }
+    .stats, .mission-grid, .wc-grid, .agent-grid, .commit-grid,
+    .tech-grid, .privacy-top, .tiers, .barriers, .vision-cols,
+    .team-grid, .open-band { grid-template-columns: 1fr; }
+    .commit-grid { gap: 1px; }
     .footer-inner { flex-direction: column; align-items: flex-start; }
-    .compare-table { font-size: 13px; }
   }
 </style>
 </head>
@@ -368,29 +432,59 @@
 
 <!-- NAV -->
 <nav>
-  <a class="nav-logo" href="#">Ministry<span>AI</span></a>
+  <a class="nav-logo" href="#top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#b0822a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21V8a4 4 0 0 1 8 0c0 1.5-1 2.5-2.5 2.5"/></svg>
+    Ministry<span>AI</span>
+  </a>
   <ul class="nav-links">
     <li><a href="#mission">Mission</a></li>
-    <li><a href="#objectives">Purpose</a></li>
-    <li><a href="#principles">How It Works</a></li>
+    <li><a href="#agents">Agents</a></li>
+    <li><a href="#commitments">Commitments</a></li>
     <li><a href="#privacy">Privacy</a></li>
+    <li><a href="#team">Team</a></li>
   </ul>
   <a class="nav-cta" href="#contact">Get in Touch</a>
 </nav>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="top">
   <div class="hero-inner">
-    <div class="hero-tag">Trustworthy AI for Christian Ministry</div>
+    <div class="hero-tag">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#8c6618" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21V8a4 4 0 0 1 8 0c0 1.5-1 2.5-2.5 2.5"/></svg>
+      AI for Your Faithful Church Stewardship
+    </div>
     <h1>A <em>Faithful Steward</em><br>for the Modern Church</h1>
-    <p class="hero-sub">Purpose-built AI that supports your ministry with theological integrity, pastoral wisdom, and unwavering protection of the people in your care.</p>
+    <p class="hero-sub">Purpose-built AI that helps you shepherd faithfully — grounded in your church's own teaching, attentive to your people, and always pointing back to the shepherd, never away.</p>
     <div class="hero-actions">
-      <a class="btn-primary" href="#mission">Learn More</a>
-      <a class="btn-outline" href="#principles">How It Works</a>
+      <a class="btn-primary" href="#agents">See How It Works</a>
+      <a class="btn-outline" href="#commitments">Our Commitments</a>
     </div>
     <div class="hero-verse">
       "The Lord is my shepherd; I shall not want. He leads me beside still waters. He restores my soul."
       <cite>Psalm 23:1–3</cite>
+    </div>
+  </div>
+</section>
+
+<!-- MOMENT -->
+<section class="moment">
+  <div class="section-inner">
+    <div class="moment-head">
+      <p class="label">What's Already Happening</p>
+      <h2 class="title">AI Has Already Arrived in the Church</h2>
+      <p class="lead">It's no longer a question of whether — but how. Your people are already using AI for sermon prep, study, and honest questions of faith. The real question is whether it draws them toward their shepherd, or away.</p>
+    </div>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">93.5%</div>
+        <div class="stat-text">of church leaders now use AI in some capacity.</div>
+        <div class="stat-src">2026 State of AI in the Church Survey</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">75%</div>
+        <div class="stat-text">cite theological misalignment as a top concern with the AI they use.</div>
+        <div class="stat-src">2026 State of AI in the Church Survey · Barna</div>
+      </div>
     </div>
   </div>
 </section>
@@ -402,196 +496,163 @@
       <div>
         <p class="label">Our Mission</p>
         <h2 class="title">Equipping Shepherds.<br>Strengthening the Sheep.</h2>
-        <p class="mission-text" style="margin-top:20px;">MinistryAI is a non-profit organization building trustworthy AI tools for Christian churches, denominations, seminaries, and ministry organizations. Funded by donors who share our vision, our systems are designed to serve your sacred calling — never to replace it.</p>
-        <p class="mission-text">Every response draws exclusively from the biblical and theological resources your ministry approves. Nothing more, nothing less.</p>
+        <p class="mission-text">MinistryAI exists out of obedience to Jesus Christ — to his command to love God and neighbor and to make disciples of all nations. From this conviction flows our belief that AI, used wisely, can help the body of Christ proclaim the Gospel more broadly and care for its people more fully; used carelessly, it erodes the embodied, relational ministry at the heart of congregational life.</p>
+        <p class="mission-text">We exist to build a trusted, reliable AI platform that serves the church in two directions.</p>
       </div>
-      <div class="mission-cards">
-        <div class="mission-card">
-          <div class="mission-card-dot"></div>
-          <div>
-            <div class="mission-card-title">Congregational Insight</div>
-            <div class="mission-card-text">Structured pathways for anonymous or confidential feedback and pattern analysis — so you know what your congregation is actually experiencing.</div>
-          </div>
-        </div>
-        <div class="mission-card">
-          <div class="mission-card-dot"></div>
-          <div>
-            <div class="mission-card-title">Ministry Productivity</div>
-            <div class="mission-card-text">Sermon preparation, theological research, discipleship planning, and administrative support — all grounded in Scripture and your ministry's doctrine.</div>
-          </div>
-        </div>
-        <div class="mission-card">
-          <div class="mission-card-dot"></div>
-          <div>
-            <div class="mission-card-title">Privacy-First Care</div>
-            <div class="mission-card-text">Knows the difference between a question AI can answer and a soul that needs a pastor. Routes accordingly, always protecting the vulnerable.</div>
-          </div>
-        </div>
+      <div class="mission-side">
+        <p class="pull">A nonprofit, funded by donors who share our vision — built to serve your sacred calling, never to replace it.</p>
+        <p><strong style="color:var(--cream);">For pastors and leaders</strong> — dependable tools to better listen to, care for, and disciple their congregations.</p>
+        <p><strong style="color:var(--cream);">For members and seekers</strong> — a safe, private place to bring questions and struggles, and be drawn toward the pastors and shepherds who lead them to Christ and his church.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- OBJECTIVES -->
-<section class="objectives" id="objectives">
+<!-- WISE / CARELESS -->
+<section class="why">
   <div class="section-inner">
-    <div class="obj-header">
-      <div>
-        <p class="label">Five Dimensions of Purpose</p>
-        <h2 class="title">Why MinistryAI Exists</h2>
-      </div>
-      <p class="lead">Every feature, every guardrail, every design decision flows from five objectives that reflect the heart of Gospel-centered ministry.</p>
+    <div class="why-head">
+      <p class="label">Why MinistryAI</p>
+      <h2 class="title">Built for What Matters Most</h2>
+      <p class="lead">Our measure is not clicks, but trust, relationships, and lives drawn closer to Christ.</p>
     </div>
-    <div class="obj-grid">
-      <div class="obj-card">
-        <div class="obj-num">01 — Shepherds</div>
-        <div class="obj-title">Guidance for Shepherds</div>
-        <p class="obj-text">Give pastors and ministry leaders deeper visibility into the faith journeys, emotional realities, and spiritual needs of their congregations — so wisdom can be applied to actual conditions, not assumptions.</p>
+    <div class="wc-grid">
+      <div class="wc wise">
+        <div class="wc-label">Used Wisely</div>
+        <p>AI can help the body of Christ proclaim the Gospel more broadly and care for its people more fully.</p>
       </div>
-      <div class="obj-card">
-        <div class="obj-num">02 — Believers</div>
-        <div class="obj-title">Confidence for the Sheep</div>
-        <p class="obj-text">Help believers maintain steadfast faith even amid hardship. Remove barriers between struggling saints and the Scripture, sound teaching, and pastoral care that strengthens their walk.</p>
-      </div>
-      <div class="obj-card">
-        <div class="obj-num">03 — Discipleship</div>
-        <div class="obj-title">Cultivation of Obedience and Love</div>
-        <p class="obj-text">Support discipleship that produces real transformation — not just information, but lives increasingly conformed to the image of Christ through faithful engagement with God's Word.</p>
-      </div>
-      <div class="obj-card">
-        <div class="obj-num">04 — Outreach</div>
-        <div class="obj-title">Effectiveness in Gospel Delivery</div>
-        <p class="obj-text">Help your church communicate the Gospel with greater clarity and care. Strengthen outreach, teaching, and follow-up so the message of Christ is genuinely heard and understood.</p>
-      </div>
-      <div class="obj-card">
-        <div class="obj-num">05 — Administration</div>
-        <div class="obj-title">Faithful Church Administration</div>
-        <p class="obj-text">Strengthen governance and operations in ways that reflect God's intent — financial transparency, ministry management, and documented best practices rooted in biblical accountability.</p>
+      <div class="wc careless">
+        <div class="wc-label">Used Carelessly</div>
+        <p>It erodes the embodied, relational ministry at the heart of congregational life.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PRINCIPLES -->
-<section class="principles" id="principles">
+<!-- AGENTS -->
+<section class="agents" id="agents">
   <div class="section-inner">
-    <div class="principles-header">
-      <div>
-        <p class="label">How It Works</p>
-        <h2 class="title">Seven Commitments<br>We Never Compromise</h2>
-      </div>
-      <p class="lead">These aren't marketing claims layered on top of a standard product. They are foundational design decisions that shape everything MinistryAI does — and doesn't do.</p>
+    <div class="agents-head">
+      <p class="label">How It Works</p>
+      <h2 class="title">One Platform. Purpose-Built Agents.</h2>
+      <p class="lead">Our core innovation is relationship-aware AI orchestration — distinct agents for the distinct relationships of church life, each grounded in your church's own teaching.</p>
     </div>
-    <div class="principles-grid">
-      <div class="principle">
-        <div class="p-num">I</div>
-        <div class="p-title">Closed-Corpus Integrity</div>
-        <p class="p-text">MinistryAI operates only within your ministry's approved materials. It learns from the sermons, commentaries, and Scripture passages you choose. If it's not in your library, it's not in the answer.</p>
-        <span class="p-badge">Your materials only</span>
+    <div class="agent-grid">
+      <div class="agent pastor">
+        <div class="agent-cap">For Pastors</div>
+        <div class="agent-body">
+          <div class="agent-name">Pastoral Agent</div>
+          <p class="agent-text">Sermon prep on your own private corpus. Research, illustrations, and a clearer view of how the whole flock is doing.</p>
+          <span class="agent-phase">Phase 1 — Start Here</span>
+        </div>
       </div>
-      <div class="principle">
-        <div class="p-num">II</div>
-        <div class="p-title">Mandatory Source Attribution</div>
-        <p class="p-text">Every response is tied to a specific passage or document from your approved materials. The system cannot generate an answer without showing exactly where it came from. No guessing, no blending.</p>
-        <span class="p-badge">Always cites its source</span>
+      <div class="agent leader">
+        <div class="agent-cap">For Leaders</div>
+        <div class="agent-body">
+          <div class="agent-name">Group Agent</div>
+          <p class="agent-text">Discussion topics and logistics for your groups, in step with your teaching — with real needs surfaced to the pastor.</p>
+          <span class="agent-phase">Phase 2 — Add Next</span>
+        </div>
       </div>
-      <div class="principle">
-        <div class="p-num">III</div>
-        <div class="p-title">Principled Silence</div>
-        <p class="p-text">"I don't know" is a feature, not a failure. When evidence is insufficient, MinistryAI says so and points the person to human leadership. Integrity of the answer always comes before speed of the response.</p>
-        <span class="p-badge">Silence over speculation</span>
-      </div>
-      <div class="principle">
-        <div class="p-num">IV</div>
-        <div class="p-title">Role-Based Calibration</div>
-        <p class="p-text">A seminary professor and a new believer need different things. Access and depth are automatically calibrated to each user's role — managed at the system level, not left to chance.</p>
-        <span class="p-badge">Right depth, right person</span>
-      </div>
-      <div class="principle">
-        <div class="p-num">V</div>
-        <div class="p-title">Complete Operational Sovereignty</div>
-        <p class="p-text">Your data never leaves your ministry. No external servers, no third-party monitoring, no remote updates that could change your doctrine without your knowledge. Everything runs under your roof.</p>
-        <span class="p-badge">Your data, your control</span>
-      </div>
-      <div class="principle">
-        <div class="p-num">VI</div>
-        <div class="p-title">Congregational Voice</div>
-        <p class="p-text">A structured way for your congregation's voice to reach you — questions, struggles, and needs surfaced as patterns, not just individual moments. Pastoral care informed by what people are actually experiencing.</p>
-        <span class="p-badge">Broadcast becomes dialogue</span>
-      </div>
-      <div class="principle">
-        <div class="p-num">VII</div>
-        <div class="p-title">Privacy-First Architecture</div>
-        <p class="p-text">When someone shares a spiritual struggle, they are trusting you. MinistryAI honors that trust through automated privacy protection, tiered sharing controls, and strict data separation. The vulnerable are safe here.</p>
-        <span class="p-badge">Protecting those who share</span>
-      </div>
-      <div class="principle" style="background: var(--warm-gray);">
-        <div class="p-num">Architecture</div>
-        <div class="p-title">The Pastoral Intelligence Cycle</div>
-        <p class="p-text">Teaching flows out → your congregation responds → privacy protection engages → patterns surface to leadership → care flows back → teaching adapts → lives are transformed. A complete loop that serves the work of shepherding.</p>
-        <span class="p-badge">A complete loop</span>
+      <div class="agent member">
+        <div class="agent-cap">For Members</div>
+        <div class="agent-body">
+          <div class="agent-name">Member Agent</div>
+          <p class="agent-text">Study and prayer, plus concerns and prayer requests filtered for privacy before they reach pastoral staff.</p>
+          <span class="agent-phase">Phase 3 — Full Scope</span>
+        </div>
       </div>
     </div>
+    <p class="agents-foot">Begin with the Pastoral Agent. Grow as trust grows.</p>
+  </div>
+</section>
+
+<!-- COMMITMENTS -->
+<section class="commitments" id="commitments">
+  <div class="section-inner">
+    <div class="commitments-head">
+      <p class="label">What We Build On</p>
+      <h2 class="title">Four Commitments</h2>
+      <p class="lead">These aren't claims layered on top of a standard product. They are the design decisions that shape everything MinistryAI does — and doesn't do.</p>
+    </div>
+    <div class="commit-grid">
+      <div class="commit">
+        <div class="commit-num">I</div>
+        <div class="commit-title">Stewardship First</div>
+        <p class="commit-text">Technology that serves your sacred calling, never replaces it. The pastor is fed by God before feeding others; the tool only ever assists.</p>
+      </div>
+      <div class="commit">
+        <div class="commit-num">II</div>
+        <div class="commit-title">Faithful to Your Theology</div>
+        <p class="commit-text">Every answer stays grounded in your church's own teaching and approved materials — not the open internet.</p>
+      </div>
+      <div class="commit">
+        <div class="commit-num">III</div>
+        <div class="commit-title">Strengthens Relationships</div>
+        <p class="commit-text">Designed to draw people toward their shepherd and one another — not toward a screen.</p>
+      </div>
+      <div class="commit">
+        <div class="commit-num">IV</div>
+        <div class="commit-title">Private &amp; Secure</div>
+        <p class="commit-text">Your church's data stays isolated and under your governance — never sold, never used to train outside models.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH -->
+<section class="tech">
+  <div class="section-inner">
+    <div class="tech-head">
+      <p class="label">The Technology</p>
+      <h2 class="title">How the Platform Is Built</h2>
+      <p class="lead">Relationship-aware AI orchestration, grounded in your materials and designed to defer to your shepherds.</p>
+    </div>
+    <div class="tech-grid">
+      <div class="tech-card">
+        <div class="tech-title">Private Corpus</div>
+        <p class="tech-text">Grounded in a vetted body of your church's materials — doctrine, liturgy, approved sermons — so guidance reflects your teaching, not a borrowed theology.</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-title">Closed-Corpus RAG</div>
+        <p class="tech-text">Each agent draws only from your approved materials, with citations you can verify. Designed to keep answers grounded, not guessing.</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-title">Relational Deferral</div>
+        <p class="tech-text">When someone is in real distress, the system is designed to step back and point them to a pastor or care-team member. Presence over precision.</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-title">Guardrails &amp; Consent</div>
+        <p class="tech-text">We are developing safeguards to keep each interaction theologically sound and pastorally appropriate, with explicit opt-in for sensitive information.</p>
+      </div>
+    </div>
+    <div class="tech-foot">Open-source · your own customizable workspace · congregational data private and under your governance.</div>
   </div>
 </section>
 
 <!-- COMPARISON -->
 <section class="comparison" id="comparison">
   <div class="section-inner">
-    <p class="label">Why MinistryAI</p>
+    <p class="label">The Difference</p>
     <h2 class="title">Not Just Any AI</h2>
-    <p class="lead">General AI tools were not built for the Church. MinistryAI was. Here's what that difference looks like in practice.</p>
-    <table class="compare-table">
-      <thead>
-        <tr>
-          <th>Dimension</th>
-          <th class="col-general">General AI</th>
-          <th class="col-ministry">MinistryAI</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Knowledge Source</td>
-          <td class="col-general">The entire internet — orthodox and heretical, blended without distinction or disclosure.</td>
-          <td class="col-ministry">Only your approved materials. Nothing else enters an answer.</td>
-        </tr>
-        <tr>
-          <td>Source Transparency</td>
-          <td class="col-general">Rarely shows sources. May fabricate citations with full confidence.</td>
-          <td class="col-ministry">Every claim is tied to a specific source. Always.</td>
-        </tr>
-        <tr>
-          <td>When It Doesn't Know</td>
-          <td class="col-general">Generates a plausible-sounding answer anyway.</td>
-          <td class="col-ministry">Says "I don't know" and directs the person to human leadership.</td>
-        </tr>
-        <tr>
-          <td>User Awareness</td>
-          <td class="col-general">Treats a pastor and a new believer identically.</td>
-          <td class="col-ministry">Automatically calibrates depth and access by role.</td>
-        </tr>
-        <tr>
-          <td>Your Data</td>
-          <td class="col-general">Sent to external servers. May be logged or used for training.</td>
-          <td class="col-ministry">Never leaves your ministry. Complete sovereignty.</td>
-        </tr>
-        <tr>
-          <td>Pastoral Care</td>
-          <td class="col-general">No concept of pastoral routing or human escalation.</td>
-          <td class="col-ministry">Recognizes when someone needs a pastor, not an AI — and routes accordingly.</td>
-        </tr>
-        <tr>
-          <td>Individual Privacy</td>
-          <td class="col-general">No privacy sanitization for sensitive disclosures.</td>
-          <td class="col-ministry">Automated PII removal. Member controls their own privacy level.</td>
-        </tr>
-        <tr>
-          <td>Mission Alignment</td>
-          <td class="col-general">Built for general task completion.</td>
-          <td class="col-ministry">Built for one purpose: serving the Church faithfully.</td>
-        </tr>
-      </tbody>
-    </table>
+    <p class="lead">General AI tools were not built for the Church. MinistryAI was. Here's what that difference is designed to look like in practice.</p>
+    <div class="compare-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr><th>Dimension</th><th class="col-general">General AI</th><th class="col-ministry">MinistryAI</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Knowledge Source</td><td class="col-general">The open internet — orthodox and heretical, blended without distinction.</td><td class="col-ministry">Only your approved materials. Nothing else enters an answer.</td></tr>
+          <tr><td>Source Transparency</td><td class="col-general">Rarely shows sources; may fabricate citations with confidence.</td><td class="col-ministry">Designed to tie each answer to a specific source you can verify.</td></tr>
+          <tr><td>When It Doesn't Know</td><td class="col-general">Generates a plausible-sounding answer anyway.</td><td class="col-ministry">Designed to defer — and point the person to human leadership.</td></tr>
+          <tr><td>User Awareness</td><td class="col-general">Treats a pastor and a new believer identically.</td><td class="col-ministry">Calibrates depth and access by role.</td></tr>
+          <tr><td>Your Data</td><td class="col-general">Often logged; may be used to train the provider's models.</td><td class="col-ministry">Isolated and under your governance — never sold or used to train outside models.</td></tr>
+          <tr><td>Pastoral Care</td><td class="col-general">No concept of pastoral routing or human escalation.</td><td class="col-ministry">Designed to recognize when someone needs a pastor, not an AI — and route accordingly.</td></tr>
+          <tr><td>Individual Privacy</td><td class="col-general">No privacy handling for sensitive disclosures.</td><td class="col-ministry">Consent-based controls; members choose their own privacy level.</td></tr>
+          <tr><td>Mission Alignment</td><td class="col-general">Built for general task completion.</td><td class="col-ministry">Built for one purpose: serving the Church faithfully.</td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </section>
 
@@ -600,62 +661,129 @@
   <div class="section-inner">
     <div class="privacy-top">
       <div>
-        <p class="label">Privacy-First Architecture</p>
+        <p class="label">Private &amp; Secure</p>
         <h2 class="title">When Someone Shares Vulnerably,<br>They Are Safe Here</h2>
       </div>
-      <p class="lead">Many people hesitate to seek pastoral care because they fear exposure. MinistryAI removes that barrier — protecting individuals while giving leadership the insight they need to shepherd well.</p>
+      <p class="lead">Many people hesitate to seek pastoral care because they fear exposure. MinistryAI is designed to remove that barrier — guarding what is sacred while giving leadership the insight to shepherd well.</p>
     </div>
-    <p style="font-size:11px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:16px;">Four Privacy Tiers — Member Chooses at Point of Submission</p>
-    <div class="privacy-tiers">
-      <div class="tier anon">
+    <p class="privacy-note">Four privacy tiers — designed for the member to choose at the point of submission</p>
+    <div class="tiers">
+      <div class="tier t1">
         <div class="tier-title">Fully Anonymous</div>
-        <p class="tier-text">Sanitized and contributes to aggregate patterns with no identifying information retained. Leadership sees themes — no one can trace them to an individual. Enables people to share what they would never say out loud.</p>
+        <p class="tier-text">Designed to strip identifying details and contribute only to aggregate patterns. Leadership sees themes; no one is meant to be traceable to an individual.</p>
       </div>
-      <div class="tier conf">
+      <div class="tier t2">
         <div class="tier-title">Confidential Pastoral Routing</div>
-        <p class="tier-text">Sent directly to a designated pastoral care provider with full identity intact, excluded from all aggregate analysis. Strictly between the individual and their pastor.</p>
+        <p class="tier-text">Sent directly to a designated pastoral care provider with identity intact, and excluded from aggregate analysis. Between the individual and their pastor.</p>
       </div>
-      <div class="tier partial">
+      <div class="tier t3">
         <div class="tier-title">Identified but Sanitized</div>
-        <p class="tier-text">A specific pastor knows who they are, while a sanitized version also informs broader pastoral awareness. Personal attention alongside collective insight.</p>
+        <p class="tier-text">A specific pastor knows who they are, while a sanitized version informs broader pastoral awareness. Personal attention alongside collective insight.</p>
       </div>
-      <div class="tier full">
+      <div class="tier t4">
         <div class="tier-title">Full Transparency</div>
-        <p class="tier-text">For non-sensitive matters — theological questions, teaching feedback, intellectual curiosities — members may choose full visibility with no sanitization overhead.</p>
+        <p class="tier-text">For non-sensitive matters — theological questions, teaching feedback, curiosities — members may choose full visibility.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- OUTCOMES -->
-<section class="outcomes" id="outcomes">
+<!-- ADOPTION -->
+<section class="adoption">
   <div class="section-inner">
-    <p class="label">What Success Looks Like</p>
-    <h2 class="title">Three Outcomes We Exist to Serve</h2>
-    <p class="lead">The measure of our success is not system performance. It is transformed lives.</p>
-    <div class="outcomes-grid">
-      <div class="outcome">
-        <div class="outcome-mark">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#c0623a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
-        <div class="outcome-title">Finding Comfort in God's Loving Heart</div>
-        <p class="outcome-text">Connecting struggling saints with Scripture that speaks directly to their pain — comfort that is real, not manufactured.</p>
+    <div class="adoption-head">
+      <p class="label">What Adoption Takes</p>
+      <h2 class="title">Similar Barriers, Whatever Your Size</h2>
+      <p class="lead">Three barriers stand between a church and trustworthy AI. MinistryAI is built to remove each one.</p>
+    </div>
+    <div class="barriers">
+      <div class="barrier">
+        <div class="barrier-icon">$</div>
+        <div class="barrier-title">The Cost</div>
+        <div class="barrier-sub">Free &amp; open-source</div>
+        <p class="barrier-text">Custom AI is expensive. MinistryAI is free to your church.</p>
       </div>
-      <div class="outcome">
-        <div class="outcome-mark">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#c0623a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        </div>
-        <div class="outcome-title">Knowing They Are Deeply Loved by God</div>
-        <p class="outcome-text">Identity rooted not in performance or approval — but in God's grace. Freeing believers to love others generously and live boldly for the Kingdom.</p>
+      <div class="barrier">
+        <div class="barrier-icon">✦</div>
+        <div class="barrier-title">The Build</div>
+        <div class="barrier-sub">We build it with you</div>
+        <p class="barrier-text">Your sermons, doctrine, and sources — shaped into a workspace that's yours.</p>
       </div>
-      <div class="outcome">
-        <div class="outcome-mark">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#c0623a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-        </div>
-        <div class="outcome-title">Living a Transformed, Faithful Life</div>
-        <p class="outcome-text">Discipleship that addresses actual areas of struggle — real growth in faithfulness, obedience, and right relationship with God, not generic principles.</p>
+      <div class="barrier">
+        <div class="barrier-icon">∞</div>
+        <div class="barrier-title">The Upkeep</div>
+        <div class="barrier-sub">Onboarding &amp; policy</div>
+        <p class="barrier-text">Governance, onboarding, and partnership for the long run.</p>
       </div>
     </div>
+    <p class="adoption-foot">Free removes the biggest barrier. The rest is what partnership is for.</p>
+    <div class="open-band">
+      <div class="open-item"><strong>Free to Your Church</strong><span>No cost to adopt</span></div>
+      <div class="open-item"><strong>Open-Source</strong><span>Yours to customize</span></div>
+      <div class="open-item"><strong>Yours to Keep</strong><span>Owned and governed by you</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- VISION -->
+<section class="vision" id="vision">
+  <div class="section-inner">
+    <p class="label">Our Vision</p>
+    <p class="vision-title">Equipping churches with AI for transformative stewardship — out of obedience to Jesus Christ.</p>
+    <div class="vision-cols">
+      <div class="vision-col">
+        <div class="vision-ref">Matthew 22:37–39</div>
+        <div class="vision-h">The Greatest Commandments</div>
+        <p>Deepen love for God and neighbor. Every function is meant to enable or protect relationships.</p>
+      </div>
+      <div class="vision-col">
+        <div class="vision-ref">Matthew 28:19</div>
+        <div class="vision-h">The Great Commission</div>
+        <p>Spread the Gospel ever farther, with soul care at the heart of human flourishing.</p>
+      </div>
+    </div>
+    <p class="vision-seal">For God's kingdom and glory.</p>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team" id="team">
+  <div class="section-inner">
+    <div class="team-head">
+      <p class="label">Who We Are</p>
+      <h2 class="title">Committed to Christ &amp; His Church</h2>
+    </div>
+    <p class="team-sub">A nonprofit — service, not profit. MinistryAI is our ministry.</p>
+    <div class="team-grid">
+      <div class="member">
+        <div class="member-name">David Lee, Ph.D.</div>
+        <div class="member-role">Founder &amp; CEO</div>
+        <ul>
+          <li>Creator of the HDMI standard</li>
+          <li>Ph.D. in EECS, UC Berkeley</li>
+          <li>Honorary Doctor of Divinity, Seoul Theological University</li>
+        </ul>
+      </div>
+      <div class="member">
+        <div class="member-name">Rae Cho, Th.D., M.B.A.</div>
+        <div class="member-role">Chief Steward of Ministry</div>
+        <ul>
+          <li>Th.D. &amp; M.Div., Duke Divinity School</li>
+          <li>M.B.A., Stanford</li>
+          <li>Taught theology &amp; church leadership</li>
+        </ul>
+      </div>
+      <div class="member">
+        <div class="member-name">Andrew Wajs</div>
+        <div class="member-role">Chief Technology Officer</div>
+        <ul>
+          <li>25 years in enterprise AI</li>
+          <li>AI orchestration architecture</li>
+          <li>M.S.E.E., University of the Witwatersrand</li>
+        </ul>
+      </div>
+    </div>
+    <div class="team-foot">Alongside our leadership, a volunteer community of Christian AI professionals and a theological advisory group of pastors and seminary faculty help guard the work.</div>
   </div>
 </section>
 
@@ -664,10 +792,10 @@
   <div class="section-inner">
     <p class="label">Get Started</p>
     <h2 class="title">Ready to Serve Your Ministry?</h2>
-    <p class="lead">MinistryAI is available to Christian churches, denominations, seminaries, and ministry organizations. We'd love to talk about your context.</p>
+    <p class="lead">MinistryAI is available to churches, denominations, seminaries, and ministry organizations. We'd love to hear about your context.</p>
     <div class="cta-btns">
       <a class="btn-primary" href="mailto:contact@ministry-ai.org">Get in Touch</a>
-      <a class="btn-outline" href="#principles">Review the Principles</a>
+      <a class="btn-outline" href="#commitments">Review the Commitments</a>
     </div>
   </div>
 </section>
@@ -678,13 +806,14 @@
     <div class="footer-logo">Ministry<span>AI</span></div>
     <ul class="footer-links">
       <li><a href="#mission">Mission</a></li>
-      <li><a href="#objectives">Purpose</a></li>
-      <li><a href="#principles">How It Works</a></li>
+      <li><a href="#agents">Agents</a></li>
+      <li><a href="#commitments">Commitments</a></li>
       <li><a href="#privacy">Privacy</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#team">Team</a></li>
     </ul>
-    <div class="footer-copy">© MinistryAI · Non-profit · All rights reserved</div>
+    <div class="footer-tag">MinistryAI · in service of the church</div>
     <div class="footer-verse">"May the sheep find comfort. May the shepherds find insight. May the Church find greater capacity to fulfill its calling."</div>
+    <div class="footer-copy">© 2026 MinistryAI · A 501(c)(3) nonprofit organization</div>
   </div>
 </footer>
 
