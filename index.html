@@ -63,7 +63,7 @@
   }
   .nav-logo span { color: var(--gold); }
   .nav-logo svg { width: 19px; height: 19px; }
-  .nav-links { display: flex; gap: 30px; list-style: none; }
+  .nav-links { display: flex; gap: 30px; list-style: none; flex-wrap: wrap; }
   .nav-links a {
     font-size: 13.5px; font-weight: 400;
     color: var(--ink-2); text-decoration: none; transition: color 0.2s;
@@ -395,7 +395,7 @@
   .footer-logo { font-family: Georgia, serif; font-size: 18px; font-weight: 700; color: rgba(244,238,225,0.85); }
   .footer-logo span { color: var(--gold); }
   .footer-tag { font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(244,238,225,0.45); }
-  .footer-links { display: flex; gap: 22px; list-style: none; }
+  .footer-links { display: flex; gap: 22px; list-style: none; flex-wrap: wrap; }
   .footer-links a { font-size: 13px; color: rgba(244,238,225,0.45); text-decoration: none; transition: color 0.2s; }
   .footer-links a:hover { color: var(--gold); }
   .footer-verse {
@@ -433,7 +433,6 @@
 <!-- NAV -->
 <nav>
   <a class="nav-logo" href="#top">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#b0822a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21V8a4 4 0 0 1 8 0c0 1.5-1 2.5-2.5 2.5"/></svg>
     Ministry<span>AI</span>
   </a>
   <ul class="nav-links">
@@ -442,6 +441,8 @@
     <li><a href="#commitments">Commitments</a></li>
     <li><a href="#privacy">Privacy</a></li>
     <li><a href="#team">Team</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
   </ul>
   <div style="display:flex; align-items:center; gap:14px;">
     <a href="signin.html" style="font-size:13px; font-weight:500; color:var(--ink); text-decoration:none;">Sign In</a>
@@ -453,7 +454,6 @@
 <section class="hero" id="top">
   <div class="hero-inner">
     <div class="hero-tag">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#8c6618" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21V8a4 4 0 0 1 8 0c0 1.5-1 2.5-2.5 2.5"/></svg>
       AI for Your Faithful Church Stewardship
     </div>
     <h1>A <em>Faithful Steward</em><br>for the Modern Church</h1>
@@ -813,10 +813,18 @@
       <li><a href="#commitments">Commitments</a></li>
       <li><a href="#privacy">Privacy</a></li>
       <li><a href="#team">Team</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
     </ul>
     <div class="footer-tag">MinistryAI · in service of the church</div>
     <div class="footer-verse">"May the sheep find comfort. May the shepherds find insight. May the Church find greater capacity to fulfill its calling."</div>
-    <div class="footer-copy">© 2026 MinistryAI · A 501(c)(3) nonprofit organization</div>
+    <div class="footer-copy" style="color:rgba(244,238,225,0.55); font-size:12.5px; line-height:1.75;">
+      <strong style="font-weight:500; color:rgba(244,238,225,0.8);">MinistryAI</strong><br>
+      Studio City, CA 91604, United States<br>
+      <a href="mailto:contact@ministry-ai.org" style="color:inherit;">contact@ministry-ai.org</a><br><br>
+      A 501(c)(3) nonprofit organization · EIN 41-4049715<br>
+      © 2026 MinistryAI. All rights reserved.
+    </div>
   </div>
 </footer>
 

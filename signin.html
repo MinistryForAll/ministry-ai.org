@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sign In — MinistryAI Workspaces</title>
 <meta name="description" content="Sign in to your church's MinistryAI workspace.">
-<meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -105,7 +104,6 @@
 
 <nav>
   <a class="nav-logo" href="index.html">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#b0822a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21V8a4 4 0 0 1 8 0c0 1.5-1 2.5-2.5 2.5"/></svg>
     Ministry<span>AI</span>
   </a>
   <a class="nav-back" href="index.html">← Back to site</a>
@@ -115,7 +113,6 @@
   <div class="wrap">
     <div class="head">
       <div class="tag">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#8c6618" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21V8a4 4 0 0 1 8 0c0 1.5-1 2.5-2.5 2.5"/></svg>
         Workspaces
       </div>
       <h1>Sign in to your workspace</h1>
@@ -126,14 +123,15 @@
 
       <!-- ============================================================
            ORGANIZATION CARD — duplicate this block for each church.
-           Andrew: replace href="#REPLACE_WITH_MS_LINK" with that
-           organization's Microsoft workspace sign-in URL.
+           Andrew: replace the "Request Access" mailto href below with that
+           organization's Microsoft workspace sign-in URL, and change the
+           link text back to "Enter Workspace →".
            ============================================================ -->
       <div class="ws">
         <span class="ws-status">Live Pilot</span>
         <div class="ws-name">Cornerstone Church</div>
         <div class="ws-meta">Pastoral Agent · grounded in your church's own teaching.</div>
-        <a class="ws-btn" href="#REPLACE_WITH_MS_LINK">Enter Workspace →</a>
+        <a class="ws-btn" href="mailto:contact@ministry-ai.org?subject=Cornerstone%20workspace%20access">Request Access →</a>
       </div>
 
       <!-- Onboarding placeholder — remove once more orgs are live -->
@@ -155,7 +153,16 @@
 
 <footer>
   <div class="footer-logo">Ministry<span>AI</span></div>
-  <div class="footer-copy">© 2026 MinistryAI · A 501(c)(3) nonprofit organization · EIN 41-4049715</div>
+  <div class="footer-copy" style="line-height:1.75;">
+    <a href="index.html" style="color:inherit;">Home</a> &middot;
+    <a href="about.html" style="color:inherit;">About</a> &middot;
+    <a href="contact.html" style="color:inherit;">Contact</a><br><br>
+    <strong style="font-weight:500;">MinistryAI</strong><br>
+    Studio City, CA 91604, United States<br>
+    <a href="mailto:contact@ministry-ai.org" style="color:inherit;">contact@ministry-ai.org</a><br><br>
+    A 501(c)(3) nonprofit organization &middot; EIN 41-4049715<br>
+    &copy; 2026 MinistryAI. All rights reserved.
+  </div>
 </footer>
 
 </body>
