@@ -223,20 +223,38 @@
   /* ------------------------------------------------------------------
      Identity configuration.
 
-     Each workspace and each church tenant signs in through its own
-     Azure-hosted Keycloak realm. Set `authUrl` to that realm's
-     OpenID Connect authorization endpoint. While a value is empty,
-     the page says sign-in is not yet connected and offers a contact
-     route, rather than presenting a button that goes nowhere.
+     `authUrl` is the workspace's own Next.js app, NOT Keycloak.
+
+     The app builds the OpenID Connect request — client_id, redirect_uri,
+     PKCE challenge, state — and then hands off to Keycloak, which renders
+     the login page and collects the password. A link straight to a
+     Keycloak /protocol/openid-connect/auth URL carries none of those
+     parameters and returns a Keycloak error page, so do not "simplify"
+     these into realm URLs.
+
+     Passwords are never collected on ministry-ai.org. Each screen only
+     ever shows a button; the identity service does the rest.
+
+     While a value is empty, the page says sign-in is not yet connected
+     and offers a contact route, rather than a button that goes nowhere.
+
+     Verified working 2026-09-15. These are Azure Container Apps
+     hostnames tied to the current ACA environment — when the stacks move
+     to the MinistryAI Azure account, update the three authUrl values
+     below, plus NEXTAUTH_URL and the Keycloak client redirect URIs on
+     each stack to match.
      ------------------------------------------------------------------ */
   var ADMIN_EMAIL = 'admin@ministry-ai.org';
+
+  var CORNERSTONE_SIGNIN = 'https://nextjs-ui.proudmeadow-c311a161.eastus2.azurecontainerapps.io/api/auth/signin?callbackUrl=%2Fcornerstone';
+  var SHEPHERD_SIGNIN    = 'https://nextjs-ui.lemonmushroom-a6ac3cf7.eastus2.azurecontainerapps.io/api/auth/signin?callbackUrl=%2Fstudio';
 
   var WORKSPACES = {
     cornerstone: {
       name: 'Cornerstone Bible Study',
       tag: 'Available today',
       blurb: 'General discipleship study, open to anyone — no church or organization affiliation required. Every answer is drawn from ingested teaching, cited.',
-      authUrl: ''
+      authUrl: CORNERSTONE_SIGNIN
     },
     shepherd: {
       name: 'Shepherd Studio',
@@ -246,9 +264,14 @@
     }
   };
 
+  /* Every Shepherd church currently signs in through the same endpoint;
+     the member's church is resolved from their account after sign-in, so
+     they land in their own workspace. The church rows are wayfinding, not
+     separate destinations. If churches are ever split into their own
+     realms, give each entry its own authUrl. */
   var ORGS = [
-    { key: 'touch',        name: 'Touch Bible Ministry',  loc: null,          authUrl: '' },
-    { key: 'missionpointe', name: 'Mission Pointe Church', loc: 'Concord, CA', authUrl: '' }
+    { key: 'touch',        name: 'Touch Bible Ministry',  loc: null,          authUrl: SHEPHERD_SIGNIN },
+    { key: 'missionpointe', name: 'Mission Pointe Church', loc: 'Concord, CA', authUrl: SHEPHERD_SIGNIN }
   ];
 
   /* ---------------------------------------------------------------- */
@@ -320,7 +343,9 @@
   /* Sign-in hand-off ------------------------------------------------- */
   function signInBlock(label, authUrl, who) {
     if (authUrl) {
-      return '<a class="btn wide" href="' + esc(authUrl) + '">' + esc(label) + ' &rarr;</a>';
+      return '<a class="btn wide" href="' + esc(authUrl) + '">' + esc(label) + ' &rarr;</a>'
+           + '<div class="note">Your password is never entered on this page. The button opens '
+           + 'MinistryAI&rsquo;s secure sign-in service, which signs you in and brings you back.</div>';
     }
     return '<button class="btn wide" type="button" disabled style="opacity:.55;cursor:not-allowed">'
          + esc(label) + '</button>'
@@ -404,12 +429,8 @@
     else if (st.path === 'cornerstone' && st.step === 2 && st.mode === 'login') {
       var cs = WORKSPACES.cornerstone;
       h += '<div class="head"><h1>Sign in to Cornerstone</h1>'
-        + '<p>Enter the email and password you registered with.</p></div>'
+        + '<p>You will enter your email and password on MinistryAI&rsquo;s secure sign-in page.</p></div>'
         + '<div class="card">'
-        + '<div class="field"><label for="c-email">Email</label>'
-        + '<input id="c-email" type="email" autocomplete="username" placeholder="you@example.com"></div>'
-        + '<div class="field"><label for="c-pass">Password</label>'
-        + '<input id="c-pass" type="password" autocomplete="current-password" placeholder="Your password"></div>'
         + signInBlock('Sign in', cs.authUrl, 'Cornerstone Bible Study')
         + '</div>' + back('Back');
     }
