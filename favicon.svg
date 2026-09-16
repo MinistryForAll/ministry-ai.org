@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="MinistryAI">
+  <rect width="64" height="64" rx="12" fill="#2c2a24"/>
+  <!-- Shepherd's crook, drawn as a simple gold stroke -->
+  <path d="M32 50 V26 a10 10 0 0 1 20 0"
+        fill="none" stroke="#b0822a" stroke-width="6"
+        stroke-linecap="round"/>
+  <circle cx="20" cy="44" r="5" fill="#f4eee1"/>
+</svg>

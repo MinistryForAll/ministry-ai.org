@@ -5,97 +5,50 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MinistryAI — AI for Your Faithful Church Stewardship</title>
 <meta name="description" content="MinistryAI is a nonprofit building trustworthy, purpose-built AI for churches and seminaries — grounded in your church's own teaching, with the shepherd at the center.">
+<link rel="canonical" href="https://ministry-ai.org/">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MinistryAI">
+<meta property="og:title" content="A Faithful Steward for the Modern Church">
+<meta property="og:description" content="Purpose-built AI for churches and seminaries — grounded in your church's own teaching, every answer cited, always pointing back to the shepherd.">
+<meta property="og:url" content="https://ministry-ai.org/">
+<meta property="og:image" content="https://ministry-ai.org/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="MinistryAI — a faithful steward for the modern church">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="A Faithful Steward for the Modern Church">
+<meta name="twitter:description" content="Purpose-built AI for churches and seminaries — grounded in your church's own teaching, every answer cited.">
+<meta name="twitter:image" content="https://ministry-ai.org/og-image.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
 <style>
-  :root {
-    /* Deck palette */
-    --cream:    #f4eee1;
-    --cream-2:  #ece2d0;
-    --paper:    #fbf7ef;
-    --ink:      #2c2a24;
-    --ink-2:    #524c42;
-    --muted:    #8a8175;
-    --gold:     #b0822a;
-    --gold-2:   #8c6618;
-    --gold-pale:#f3e6c8;
-    --green:    #3f6b57;
-    --green-2:  #2e4f40;
-    --green-pale:#dde8df;
-    --taupe:    #6e6456;
-    --taupe-pale:#e4ddd0;
-    --navy:     #232e4b;
-    --navy-2:   #1a2238;
-    --line:     rgba(44,42,36,0.12);
-    --white:    #ffffff;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Inter', system-ui, sans-serif;
-    background: var(--cream);
-    color: var(--ink);
-    font-size: 16px;
-    line-height: 1.7;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  h1, h2, h3, .serif { font-family: Georgia, 'Times New Roman', serif; }
-
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 48px; height: 66px;
-    background: rgba(244,238,225,0.92);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--line);
-  }
-  .nav-logo {
-    font-family: Georgia, serif;
-    font-size: 20px; font-weight: 700;
-    color: var(--ink); text-decoration: none; letter-spacing: -0.01em;
-    display: flex; align-items: center; gap: 9px;
-  }
-  .nav-logo span { color: var(--gold); }
-  .nav-logo svg { width: 19px; height: 19px; }
-  .nav-links { display: flex; gap: 30px; list-style: none; flex-wrap: wrap; }
-  .nav-links a {
-    font-size: 13.5px; font-weight: 400;
-    color: var(--ink-2); text-decoration: none; transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--gold); }
-  .nav-cta {
-    font-size: 13px; font-weight: 500;
-    background: var(--ink); color: var(--cream);
-    padding: 10px 22px; border-radius: 4px;
-    text-decoration: none; transition: background 0.2s;
-  }
-  .nav-cta:hover { background: var(--gold-2); }
+  /* Page-specific styles only. Tokens, nav, footer and base type live in site.css. */
 
   /* HERO */
   .hero {
-    min-height: 100vh;
+    min-height: calc(100vh - var(--nav-h));
     display: flex; align-items: center;
-    padding: 120px 48px 90px;
+    padding: 80px 48px 90px;
     background:
       radial-gradient(circle at 80% 18%, rgba(176,130,42,0.10) 0%, transparent 42%),
       var(--cream);
-    position: relative; overflow: hidden;
+    position: relative;
   }
   .hero-inner { max-width: 1120px; margin: 0 auto; width: 100%; }
   .hero-tag {
     display: inline-flex; align-items: center; gap: 9px;
-    font-size: 11.5px; font-weight: 600;
+    font-size: 11.5px; font-weight: 700;
     letter-spacing: 0.13em; text-transform: uppercase;
-    color: var(--gold-2); background: var(--gold-pale);
+    color: var(--gold-3); background: var(--gold-pale);
     padding: 7px 15px; border-radius: 3px; margin-bottom: 30px;
   }
-  .hero-tag svg { width: 15px; height: 15px; }
   .hero h1 {
     font-size: clamp(42px, 6vw, 74px);
     font-weight: 700; line-height: 1.08;
@@ -111,37 +64,37 @@
   .hero-actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
   .btn-primary {
     font-size: 14px; font-weight: 500;
-    background: var(--green); color: var(--white);
+    background: var(--green-2); color: var(--white);
     padding: 14px 30px; border-radius: 4px;
     text-decoration: none; transition: all 0.2s;
   }
-  .btn-primary:hover { background: var(--green-2); transform: translateY(-1px); }
+  .btn-primary:hover { background: var(--ink); transform: translateY(-1px); }
   .btn-outline {
     font-size: 14px; font-weight: 400; color: var(--ink);
-    border: 1px solid rgba(44,42,36,0.25);
+    border: 1px solid var(--line-2);
     padding: 13px 28px; border-radius: 4px;
     text-decoration: none; transition: all 0.2s; background: transparent;
   }
-  .btn-outline:hover { border-color: var(--gold); color: var(--gold-2); }
+  .btn-outline:hover { border-color: var(--gold-2); color: var(--gold-3); }
   .hero-verse {
     margin-top: 64px; padding-top: 26px;
     border-top: 1px solid var(--line);
-    font-family: Georgia, serif;
+    font-family: var(--serif);
     font-style: italic; font-size: 16px;
     color: var(--ink-2); max-width: 540px; line-height: 1.7;
   }
   .hero-verse cite {
     display: block; margin-top: 9px;
-    font-style: normal; font-family: 'Inter', sans-serif;
-    font-size: 11px; font-weight: 600;
+    font-style: normal; font-family: var(--sans);
+    font-size: 11px; font-weight: 700;
     letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-2);
   }
 
-  /* SHARED */
+  /* SHARED SECTION FURNITURE */
   section { padding: 92px 48px; }
   .section-inner { max-width: 1120px; margin: 0 auto; }
   .label {
-    font-size: 11px; font-weight: 600;
+    font-size: 11px; font-weight: 700;
     letter-spacing: 0.15em; text-transform: uppercase;
     color: var(--gold-2); margin-bottom: 16px;
   }
@@ -158,60 +111,57 @@
   /* MOMENT / STATS */
   .moment { background: var(--paper); border-top: 1px solid var(--line); }
   .moment-head { max-width: 720px; }
-  .stats {
-    margin-top: 52px;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
-  }
+  .stats { margin-top: 52px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
   .stat {
     background: var(--cream); border: 1px solid var(--line);
     border-radius: 12px; padding: 34px 32px;
   }
   .stat-num {
-    font-family: Georgia, serif; font-size: 52px;
+    font-family: var(--serif); font-size: 52px;
     font-weight: 700; color: var(--green); line-height: 1; margin-bottom: 10px;
   }
   .stat:nth-child(2) .stat-num { color: var(--gold-2); }
   .stat-text { font-size: 15px; color: var(--ink-2); line-height: 1.6; }
-  .stat-src { margin-top: 18px; font-size: 11.5px; color: var(--muted); letter-spacing: 0.02em; }
+  .stat-src { margin-top: 18px; font-size: 12px; color: var(--muted); letter-spacing: 0.02em; }
+  .stat-src a { color: inherit; }
 
   /* MISSION */
   .mission { background: var(--green); }
   .mission .title { color: var(--cream); }
   .mission .label { color: var(--green-pale); }
   .mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-  .mission-text { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.82); line-height: 1.85; }
+  .mission-text { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.93); line-height: 1.85; }
   .mission-text + .mission-text { margin-top: 16px; }
   .mission-side {
-    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16);
-    border-radius: 12px; padding: 30px 30px;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 12px; padding: 30px;
   }
-  .mission-side p { font-size: 15px; color: rgba(255,255,255,0.78); line-height: 1.8; }
+  .mission-side p { font-size: 15px; color: var(--white); line-height: 1.8; }
   .mission-side p + p { margin-top: 14px; }
   .mission-side .pull {
-    font-family: Georgia, serif; font-style: italic; font-size: 19px;
-    color: var(--cream); line-height: 1.5; margin-bottom: 20px;
+    font-family: var(--serif); font-style: italic; font-size: 19px;
+    color: var(--white); line-height: 1.5; margin-bottom: 20px;
   }
+  .mission-side strong { color: var(--white); }
 
   /* WISE / CARELESS */
   .why { background: var(--cream); }
   .why-head { text-align: center; max-width: 660px; margin: 0 auto 50px; }
   .why-head .lead { margin: 0 auto; }
   .wc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-  .wc {
-    border-radius: 14px; padding: 38px 34px; border: 1px solid var(--line);
-  }
+  .wc { border-radius: 14px; padding: 38px 34px; border: 1px solid var(--line); }
   .wc.wise { background: var(--green-pale); border-color: rgba(63,107,87,0.25); }
   .wc.careless { background: var(--cream-2); }
   .wc-label {
-    font-size: 11px; font-weight: 600; letter-spacing: 0.13em;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.13em;
     text-transform: uppercase; margin-bottom: 14px;
   }
   .wc.wise .wc-label { color: var(--green-2); }
   .wc.careless .wc-label { color: var(--taupe); }
-  .wc p { font-family: Georgia, serif; font-size: 21px; line-height: 1.45; color: var(--ink); }
+  .wc p { font-family: var(--serif); font-size: 21px; line-height: 1.45; color: var(--ink); }
   .wc.careless p { color: var(--ink-2); }
 
-  /* AGENTS */
+  /* AGENT / STUDIO CARDS */
   .agents { background: var(--paper); }
   .agents-head { max-width: 720px; margin-bottom: 50px; }
   .agent-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
@@ -222,42 +172,32 @@
   }
   .agent:hover { transform: translateY(-3px); box-shadow: 0 14px 38px rgba(44,42,36,0.10); }
   .agent-cap {
-    padding: 11px 24px; font-size: 11px; font-weight: 600;
+    padding: 11px 24px; font-size: 11px; font-weight: 700;
     letter-spacing: 0.13em; text-transform: uppercase; color: var(--white);
   }
-  .agent.pastor .agent-cap { background: var(--green); }
-  .agent.leader .agent-cap { background: var(--gold); }
-  .agent.member .agent-cap { background: var(--taupe); }
+  .agent.pastor .agent-cap { background: var(--green-2); }
+  .agent.leader .agent-cap { background: var(--gold-3); }
+  .agent.seeker .agent-cap { background: var(--taupe); }
   .agent-body { padding: 26px 24px 30px; }
   .agent-name {
-    font-family: Georgia, serif; font-size: 23px; font-weight: 700;
+    font-family: var(--serif); font-size: 23px; font-weight: 700;
     margin-bottom: 12px; color: var(--ink);
-  }
-  .agent-text { font-size: 14.5px; color: var(--ink-2); line-height: 1.7; }
-  .agent-phase {
-    margin-top: 18px; display: inline-block; font-size: 11px;
-    font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
-    padding: 4px 11px; border-radius: 4px;
-  }
-  .agent.pastor .agent-phase { color: var(--green-2); background: var(--green-pale); }
-  .agent.leader .agent-phase { color: var(--gold-2); background: var(--gold-pale); }
-  .agent.member .agent-phase { color: var(--taupe); background: var(--taupe-pale); }
-  .agents-foot {
-    margin-top: 36px; text-align: center; font-family: Georgia, serif;
-    font-style: italic; font-size: 20px; color: var(--gold-2);
   }
 
   /* COMMITMENTS */
   .commitments { background: var(--cream); }
   .commitments-head { max-width: 720px; margin-bottom: 48px; }
-  .commit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border-radius: 14px; overflow: hidden; }
+  .commit-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    background: var(--line); border-radius: 14px; overflow: hidden;
+  }
   .commit { background: var(--paper); padding: 34px 32px; transition: background 0.2s; }
   .commit:hover { background: var(--white); }
   .commit-num {
-    font-family: Georgia, serif; font-size: 14px; font-weight: 700;
-    color: var(--gold); margin-bottom: 12px;
+    font-family: var(--serif); font-size: 14px; font-weight: 700;
+    color: var(--gold-2); margin-bottom: 12px;
   }
-  .commit-title { font-family: Georgia, serif; font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+  .commit-title { font-family: var(--serif); font-size: 20px; font-weight: 700; margin-bottom: 10px; }
   .commit-text { font-size: 14.5px; color: var(--ink-2); line-height: 1.7; }
 
   /* TECH */
@@ -266,15 +206,15 @@
   .tech-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
   .tech-card {
     background: var(--cream); border: 1px solid var(--line); border-left: 3px solid var(--green);
-    border-radius: 10px; padding: 26px 26px;
+    border-radius: 10px; padding: 26px;
   }
   .tech-card:nth-child(2) { border-left-color: var(--gold); }
-  .tech-card:nth-child(3) { border-left-color: var(--taupe); }
+  .tech-card:nth-child(3) { border-left-color: var(--taupe-dec); }
   .tech-card:nth-child(4) { border-left-color: var(--navy); }
-  .tech-title { font-family: Georgia, serif; font-size: 18px; font-weight: 700; margin-bottom: 9px; }
+  .tech-title { font-family: var(--serif); font-size: 18px; font-weight: 700; margin-bottom: 9px; }
   .tech-text { font-size: 14px; color: var(--ink-2); line-height: 1.7; }
   .tech-foot {
-    margin-top: 30px; padding: 18px 24px; background: var(--ink); color: var(--cream);
+    margin-top: 30px; padding: 18px 24px; background: var(--ink); color: var(--on-dark);
     border-radius: 8px; font-size: 14px; text-align: center; letter-spacing: 0.01em;
   }
 
@@ -283,9 +223,9 @@
   .compare-wrap { margin-top: 44px; overflow-x: auto; }
   .compare-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 640px; }
   .compare-table th {
-    text-align: left; padding: 14px 18px; font-size: 11.5px; font-weight: 600;
+    text-align: left; padding: 14px 18px; font-size: 11.5px; font-weight: 700;
     letter-spacing: 0.06em; text-transform: uppercase;
-    border-bottom: 2px solid rgba(44,42,36,0.18); color: var(--muted);
+    border-bottom: 2px solid var(--line-2); color: var(--muted);
   }
   .compare-table th.col-ministry { color: var(--green-2); }
   .compare-table td { padding: 15px 18px; vertical-align: top; border-bottom: 1px solid var(--line); line-height: 1.6; }
@@ -294,25 +234,30 @@
   .compare-table td.col-ministry { color: var(--green-2); width: 40%; }
   .compare-table tr:hover td { background: rgba(176,130,42,0.04); }
 
-  /* PRIVACY */
+  /* PRIVACY / PROTECTION */
   .privacy { background: var(--navy); }
   .privacy .title { color: var(--cream); }
-  .privacy .label { color: var(--gold); }
-  .privacy .lead { color: rgba(255,255,255,0.62); }
+  .privacy .label { color: var(--gold-light); }
+  .privacy .lead { color: rgba(255,255,255,0.88); }
   .privacy-top { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-bottom: 26px; align-items: start; }
-  .privacy-note { font-size: 11.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.42); margin: 30px 0 18px; }
+  .privacy-note {
+    font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(255,255,255,0.78); margin: 30px 0 18px;
+  }
+  .privacy-foot { margin-top: 26px; font-size: 14.5px; color: rgba(255,255,255,0.88); }
+  .privacy-foot a { color: var(--gold-light); }
   .tiers { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .tier { padding: 24px 22px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); }
-  .tier.t1 { background: rgba(176,130,42,0.12); border-color: rgba(176,130,42,0.28); }
-  .tier.t2 { background: rgba(63,107,87,0.18); border-color: rgba(63,107,87,0.35); }
-  .tier.t3 { background: rgba(110,100,86,0.18); border-color: rgba(110,100,86,0.35); }
-  .tier.t4 { background: rgba(255,255,255,0.05); }
-  .tier-title { font-family: Georgia, serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
-  .tier.t1 .tier-title { color: #e6c684; }
-  .tier.t2 .tier-title { color: #8fcfaa; }
-  .tier.t3 .tier-title { color: #c9bda8; }
-  .tier.t4 .tier-title { color: rgba(255,255,255,0.78); }
-  .tier-text { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.65; }
+  .tier { padding: 24px 22px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.14); }
+  .tier.t1 { background: rgba(176,130,42,0.14); border-color: rgba(176,130,42,0.32); }
+  .tier.t2 { background: rgba(63,107,87,0.20); border-color: rgba(63,107,87,0.38); }
+  .tier.t3 { background: rgba(110,100,86,0.20); border-color: rgba(110,100,86,0.38); }
+  .tier.t4 { background: rgba(255,255,255,0.06); }
+  .tier-title { font-family: var(--serif); font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .tier.t1 .tier-title { color: #edd096; }
+  .tier.t2 .tier-title { color: #9ddcb8; }
+  .tier.t3 .tier-title { color: #d6cbb8; }
+  .tier.t4 .tier-title { color: rgba(255,255,255,0.92); }
+  .tier-text { font-size: 13.5px; color: rgba(255,255,255,0.84); line-height: 1.65; }
 
   /* ADOPTION */
   .adoption { background: var(--cream); }
@@ -322,40 +267,40 @@
   .barrier-icon {
     width: 50px; height: 50px; border-radius: 50%; margin: 0 auto 18px;
     display: flex; align-items: center; justify-content: center;
-    background: var(--gold-pale); color: var(--gold-2);
-    font-family: Georgia, serif; font-size: 24px; font-weight: 700;
+    background: var(--gold-pale); color: var(--gold-3);
+    font-family: var(--serif); font-size: 24px; font-weight: 700;
   }
   .barrier:nth-child(2) .barrier-icon { background: var(--green-pale); color: var(--green-2); }
   .barrier:nth-child(3) .barrier-icon { background: var(--taupe-pale); color: var(--taupe); }
-  .barrier-title { font-family: Georgia, serif; font-size: 20px; font-weight: 700; margin-bottom: 6px; }
-  .barrier-sub { font-size: 13px; font-weight: 600; color: var(--gold-2); margin-bottom: 12px; }
+  .barrier-title { font-family: var(--serif); font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+  .barrier-sub { font-size: 13px; font-weight: 600; color: var(--gold-3); margin-bottom: 12px; }
   .barrier:nth-child(2) .barrier-sub { color: var(--green-2); }
   .barrier:nth-child(3) .barrier-sub { color: var(--taupe); }
   .barrier-text { font-size: 14px; color: var(--ink-2); line-height: 1.65; }
-  .adoption-foot { margin-top: 32px; text-align: center; font-family: Georgia, serif; font-style: italic; font-size: 20px; color: var(--ink); }
+  .adoption-foot { margin-top: 32px; text-align: center; font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--ink); }
   .open-band {
     margin-top: 44px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
     background: var(--line); border-radius: 12px; overflow: hidden;
   }
-  .open-item { background: var(--ink); color: var(--cream); padding: 26px 24px; text-align: center; }
-  .open-item strong { display: block; font-family: Georgia, serif; font-size: 18px; margin-bottom: 5px; color: var(--white); }
-  .open-item span { font-size: 13px; color: rgba(244,238,225,0.65); }
+  .open-item { background: var(--ink); color: var(--on-dark); padding: 26px 24px; text-align: center; }
+  .open-item strong { display: block; font-family: var(--serif); font-size: 18px; margin-bottom: 5px; color: var(--white); }
+  .open-item span { font-size: 13px; color: rgba(244,238,225,0.82); }
 
   /* VISION */
   .vision { background: var(--green-2); text-align: center; }
   .vision .section-inner { max-width: 860px; }
   .vision .label { color: var(--green-pale); }
   .vision-title {
-    font-family: Georgia, serif; font-size: clamp(26px, 3.4vw, 40px);
+    font-family: var(--serif); font-size: clamp(26px, 3.4vw, 40px);
     font-weight: 700; color: var(--cream); line-height: 1.3; margin-bottom: 44px;
     font-style: italic;
   }
   .vision-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; text-align: left; }
-  .vision-col { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 28px 26px; }
-  .vision-ref { font-size: 11.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
-  .vision-h { font-family: Georgia, serif; font-size: 19px; font-weight: 700; color: var(--cream); margin-bottom: 12px; }
-  .vision-col p { font-size: 14.5px; color: rgba(255,255,255,0.75); line-height: 1.7; }
-  .vision-seal { margin-top: 38px; font-family: Georgia, serif; font-style: italic; font-size: 20px; color: var(--gold); }
+  .vision-col { background: rgba(255,255,255,0.09); border: 1px solid rgba(255,255,255,0.20); border-radius: 12px; padding: 28px 26px; }
+  .vision-ref { font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 6px; }
+  .vision-h { font-family: var(--serif); font-size: 19px; font-weight: 700; color: var(--cream); margin-bottom: 12px; }
+  .vision-col p { font-size: 14.5px; color: rgba(255,255,255,0.90); line-height: 1.7; }
+  .vision-seal { margin-top: 38px; font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--gold-light); }
 
   /* TEAM */
   .team { background: var(--cream); }
@@ -368,8 +313,8 @@
   }
   .member:nth-child(1) { border-top-color: var(--green); }
   .member:nth-child(3) { border-top-color: var(--navy); }
-  .member-name { font-family: Georgia, serif; font-size: 22px; font-weight: 700; margin-bottom: 3px; }
-  .member-role { font-size: 13px; font-weight: 600; letter-spacing: 0.04em; color: var(--gold-2); text-transform: uppercase; margin-bottom: 18px; }
+  .member-name { font-family: var(--serif); font-size: 22px; font-weight: 700; margin-bottom: 3px; }
+  .member-role { font-size: 13px; font-weight: 600; letter-spacing: 0.04em; color: var(--gold-3); text-transform: uppercase; margin-bottom: 18px; }
   .member:nth-child(1) .member-role { color: var(--green-2); }
   .member:nth-child(3) .member-role { color: var(--navy); }
   .member ul { list-style: none; }
@@ -385,24 +330,28 @@
   /* CTA */
   .cta { background: var(--gold-pale); border-top: 1px solid var(--line); text-align: center; }
   .cta .section-inner { max-width: 640px; }
-  .cta .label { color: var(--gold-2); }
+  .cta .label { color: var(--gold-3); }
   .cta .lead { margin: 0 auto 36px; text-align: center; }
   .cta-btns { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
 
-  /* FOOTER */
-  footer { background: var(--ink); color: rgba(244,238,225,0.5); padding: 46px 48px; }
-  .footer-inner { max-width: 1120px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 18px; }
-  .footer-logo { font-family: Georgia, serif; font-size: 18px; font-weight: 700; color: rgba(244,238,225,0.85); }
-  .footer-logo span { color: var(--gold); }
-  .footer-tag { font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(244,238,225,0.45); }
-  .footer-links { display: flex; gap: 22px; list-style: none; flex-wrap: wrap; }
-  .footer-links a { font-size: 13px; color: rgba(244,238,225,0.45); text-decoration: none; transition: color 0.2s; }
-  .footer-links a:hover { color: var(--gold); }
-  .footer-verse {
-    width: 100%; margin-top: 24px; padding-top: 22px; border-top: 1px solid rgba(244,238,225,0.1);
-    font-family: Georgia, serif; font-style: italic; font-size: 14.5px; color: rgba(244,238,225,0.4); text-align: center; line-height: 1.6;
-  }
-  .footer-copy { width: 100%; text-align: center; margin-top: 14px; font-size: 12px; color: rgba(244,238,225,0.3); }
+  /* CARD INTERNALS */
+  .card-q { font-family: var(--serif); font-style: italic; font-size: 14.5px; color: rgba(255,255,255,0.92); margin-top: 3px; text-transform: none; letter-spacing: 0; font-weight: 400; }
+  .card-list { list-style: none; padding: 0; margin: 4px 0 0; }
+  .card-list li { position: relative; padding-left: 17px; font-size: 14.5px; line-height: 1.62; color: var(--ink-2); margin-bottom: 12px; }
+  .card-list li:last-child { margin-bottom: 0; }
+  .card-list li:before { content: ""; position: absolute; left: 0; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+  .agent.pastor .card-list li:before { background: var(--green); }
+  .agent.seeker .card-list li:before { background: var(--taupe-dec); }
+  .card-for { font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--gold-3); margin: -4px 0 16px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 34px; }
+  .chip { background: var(--green-2); color: var(--cream); font-size: 13px; padding: 11px 17px; border-radius: 3px; }
+  .principle { background: var(--green-2); color: var(--cream); padding: 20px 26px; border-radius: 4px; margin-bottom: 34px; }
+  .principle b { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; color: var(--gold-pale); margin-bottom: 8px; }
+  .principle p { margin: 0; font-size: 15.5px; line-height: 1.65; max-width: 82ch; }
+  .lang-band { margin-top: 30px; background: var(--green-2); color: var(--cream); padding: 17px 24px; border-radius: 3px; font-size: 14.5px; line-height: 1.6; }
+  .lang-band b { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; color: var(--gold-pale); margin-bottom: 6px; }
+  .verse-band { margin-top: 20px; background: var(--gold-pale); padding: 17px 24px; border-radius: 3px; font-family: var(--serif); font-style: italic; font-size: 15.5px; color: var(--ink); line-height: 1.6; }
+  .verse-band span { font-style: normal; font-weight: 600; color: var(--gold-3); }
 
   /* ANIMATION */
   @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
@@ -411,55 +360,54 @@
   .hero-sub { animation: fadeUp 0.6s ease 0.2s both; }
   .hero-actions { animation: fadeUp 0.6s ease 0.3s both; }
   .hero-verse { animation: fadeUp 0.6s ease 0.45s both; }
-  @media (prefers-reduced-motion: reduce) { * { animation: none !important; scroll-behavior: auto; } }
 
   /* RESPONSIVE */
   @media (max-width: 880px) {
-    nav { padding: 0 20px; }
-    .nav-links { display: none; }
-    section, footer { padding-left: 20px; padding-right: 20px; }
-    .hero { padding: 110px 20px 70px; }
-    section { padding-top: 64px; padding-bottom: 64px; }
+    section { padding: 64px 20px; }
+    .hero { padding: 56px 20px 70px; min-height: 0; }
     .stats, .mission-grid, .wc-grid, .agent-grid, .commit-grid,
     .tech-grid, .privacy-top, .tiers, .barriers, .vision-cols,
     .team-grid, .open-band { grid-template-columns: 1fr; }
     .commit-grid { gap: 1px; }
-    .footer-inner { flex-direction: column; align-items: flex-start; }
   }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <a class="nav-logo" href="#top">
-    Ministry<span>AI</span>
-  </a>
-  <ul class="nav-links">
-    <li><a href="#mission">Mission</a></li>
-    <li><a href="#agents">Agents</a></li>
-    <li><a href="#commitments">Commitments</a></li>
-    <li><a href="#privacy">Privacy</a></li>
-    <li><a href="#team">Team</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-  <div style="display:flex; align-items:center; gap:14px;">
-    <a href="signin.html" style="font-size:13px; font-weight:500; color:var(--ink); text-decoration:none;">Sign In</a>
-    <a class="nav-cta" href="#contact">Get in Touch</a>
+<a class="skip" href="#main">Skip to content</a>
+
+<nav class="site-nav" aria-label="Primary">
+  <div class="site-nav-in">
+    <a class="site-logo" href="index.html">Ministry<span>AI</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">
+      <span class="bars" aria-hidden="true"></span> Menu
+    </button>
+    <ul class="nav-links" id="nav-menu">
+      <li><a href="index.html#mission">Mission</a></li>
+      <li><a href="index.html#serve">Who We Serve</a></li>
+      <li><a href="index.html#studios">Studios</a></li>
+      <li><a href="index.html#commitments">Commitments</a></li>
+      <li><a href="index.html#team">Team</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a class="nav-signin" href="signin.html">Sign In</a>
+      <a class="nav-cta" href="contact.html">Get in Touch</a>
+    </div>
   </div>
 </nav>
+
+<main id="main">
 
 <!-- HERO -->
 <section class="hero" id="top">
   <div class="hero-inner">
-    <div class="hero-tag">
-      AI for Your Faithful Church Stewardship
-    </div>
+    <p class="hero-tag">AI for Your Faithful Church Stewardship</p>
     <h1>A <em>Faithful Steward</em><br>for the Modern Church</h1>
     <p class="hero-sub">Purpose-built AI that helps you shepherd faithfully — grounded in your church's own teaching, attentive to your people, and always pointing back to the shepherd, never away.</p>
     <div class="hero-actions">
-      <a class="btn-primary" href="#agents">See How It Works</a>
+      <a class="btn-primary" href="#studios">See How It Works</a>
       <a class="btn-outline" href="#commitments">Our Commitments</a>
     </div>
     <div class="hero-verse">
@@ -486,7 +434,7 @@
       <div class="stat">
         <div class="stat-num">75%</div>
         <div class="stat-text">cite theological misalignment as a top concern with the AI they use.</div>
-        <div class="stat-src">2026 State of AI in the Church Survey · Barna</div>
+        <div class="stat-src">2026 State of AI in the Church Survey</div>
       </div>
     </div>
   </div>
@@ -504,8 +452,8 @@
       </div>
       <div class="mission-side">
         <p class="pull">A 501(c)(3) nonprofit, funded by donors who share our vision — built to serve your sacred calling, never to replace it.</p>
-        <p><strong style="color:var(--cream);">For pastors and leaders</strong> — dependable tools to better listen to, care for, and disciple their congregations.</p>
-        <p><strong style="color:var(--cream);">For members and seekers</strong> — a safe, private place to bring questions and struggles, and be drawn toward the pastors and shepherds who lead them to Christ and his church.</p>
+        <p><strong>For pastors and leaders</strong> — dependable tools to better listen to, care for, and disciple their congregations.</p>
+        <p><strong>For members and seekers</strong> — a safe, private place to bring questions and struggles, and be drawn toward the pastors and shepherds who lead them to Christ and his church.</p>
       </div>
     </div>
   </div>
@@ -532,41 +480,156 @@
   </div>
 </section>
 
-<!-- AGENTS -->
-<section class="agents" id="agents">
+<!-- WHO WE SERVE -->
+<section class="agents" id="serve">
   <div class="section-inner">
     <div class="agents-head">
-      <p class="label">How It Works</p>
-      <h2 class="title">One Platform. Purpose-Built Agents.</h2>
-      <p class="lead">Our core innovation is relationship-aware AI orchestration — distinct agents for the distinct relationships of church life, each grounded in your church's own teaching.</p>
+      <p class="label">Who We Serve</p>
+      <h2 class="title">Three People We Serve &mdash; One Flock</h2>
+      <p class="lead">Each carries a different question. MinistryAI answers all three from the church's own teaching.</p>
     </div>
     <div class="agent-grid">
       <div class="agent pastor">
-        <div class="agent-cap">For Pastors</div>
+        <div class="agent-cap">Pastors<div class="card-q">&ldquo;How do I shepherd faithfully?&rdquo;</div></div>
         <div class="agent-body">
-          <div class="agent-name">Pastoral Agent</div>
-          <p class="agent-text">Sermon prep on your own private corpus. Research, illustrations, and a clearer view of how the whole flock is doing.</p>
-          <span class="agent-phase">Phase 1 — Start Here</span>
+          <ul class="card-list">
+            <li>Know and hear the whole flock &mdash; not only the vocal few</li>
+            <li>Teaching grounded in your church's theology, not the open internet</li>
+            <li>Reclaim time for prayer, preaching, sabbath, presence</li>
+          </ul>
         </div>
       </div>
       <div class="agent leader">
-        <div class="agent-cap">For Leaders</div>
+        <div class="agent-cap">Group Leaders<div class="card-q">&ldquo;How do I care for my group?&rdquo;</div></div>
         <div class="agent-body">
-          <div class="agent-name">Group Agent</div>
-          <p class="agent-text">Discussion topics and logistics for your groups, in step with your teaching — with real needs surfaced to the pastor.</p>
-          <span class="agent-phase">Phase 2 — Add Next</span>
+          <ul class="card-list">
+            <li>Gatherings aligned with your pastor's teaching</li>
+            <li>Prepared with members' needs, prayers, and contexts in view</li>
+            <li>Real needs carried to pastors &mdash; privately</li>
+          </ul>
         </div>
       </div>
-      <div class="agent member">
-        <div class="agent-cap">For Members</div>
+      <div class="agent seeker">
+        <div class="agent-cap">Members &amp; Seekers<div class="card-q">&ldquo;How do I grow in faith?&rdquo;</div></div>
         <div class="agent-body">
-          <div class="agent-name">Member Agent</div>
-          <p class="agent-text">Study and prayer, plus concerns and prayer requests filtered for privacy before they reach pastoral staff.</p>
-          <span class="agent-phase">Phase 3 — Full Scope</span>
+          <ul class="card-list">
+            <li>Honest questions answered from your church's own teaching</li>
+            <li>A private place to pray, study, journal, and reflect</li>
+            <li>A safe first step toward a pastor &mdash; never a substitute for one</li>
+          </ul>
         </div>
       </div>
     </div>
-    <p class="agents-foot">Begin with the Pastoral Agent. Grow as trust grows.</p>
+    <p class="adoption-foot" style="margin-top:36px;color:var(--gold-3);">Pastoral intelligence &amp; congregational voice &mdash; so no sheep is unseen and unheard.</p>
+  </div>
+</section>
+
+<!-- WHAT WE BUILD -->
+<section class="agents" id="studios">
+  <div class="section-inner">
+    <div class="agents-head">
+      <p class="label">What We Build</p>
+      <h2 class="title">Steward AI &mdash; In Order of the Mission</h2>
+      <p class="lead">Most churches today lack the intense discipleship training the Great Commission requires &mdash; so we begin at the cornerstone, then equip the shepherd, then the community.</p>
+    </div>
+    <div class="agent-grid">
+      <div class="agent seeker">
+        <div class="agent-cap">1 &middot; Available today</div>
+        <div class="agent-body">
+          <div class="agent-name">Cornerstone Bible Study</div>
+          <p class="card-for">for members &mdash; the foundation</p>
+          <ul class="card-list">
+            <li>Viable, proven Bible teaching &mdash; three field-tested discipleship courses</li>
+            <li>The intense discipleship most churches are missing &mdash; study worthy of the Great Commission</li>
+            <li>Q&amp;A only from ingested teaching, cited &mdash; a shepherd's care one step away</li>
+          </ul>
+        </div>
+      </div>
+      <div class="agent pastor">
+        <div class="agent-cap">2 &middot; Opening to pilot churches</div>
+        <div class="agent-body">
+          <div class="agent-name">Shepherd Studio</div>
+          <p class="card-for">for pastors &mdash; the shepherd equipped</p>
+          <ul class="card-list">
+            <li>Sermon Studio &mdash; a seven-room ethical workflow &mdash; with Sermon Library</li>
+            <li>Pastors lead the new style of ministry, drawing members into engagement</li>
+            <li>Q&amp;A Oversight &mdash; member exchanges surfaced to the shepherd for review</li>
+          </ul>
+        </div>
+      </div>
+      <div class="agent leader">
+        <div class="agent-cap">3 &middot; Planned</div>
+        <div class="agent-body">
+          <div class="agent-name">Community Studio</div>
+          <p class="card-for">for ministry leaders &amp; groups</p>
+          <ul class="card-list">
+            <li>Leaders and members interacting together, with AI's help</li>
+            <li>AI in an agentic role &mdash; facilitating engagement and productive struggle</li>
+            <li>Never a chatbot substitute &mdash; always a bridge to persons</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="chips">
+      <span class="chip">Answers only from ingested materials</span>
+      <span class="chip">Every answer cited</span>
+      <span class="chip">Model-agnostic by design</span>
+      <span class="chip">Multilingual &mdash; KO &middot; EN &middot; ZH &middot; JA &middot; AR &middot; ES &amp; more</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOR WHOM -->
+<section class="commitments" id="forwhom" style="background:var(--paper);">
+  <div class="section-inner">
+    <div class="agents-head">
+      <p class="label">For Whom</p>
+      <h2 class="title">Built for the Global Church</h2>
+      <p class="lead">A nonprofit conviction: AI must deepen the work of ministry &mdash; never replace the minister.</p>
+    </div>
+    <div class="principle">
+      <b>The key principle &mdash; engagement between shepherd and member</b>
+      <p>In an age when people may rely on AI more than on persons, ministry succeeds through personal, relationship-based care. Every workspace is built to protect and deepen it.</p>
+    </div>
+    <div class="agent-grid">
+      <div class="agent pastor">
+        <div class="agent-cap">Churches</div>
+        <div class="agent-body">
+          <ul class="card-list">
+            <li>Shepherd Studio keeps the pastor at the center of sermon, discipleship, and every member Q&amp;A</li>
+            <li>Cornerstone draws members toward their shepherd &mdash; a first step to a person, never a substitute</li>
+            <li>Oversight and escalation turn every AI exchange into an occasion for personal ministry</li>
+          </ul>
+        </div>
+      </div>
+      <div class="agent leader">
+        <div class="agent-cap">Seminaries</div>
+        <div class="agent-body">
+          <ul class="card-list">
+            <li>Train graduates in Shepherd Studio &mdash; ready to adopt it in the churches they will serve</li>
+            <li>Adapt Shepherd Studio for the classroom, pursuing the same objective: engagement</li>
+            <li>Teach with Cornerstone &mdash; students learn to lead Bible study, then carry it, as-is or adapted, into their own ministry</li>
+          </ul>
+        </div>
+      </div>
+      <div class="agent seeker">
+        <div class="agent-cap">Missionaries</div>
+        <div class="agent-body">
+          <ul class="card-list">
+            <li>Cornerstone and Shepherd Studio carried to the mission field &mdash; Community Studio to follow</li>
+            <li>The language of choice for each region &mdash; many offered today, more as the mission requires</li>
+            <li>The same principle in every tongue: relationship over reliance</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="lang-band">
+      <b>Languages offered today</b>
+      Korean &middot; English &middot; Chinese &middot; Japanese &middot; Arabic &middot; Spanish &middot; Southeast Asian languages &mdash; in General Q&amp;A and Study sessions, expanding further
+    </div>
+    <div class="verse-band">
+      &ldquo;Go therefore and make disciples of all nations &hellip; I am with you always.&rdquo; <span>&mdash; Matthew 28:19&ndash;20 (ESV), The Great Commission</span>
+    </div>
   </div>
 </section>
 
@@ -618,7 +681,7 @@
       </div>
       <div class="tech-card">
         <div class="tech-title">Closed-Corpus RAG</div>
-        <p class="tech-text">Each agent draws only from your approved materials, with citations you can verify. Designed to keep answers grounded, not guessing.</p>
+        <p class="tech-text">Each studio draws only from your approved materials, with citations you can verify. Designed to keep answers grounded, not guessing.</p>
       </div>
       <div class="tech-card">
         <div class="tech-title">Relational Deferral</div>
@@ -629,7 +692,7 @@
         <p class="tech-text">We are developing safeguards to keep each interaction theologically sound and pastorally appropriate, with explicit opt-in for sensitive information.</p>
       </div>
     </div>
-    <div class="tech-foot">Open-source · your own customizable workspace · congregational data private and under your governance.</div>
+    <p class="tech-foot">Open-source · your own customizable workspace · congregational data private and under your governance.</p>
   </div>
 </section>
 
@@ -641,8 +704,9 @@
     <p class="lead">General AI tools were not built for the Church. MinistryAI was. Here's what that difference is designed to look like in practice.</p>
     <div class="compare-wrap">
       <table class="compare-table">
+        <caption class="label" style="text-align:left;margin:0 0 10px;">General AI compared with MinistryAI</caption>
         <thead>
-          <tr><th>Dimension</th><th class="col-general">General AI</th><th class="col-ministry">MinistryAI</th></tr>
+          <tr><th scope="col">Dimension</th><th scope="col" class="col-general">General AI</th><th scope="col" class="col-ministry">MinistryAI</th></tr>
         </thead>
         <tbody>
           <tr><td>Knowledge Source</td><td class="col-general">The open internet — orthodox and heretical, blended without distinction.</td><td class="col-ministry">Only your approved materials. Nothing else enters an answer.</td></tr>
@@ -659,12 +723,12 @@
   </div>
 </section>
 
-<!-- PRIVACY -->
-<section class="privacy" id="privacy">
+<!-- HOW WE PROTECT MEMBERS -->
+<section class="privacy" id="protection">
   <div class="section-inner">
     <div class="privacy-top">
       <div>
-        <p class="label">Private &amp; Secure</p>
+        <p class="label">How We Protect Members</p>
         <h2 class="title">When Someone Shares Vulnerably,<br>They Are Safe Here</h2>
       </div>
       <p class="lead">Many people hesitate to seek pastoral care because they fear exposure. MinistryAI is designed to remove that barrier — guarding what is sacred while giving leadership the insight to shepherd well.</p>
@@ -688,6 +752,7 @@
         <p class="tier-text">For non-sensitive matters — theological questions, teaching feedback, curiosities — members may choose full visibility.</p>
       </div>
     </div>
+    <p class="privacy-foot">These are product design commitments. For how we handle data as an organization, read our <a href="privacy.html">Privacy Policy</a>.</p>
   </div>
 </section>
 
@@ -701,19 +766,19 @@
     </div>
     <div class="barriers">
       <div class="barrier">
-        <div class="barrier-icon">$</div>
+        <div class="barrier-icon" aria-hidden="true">$</div>
         <div class="barrier-title">The Cost</div>
         <div class="barrier-sub">Free &amp; open-source</div>
         <p class="barrier-text">Custom AI is expensive. MinistryAI is free to your church.</p>
       </div>
       <div class="barrier">
-        <div class="barrier-icon">✦</div>
+        <div class="barrier-icon" aria-hidden="true">✦</div>
         <div class="barrier-title">The Build</div>
         <div class="barrier-sub">We build it with you</div>
         <p class="barrier-text">Your sermons, doctrine, and sources — shaped into a workspace that's yours.</p>
       </div>
       <div class="barrier">
-        <div class="barrier-icon">∞</div>
+        <div class="barrier-icon" aria-hidden="true">∞</div>
         <div class="barrier-title">The Upkeep</div>
         <div class="barrier-sub">Onboarding &amp; policy</div>
         <p class="barrier-text">Governance, onboarding, and partnership for the long run.</p>
@@ -732,16 +797,16 @@
 <section class="vision" id="vision">
   <div class="section-inner">
     <p class="label">Our Vision</p>
-    <p class="vision-title">Equipping churches with AI for transformative stewardship — out of obedience to Jesus Christ.</p>
+    <h2 class="vision-title">Equipping churches with AI for transformative stewardship — out of obedience to Jesus Christ.</h2>
     <div class="vision-cols">
       <div class="vision-col">
         <div class="vision-ref">Matthew 22:37–39</div>
-        <div class="vision-h">The Greatest Commandments</div>
+        <h3 class="vision-h">The Greatest Commandments</h3>
         <p>Deepen love for God and neighbor. Every function is meant to enable or protect relationships.</p>
       </div>
       <div class="vision-col">
         <div class="vision-ref">Matthew 28:19</div>
-        <div class="vision-h">The Great Commission</div>
+        <h3 class="vision-h">The Great Commission</h3>
         <p>Spread the Gospel ever farther, with soul care at the heart of human flourishing.</p>
       </div>
     </div>
@@ -759,16 +824,16 @@
     <p class="team-sub">A nonprofit — service, not profit. MinistryAI is our ministry.</p>
     <div class="team-grid">
       <div class="member">
-        <div class="member-name">David Lee, Ph.D.</div>
+        <h3 class="member-name">David Lee, Ph.D.</h3>
         <div class="member-role">Founder &amp; CEO</div>
         <ul>
-          <li>Creator of the HDMI standard</li>
+          <li>Co-creator of the HDMI standard</li>
           <li>Ph.D. in EECS, UC Berkeley</li>
           <li>Honorary Doctor of Divinity, Seoul Theological University</li>
         </ul>
       </div>
       <div class="member">
-        <div class="member-name">Rae Cho, Th.D., M.B.A.</div>
+        <h3 class="member-name">Rae Cho, Th.D., M.B.A.</h3>
         <div class="member-role">Chief Steward of Ministry</div>
         <ul>
           <li>Th.D. &amp; M.Div., Duke Divinity School</li>
@@ -777,7 +842,7 @@
         </ul>
       </div>
       <div class="member">
-        <div class="member-name">Andrew Wajs</div>
+        <h3 class="member-name">Andrew Wajs</h3>
         <div class="member-role">Chief Technology Officer</div>
         <ul>
           <li>25 years in enterprise AI</li>
@@ -786,7 +851,7 @@
         </ul>
       </div>
     </div>
-    <div class="team-foot">Alongside our leadership, a volunteer community of Christian AI professionals and a theological advisory group of pastors and seminary faculty help guard the work.</div>
+    <p class="team-foot">Alongside our leadership, a volunteer community of Christian AI professionals and a theological advisory group of pastors and seminary faculty help guard the work.</p>
   </div>
 </section>
 
@@ -797,36 +862,42 @@
     <h2 class="title">Ready to Serve Your Ministry?</h2>
     <p class="lead">MinistryAI is available to churches, denominations, seminaries, and ministry organizations. We'd love to hear about your context.</p>
     <div class="cta-btns">
-      <a class="btn-primary" href="mailto:admin@ministry-ai.org">Get in Touch</a>
+      <a class="btn-primary" href="contact.html">Get in Touch</a>
       <a class="btn-outline" href="#commitments">Review the Commitments</a>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-logo">Ministry<span>AI</span></div>
-    <ul class="footer-links">
-      <li><a href="#mission">Mission</a></li>
-      <li><a href="#agents">Agents</a></li>
-      <li><a href="#commitments">Commitments</a></li>
-      <li><a href="#privacy">Privacy</a></li>
-      <li><a href="#team">Team</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-    <div class="footer-tag">MinistryAI · in service of the church</div>
-    <div class="footer-verse">"May the sheep find comfort. May the shepherds find insight. May the Church find greater capacity to fulfill its calling."</div>
-    <div class="footer-copy" style="color:rgba(244,238,225,0.55); font-size:12.5px; line-height:1.75;">
-      <strong style="font-weight:500; color:rgba(244,238,225,0.8);">MinistryAI</strong><br>
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer-in">
+    <div class="foot-top">
+      <div class="foot-brand">Ministry<span>AI</span></div>
+      <ul class="foot-links">
+        <li><a href="index.html#mission">Mission</a></li>
+        <li><a href="index.html#serve">Who We Serve</a></li>
+        <li><a href="index.html#studios">Studios</a></li>
+        <li><a href="index.html#commitments">Commitments</a></li>
+        <li><a href="index.html#protection">How We Protect Members</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+      </ul>
+      <div class="foot-tag">MinistryAI · in service of the church</div>
+    </div>
+    <p class="foot-verse">"May the sheep find comfort. May the shepherds find insight. May the Church find greater capacity to fulfill its calling."</p>
+    <div class="foot-legal">
+      <strong>MinistryAI</strong><br>
       Studio City, CA 91604, United States<br>
-      <a href="mailto:admin@ministry-ai.org" style="color:inherit;">admin@ministry-ai.org</a><br><br>
+      <a href="mailto:admin@ministry-ai.org">admin@ministry-ai.org</a><br><br>
       A 501(c)(3) nonprofit organization · EIN 41-4049715<br>
       © 2026 MinistryAI. All rights reserved.
     </div>
   </div>
 </footer>
 
+<script src="site.js"></script>
 </body>
 </html>

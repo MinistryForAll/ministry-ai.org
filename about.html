@@ -5,106 +5,119 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About MinistryAI — Our Organization, Mission and Vision</title>
 <meta name="description" content="MinistryAI is a 501(c)(3) nonprofit building purpose-built AI for churches and seminaries. Our legal name, EIN, address, mission and vision.">
+<link rel="canonical" href="https://ministry-ai.org/about.html">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MinistryAI">
+<meta property="og:title" content="About MinistryAI">
+<meta property="og:description" content="A 501(c)(3) nonprofit building purpose-built AI for churches and seminaries. Who we are, how we are registered, and what we actually do.">
+<meta property="og:url" content="https://ministry-ai.org/about.html">
+<meta property="og:image" content="https://ministry-ai.org/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="About MinistryAI">
+<meta name="twitter:description" content="A 501(c)(3) nonprofit building purpose-built AI for churches and seminaries.">
+<meta name="twitter:image" content="https://ministry-ai.org/og-image.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
 <style>
-:root{
-  --cream:#F4EEE1;
-  --ink:#2C2A24;
-  --gold:#B0822A;
-  --forest:#3F6B57;
-  --navy:#232E4B;
-  --rule:rgba(44,42,36,.14);
-  --muted:rgba(44,42,36,.66);
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;
-  background:var(--cream);
-  color:var(--ink);
-  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
-  font-size:17px;
-  line-height:1.65;
-  -webkit-font-smoothing:antialiased;
-}
-h1,h2,h3{font-family:Georgia,"Times New Roman",serif;font-weight:400;line-height:1.2;margin:0}
-a{color:var(--forest)}
-a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-.wrap{max-width:860px;margin:0 auto;padding:0 24px}
+  /* Page-specific styles only. Tokens, nav and footer live in site.css. */
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 48px; }
+  @media (max-width: 880px) { .wrap { padding: 0 20px; } }
 
-/* nav */
-.nav{border-bottom:1px solid var(--rule);background:var(--cream);position:sticky;top:0;z-index:20}
-.nav-in{max-width:1080px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
-.brand{font-family:Georgia,serif;font-size:21px;color:var(--ink);text-decoration:none;letter-spacing:.01em}
-.nav-links{display:flex;gap:20px;margin-left:auto;flex-wrap:wrap}
-.nav-links a{color:var(--muted);text-decoration:none;font-size:15px}
-.nav-links a:hover{color:var(--ink)}
-.nav-cta{background:var(--navy);color:var(--cream);text-decoration:none;padding:9px 18px;border-radius:3px;font-size:15px}
-@media(max-width:720px){.nav-links{gap:14px;margin-left:0;width:100%}}
+  .hero { padding: 76px 0 48px; border-bottom: 1px solid var(--line); }
+  .hero h1 {
+    font-size: clamp(34px, 5vw, 46px); font-weight: 700;
+    letter-spacing: -0.015em; line-height: 1.12; max-width: 18ch;
+  }
+  .hero p { font-size: 18px; font-weight: 300; color: var(--ink-2); max-width: 60ch; margin: 20px 0 0; }
 
-/* hero */
-.hero{padding:72px 0 44px;border-bottom:1px solid var(--rule)}
-.hero h1{font-size:44px;max-width:16ch}
-.hero p{font-size:19px;color:var(--muted);max-width:60ch;margin:20px 0 0}
-@media(max-width:720px){.hero h1{font-size:34px}}
+  section { padding: 56px 0; border-bottom: 1px solid var(--line); }
+  section h2 { font-size: clamp(26px, 3.2vw, 32px); font-weight: 700; margin-bottom: 18px; letter-spacing: -0.01em; }
+  section p { max-width: 66ch; color: var(--ink-2); }
+  section p + p { margin-top: 16px; }
+  .lead {
+    font-family: var(--serif); font-size: 21px; line-height: 1.55;
+    color: var(--ink); max-width: 56ch; margin-bottom: 18px;
+  }
 
-/* sections */
-section{padding:52px 0;border-bottom:1px solid var(--rule)}
-section h2{font-size:30px;margin-bottom:18px}
-section p{max-width:66ch}
-.lead{font-family:Georgia,serif;font-size:22px;line-height:1.55;color:var(--ink);max-width:56ch}
+  .facts { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 15.5px; }
+  .facts th, .facts td {
+    text-align: left; padding: 14px 0;
+    border-bottom: 1px solid var(--line); vertical-align: top;
+  }
+  .facts th { width: 38%; font-weight: 500; color: var(--muted); padding-right: 20px; }
+  .facts td { color: var(--ink); }
+  @media (max-width: 600px) {
+    .facts th, .facts td { display: block; width: 100%; border: none; padding: 0; }
+    .facts th { padding-top: 16px; }
+    .facts td { padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+  }
 
-/* fact table — the part the reviewer reads */
-.facts{width:100%;border-collapse:collapse;margin-top:8px;font-size:16px}
-.facts th,.facts td{text-align:left;padding:14px 0;border-bottom:1px solid var(--rule);vertical-align:top}
-.facts th{width:38%;font-weight:500;color:var(--muted);padding-right:20px}
-@media(max-width:600px){
-  .facts th,.facts td{display:block;width:100%;border:none;padding:0}
-  .facts th{padding-top:16px}
-  .facts td{padding-bottom:14px;border-bottom:1px solid var(--rule)}
-}
+  .activities { list-style: none; padding: 0; margin: 24px 0 0; }
+  .activities li {
+    padding: 20px 22px; border-left: 3px solid var(--green);
+    border-radius: 0 12px 12px 0; margin-bottom: 16px; background: rgba(63,107,87,.06);
+  }
+  .activities li strong {
+    display: block; font-family: var(--serif); font-size: 19px;
+    font-weight: 700; margin-bottom: 5px; color: var(--ink);
+  }
+  .activities li span { color: var(--ink-2); font-size: 15.5px; }
+  .activities li:nth-child(2) { border-left-color: var(--gold); background: rgba(176,130,42,.07); }
+  .activities li:nth-child(3) { border-left-color: var(--navy); background: rgba(35,46,75,.06); }
 
-/* activities */
-.activities{list-style:none;padding:0;margin:24px 0 0}
-.activities li{padding:18px 0 18px 22px;border-left:3px solid var(--forest);margin-bottom:16px;background:rgba(63,107,87,.05)}
-.activities li strong{display:block;font-family:Georgia,serif;font-size:19px;font-weight:400;margin-bottom:5px}
-.activities li span{color:var(--muted);font-size:16px}
-.activities li:nth-child(2){border-left-color:var(--gold);background:rgba(176,130,42,.06)}
-.activities li:nth-child(3){border-left-color:var(--navy);background:rgba(35,46,75,.05)}
-.activities li:nth-child(4){border-left-color:var(--forest);background:rgba(63,107,87,.05)}
-
-/* people */
-.people{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:28px;margin-top:24px}
-.person h3{font-size:20px}
-.person .role{color:var(--gold);font-size:15px;margin:4px 0 8px}
-.person p{font-size:15px;color:var(--muted);margin:0}
-
-/* footer */
-footer{padding:44px 0 56px;font-size:15px;color:var(--muted)}
-footer .legal{max-width:60ch}
-footer .legal strong{color:var(--ink);font-weight:500}
-.footlinks{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:22px}
-.footlinks a{color:var(--muted);text-decoration:none}
-.footlinks a:hover{color:var(--ink)}
+  .people { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 24px; margin-top: 24px; }
+  .person {
+    background: var(--paper); border: 1px solid var(--line);
+    border-radius: 12px; padding: 26px 24px; border-top: 3px solid var(--green);
+  }
+  .person:nth-child(2) { border-top-color: var(--gold); }
+  .person:nth-child(3) { border-top-color: var(--navy); }
+  .person h3 { font-size: 20px; font-weight: 700; }
+  .person .role {
+    font-size: 12.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+    color: var(--green-2); margin: 6px 0 10px;
+  }
+  .person:nth-child(2) .role { color: var(--gold-3); }
+  .person:nth-child(3) .role { color: var(--navy); }
+  .person p { font-size: 14.5px; color: var(--ink-2); margin: 0; }
 </style>
 </head>
 <body>
 
-<nav class="nav">
-  <div class="nav-in">
-    <a class="brand" href="index.html">MinistryAI</a>
-    <div class="nav-links">
-      <a href="index.html#mission">Mission</a>
-      <a href="index.html#agents">Agents</a>
-      <a href="index.html#commitments">Commitments</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
+<a class="skip" href="#main">Skip to content</a>
+
+<nav class="site-nav" aria-label="Primary">
+  <div class="site-nav-in">
+    <a class="site-logo" href="index.html">Ministry<span>AI</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">
+      <span class="bars" aria-hidden="true"></span> Menu
+    </button>
+    <ul class="nav-links" id="nav-menu">
+      <li><a href="index.html#mission">Mission</a></li>
+      <li><a href="index.html#serve">Who We Serve</a></li>
+      <li><a href="index.html#studios">Studios</a></li>
+      <li><a href="index.html#commitments">Commitments</a></li>
+      <li><a href="index.html#team">Team</a></li>
+      <li><a href="about.html" aria-current="page">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a class="nav-signin" href="signin.html">Sign In</a>
+      <a class="nav-cta" href="contact.html">Get in Touch</a>
     </div>
-    <a class="nav-cta" href="contact.html">Get in Touch</a>
   </div>
 </nav>
+
+<main id="main">
 
 <header class="hero">
   <div class="wrap">
@@ -118,12 +131,14 @@ footer .legal strong{color:var(--ink);font-weight:500}
     <h2>Who we are</h2>
     <p class="lead">MinistryAI is a nonprofit corporation recognized by the Internal Revenue Service as tax-exempt under Section 501(c)(3) of the Internal Revenue Code. Our registered name and our operating name are the same.</p>
     <table class="facts">
-      <tr><th>Legal organization name</th><td>MinistryAI</td></tr>
-      <tr><th>Tax status</th><td>501(c)(3) nonprofit corporation, effective January 28, 2026</td></tr>
-      <tr><th>Employer Identification Number (EIN)</th><td>41-4049715</td></tr>
-      <tr><th>Mailing address</th><td>Studio City, CA 91604<br>United States</td></tr>
-      <tr><th>Email</th><td><a href="mailto:admin@ministry-ai.org">admin@ministry-ai.org</a></td></tr>
-      <tr><th>Website</th><td><a href="https://ministry-ai.org">ministry-ai.org</a></td></tr>
+      <tbody>
+        <tr><th scope="row">Legal organization name</th><td>MinistryAI</td></tr>
+        <tr><th scope="row">Tax status</th><td>501(c)(3) nonprofit corporation, effective January 28, 2026</td></tr>
+        <tr><th scope="row">Employer Identification Number (EIN)</th><td>41-4049715</td></tr>
+        <tr><th scope="row">Mailing address</th><td>Studio City, CA 91604<br>United States</td></tr>
+        <tr><th scope="row">Email</th><td><span class="copyable"><a href="mailto:admin@ministry-ai.org">admin@ministry-ai.org</a> <button class="copy-btn" type="button" data-copy="admin@ministry-ai.org">Copy</button></span></td></tr>
+        <tr><th scope="row">Website</th><td><a href="https://ministry-ai.org">ministry-ai.org</a></td></tr>
+      </tbody>
     </table>
   </div>
 </section>
@@ -183,7 +198,7 @@ footer .legal strong{color:var(--ink);font-weight:500}
       <div class="person">
         <h3>David Lee, Ph.D.</h3>
         <div class="role">Founder &amp; Chief Executive Officer</div>
-        <p>Creator of the HDMI standard. Ph.D. in EECS, UC Berkeley. Honorary Doctor of Divinity, Seoul Theological University.</p>
+        <p>Co-creator of the HDMI standard. Ph.D. in EECS, UC Berkeley. Honorary Doctor of Divinity, Seoul Theological University.</p>
       </div>
       <div class="person">
         <h3>Rae Cho, Th.D., M.B.A.</h3>
@@ -200,16 +215,24 @@ footer .legal strong{color:var(--ink);font-weight:500}
   </div>
 </section>
 
-<footer>
-  <div class="wrap">
-    <div class="footlinks">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-      <a href="index.html#commitments">Our Commitments</a>
-      <a href="index.html#privacy">Privacy</a>
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer-in">
+    <div class="foot-top">
+      <div class="foot-brand">Ministry<span>AI</span></div>
+      <ul class="foot-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#commitments">Our Commitments</a></li>
+        <li><a href="index.html#protection">How We Protect Members</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+      </ul>
+      <div class="foot-tag">MinistryAI · in service of the church</div>
     </div>
-    <div class="legal">
+    <div class="foot-legal">
       <strong>MinistryAI</strong><br>
       Studio City, CA 91604, United States<br>
       <a href="mailto:admin@ministry-ai.org">admin@ministry-ai.org</a><br><br>
@@ -219,5 +242,6 @@ footer .legal strong{color:var(--ink);font-weight:500}
   </div>
 </footer>
 
+<script src="site.js"></script>
 </body>
 </html>
