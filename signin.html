@@ -4,10 +4,49 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sign In — MinistryAI Workspaces</title>
-<meta name="description" content="Sign in to your church's MinistryAI workspace.">
+<meta name="description" content="Sign in to your MinistryAI workspace.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- ====================================================================
+     MINISTRYAI SIGN-IN — maintenance notes
+     ====================================================================
+     Multi-step picker following David's signinmockup.html:
+       workspace  ->  (Cornerstone: sign in | join)
+                  ->  (Shepherd: church list -> church sign-in | request)
+
+     SIGN-IN LINKS
+     Every "Sign in" button points at the workspace's Next.js app, NOT at
+     Keycloak directly. The app builds the OIDC request (client_id,
+     redirect_uri, PKCE challenge, state) and hands off to Keycloak, which
+     renders the login page and collects the password. Never link straight
+     to a Keycloak /protocol/openid-connect/auth URL — without those
+     parameters Keycloak returns an error page.
+
+     Verified working 2026-09-15:
+       Cornerstone  https://nextjs-ui.proudmeadow-c311a161.eastus2.azurecontainerapps.io
+       Shepherd     https://nextjs-ui.lemonmushroom-a6ac3cf7.eastus2.azurecontainerapps.io
+     These are Azure Container Apps hostnames tied to the current ACA
+     environment. When the stacks move to the ministry-ai Azure account,
+     update SIGNIN_CORNERSTONE / SIGNIN_SHEPHERD below, and NEXTAUTH_URL +
+     the Keycloak client redirect URIs on each stack to match.
+
+     PER-CHURCH LINKS
+     Every Shepherd church currently signs in through the SAME endpoint;
+     the user's church is resolved from their account after sign-in. The
+     church rows are wayfinding, not separate destinations. If churches
+     ever get their own realms, give each ORGS entry its own `signin`.
+
+     ADDING A CHURCH
+     Add one entry to ORGS. The roster count updates itself.
+
+     FORMS
+     There is no backend on GitHub Pages, so both forms compose a
+     prefilled email to admin@ministry-ai.org. To make them submit
+     server-side later, point them at the API's Keycloak invitation route.
+     ==================================================================== -->
+
 <style>
   :root {
     --cream:#f4eee1; --cream-2:#ece2d0; --paper:#fbf7ef;
@@ -25,127 +64,160 @@
     display:flex; flex-direction:column; -webkit-font-smoothing:antialiased;
   }
   h1,h2,h3 { font-family:Georgia,'Times New Roman',serif; }
+  [hidden] { display:none !important; }
 
   nav {
     display:flex; align-items:center; justify-content:space-between;
     padding:0 48px; height:66px; background:rgba(244,238,225,0.92);
     backdrop-filter:blur(10px); border-bottom:1px solid var(--line);
+    position:sticky; top:0; z-index:10;
   }
   .nav-logo {
     font-family:Georgia,serif; font-size:20px; font-weight:700;
     color:var(--ink); text-decoration:none; letter-spacing:-0.01em;
-    display:flex; align-items:center; gap:9px;
   }
   .nav-logo span { color:var(--gold); }
-  .nav-logo svg { width:19px; height:19px; }
   .nav-back { font-size:13.5px; color:var(--ink-2); text-decoration:none; transition:color .2s; }
   .nav-back:hover { color:var(--gold); }
 
-  main { flex:1; padding:80px 48px 90px; }
-  .wrap { max-width:960px; margin:0 auto; }
-  .head { text-align:center; max-width:620px; margin:0 auto 52px; }
-  .head .tag {
-    display:inline-flex; align-items:center; gap:9px; font-size:11.5px; font-weight:600;
-    letter-spacing:.13em; text-transform:uppercase; color:var(--gold-2);
-    background:var(--gold-pale); padding:7px 15px; border-radius:3px; margin-bottom:26px;
-  }
-  .head .tag svg { width:15px; height:15px; }
-  .head h1 { font-size:clamp(34px,5vw,52px); font-weight:700; line-height:1.12; letter-spacing:-0.015em; margin-bottom:16px; }
-  .head p { font-size:17px; font-weight:300; color:var(--ink-2); line-height:1.7; }
+  main { flex:1; padding:74px 48px 90px; }
+  .wrap { max-width:880px; margin:0 auto; }
 
-  .ws-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .head { text-align:center; max-width:620px; margin:0 auto 44px; }
+  .head .tag {
+    display:inline-flex; align-items:center; font-size:11.5px; font-weight:600;
+    letter-spacing:.13em; text-transform:uppercase; color:var(--gold-2);
+    background:var(--gold-pale); padding:7px 15px; border-radius:3px; margin-bottom:24px;
+  }
+  .head h1 { font-size:clamp(30px,4.4vw,46px); font-weight:700; line-height:1.14; letter-spacing:-0.015em; margin-bottom:14px; }
+  .head p { font-size:16.5px; font-weight:300; color:var(--ink-2); line-height:1.7; }
+
+  /* ── Workspace cards (step 1) ─────────────────────────────────── */
+  .ws-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:stretch; }
   .ws {
     background:var(--paper); border:1px solid var(--line); border-radius:14px;
-    padding:30px 30px; border-top:3px solid var(--green);
-    display:flex; flex-direction:column;
+    padding:30px; border-top:3px solid var(--green);
+    display:flex; flex-direction:column; text-align:left;
+    font:inherit; color:inherit; cursor:pointer; width:100%;
+    transition:border-color .2s, transform .2s, box-shadow .2s;
   }
+  .ws:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(44,42,36,0.07); }
+  .ws:focus-visible { outline:2px solid var(--gold); outline-offset:3px; }
   .ws-status {
     font-size:11px; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
     color:var(--green-2); margin-bottom:12px; display:inline-flex; align-items:center; gap:7px;
   }
-  .ws-status::before { content:''; width:7px; height:7px; border-radius:50%; background:var(--green); display:inline-block; }
-  .ws-name { font-family:Georgia,serif; font-size:24px; font-weight:700; margin-bottom:6px; }
-  .ws-meta { font-size:14px; color:var(--ink-2); line-height:1.6; margin-bottom:24px; flex:1; }
-  .ws-btn {
-    align-self:flex-start; font-size:14px; font-weight:500;
-    background:var(--green); color:var(--white); padding:12px 26px;
-    border-radius:4px; text-decoration:none; transition:all .2s;
-  }
-  .ws-btn:hover { background:var(--green-2); transform:translateY(-1px); }
+  .ws-status::before { content:''; width:7px; height:7px; border-radius:50%; background:var(--green); }
+  .ws-name { display:block; font-family:Georgia,serif; font-size:23px; font-weight:700; margin-bottom:6px; }
+  .ws-meta { display:block; font-size:14px; color:var(--ink-2); line-height:1.65; margin-bottom:22px; }
+  .ws-go { display:block; margin-top:auto; font-size:14px; font-weight:500; color:var(--green-2); }
+  .ws.alt { border-top-color:var(--gold); background:var(--cream-2); }
+  .ws.alt .ws-status { color:var(--gold-2); }
+  .ws.alt .ws-status::before { background:var(--gold); }
+  .ws.alt .ws-go { color:var(--gold-2); }
 
-  /* Onboarding placeholder card */
-  .ws.soon { border-top-color:var(--gold); background:var(--cream-2); }
-  .ws.soon .ws-status { color:var(--gold-2); }
-  .ws.soon .ws-status::before { background:var(--gold); }
+  /* ── Church roster (step 2, Shepherd) ─────────────────────────── */
+  .roster-head {
+    display:flex; align-items:baseline; justify-content:space-between;
+    flex-wrap:wrap; gap:6px 18px; margin-bottom:16px;
+  }
+  .roster-head h2 { font-size:17px; font-weight:700; }
+  .roster-count { font-size:12px; font-weight:500; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
+  .rows { display:flex; flex-direction:column; gap:10px; }
+  .row {
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    background:var(--paper); border:1px solid var(--line); border-left:3px solid var(--taupe);
+    border-radius:10px; padding:18px 22px; width:100%; text-align:left;
+    font:inherit; color:inherit; cursor:pointer;
+    transition:border-left-color .2s, transform .2s, box-shadow .2s;
+  }
+  .row:hover { border-left-color:var(--gold); transform:translateX(2px); box-shadow:0 4px 14px rgba(44,42,36,0.06); }
+  .row:focus-visible { outline:2px solid var(--gold); outline-offset:3px; }
+  .row-name { display:block; font-family:Georgia,serif; font-size:17px; font-weight:700; line-height:1.35; }
+  .row-loc { display:block; font-size:13px; color:var(--muted); margin-top:3px; }
+  .row-go { font-size:18px; color:var(--muted); flex-shrink:0; }
+  .row.new { border-left-color:var(--gold); background:var(--cream-2); }
+  .row.new .row-name { font-family:'Inter',sans-serif; font-size:14.5px; font-weight:500; }
+
+  /* ── Cards, buttons, forms ────────────────────────────────────── */
+  .card {
+    background:var(--paper); border:1px solid var(--line); border-radius:14px;
+    padding:30px; max-width:520px; margin:0 auto;
+  }
+  .btn {
+    display:inline-block; width:100%; text-align:center; font:inherit;
+    font-size:15px; font-weight:500; background:var(--green); color:var(--white);
+    padding:13px 26px; border:none; border-radius:4px; text-decoration:none;
+    cursor:pointer; transition:background .2s, transform .2s;
+  }
+  .btn:hover { background:var(--green-2); transform:translateY(-1px); }
+  .btn:focus-visible { outline:2px solid var(--gold); outline-offset:3px; }
+  .btn.gold { background:var(--gold); }
+  .btn.gold:hover { background:var(--gold-2); }
+  .btn.ghost { background:transparent; color:var(--ink); border:1px solid rgba(44,42,36,0.25); }
+  .btn.ghost:hover { background:transparent; border-color:var(--gold); color:var(--gold-2); }
+  .divider {
+    display:flex; align-items:center; gap:14px; margin:18px 0;
+    font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted);
+  }
+  .divider::before, .divider::after { content:''; flex:1; height:1px; background:var(--line); }
+
+  .field { margin-bottom:16px; }
+  .field-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  label { display:block; font-size:13px; font-weight:500; color:var(--ink-2); margin-bottom:6px; }
+  input, textarea {
+    width:100%; font:inherit; font-size:15px; color:var(--ink);
+    background:var(--white); border:1px solid rgba(44,42,36,0.2);
+    border-radius:4px; padding:11px 13px; transition:border-color .2s;
+  }
+  textarea { min-height:78px; resize:vertical; line-height:1.6; }
+  input:focus, textarea:focus { outline:none; border-color:var(--gold); }
+
+  .note { font-size:13px; color:var(--muted); line-height:1.65; margin-top:16px; }
+  .back { text-align:center; margin-top:26px; }
+  .back button {
+    font:inherit; font-size:13.5px; color:var(--ink-2); background:none; border:none;
+    cursor:pointer; border-bottom:1px solid rgba(44,42,36,0.22); padding:0 0 1px;
+  }
+  .back button:hover { color:var(--gold-2); border-color:var(--gold); }
 
   .help {
-    margin-top:44px; text-align:center; padding:30px;
+    margin-top:44px; text-align:center; padding:28px;
     background:var(--paper); border:1px solid var(--line); border-radius:12px;
   }
   .help p { font-size:15px; color:var(--ink-2); margin-bottom:14px; }
   .help a {
-    font-size:14px; font-weight:500; color:var(--ink); border:1px solid rgba(44,42,36,0.25);
-    padding:11px 24px; border-radius:4px; text-decoration:none; transition:all .2s;
+    display:inline-block; font-size:14px; font-weight:500; color:var(--ink);
+    border:1px solid rgba(44,42,36,0.25); padding:11px 24px; border-radius:4px;
+    text-decoration:none; transition:border-color .2s, color .2s;
   }
   .help a:hover { border-color:var(--gold); color:var(--gold-2); }
 
   footer { background:var(--ink); color:rgba(244,238,225,0.5); padding:34px 48px; text-align:center; }
   .footer-logo { font-family:Georgia,serif; font-size:17px; font-weight:700; color:rgba(244,238,225,0.85); }
-  .footer-logo span { color:var(--gold); }
   .footer-copy { margin-top:10px; font-size:12px; color:rgba(244,238,225,0.4); }
+  .footer-logo span { color:var(--gold); }
 
   @media (max-width:760px) {
-    nav { padding:0 20px; } main { padding:56px 20px 70px; }
-    .ws-grid { grid-template-columns:1fr; }
+    nav { padding:0 20px; }
+    main { padding:52px 20px 70px; }
+    .ws-grid, .field-row { grid-template-columns:1fr; }
   }
 </style>
 </head>
 <body>
 
 <nav>
-  <a class="nav-logo" href="index.html">
-    Ministry<span>AI</span>
-  </a>
-  <a class="nav-back" href="index.html">← Back to site</a>
+  <a class="nav-logo" href="index.html">Ministry<span>AI</span></a>
+  <a class="nav-back" href="index.html">&larr; Back to site</a>
 </nav>
 
 <main>
   <div class="wrap">
-    <div class="head">
-      <div class="tag">
-        Workspaces
-      </div>
-      <h1>Sign in to your workspace</h1>
-      <p>Select your church or organization to enter its MinistryAI workspace. You'll be asked to sign in securely on the next step.</p>
-    </div>
-
-    <div class="ws-grid">
-
-      <!-- ============================================================
-           ORGANIZATION CARD — duplicate this block for each church.
-           Andrew: replace the "Request Access" mailto href below with that
-           organization's Microsoft workspace sign-in URL, and change the
-           link text back to "Enter Workspace →".
-           ============================================================ -->
-      <div class="ws">
-        <span class="ws-status">Live Pilot</span>
-        <div class="ws-name">Cornerstone Church</div>
-        <div class="ws-meta">Pastoral Agent · grounded in your church's own teaching.</div>
-        <a class="ws-btn" href="mailto:admin@ministry-ai.org?subject=Cornerstone%20workspace%20access">Request Access →</a>
-      </div>
-
-      <!-- Onboarding placeholder — remove once more orgs are live -->
-      <div class="ws soon">
-        <span class="ws-status">Onboarding</span>
-        <div class="ws-name">More churches joining</div>
-        <div class="ws-meta">New pilot workspaces are being set up. If your church is onboarding, your workspace will appear here.</div>
-        <a class="ws-btn" style="background:var(--gold);" href="mailto:admin@ministry-ai.org">Ask About a Pilot →</a>
-      </div>
-
-    </div>
+    <div id="stage"></div>
 
     <div class="help">
-      <p>Don't see your church, or having trouble signing in?</p>
+      <p>Having trouble signing in?</p>
       <a href="mailto:admin@ministry-ai.org">Get in Touch</a>
     </div>
   </div>
@@ -164,6 +236,276 @@
     &copy; 2026 MinistryAI. All rights reserved.
   </div>
 </footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ── Configuration ─────────────────────────────────────────────── */
+
+  var SIGNIN_CORNERSTONE = "https://nextjs-ui.proudmeadow-c311a161.eastus2.azurecontainerapps.io/api/auth/signin?callbackUrl=%2Fcornerstone";
+  var SIGNIN_SHEPHERD    = "https://nextjs-ui.lemonmushroom-a6ac3cf7.eastus2.azurecontainerapps.io/api/auth/signin?callbackUrl=%2Fstudio";
+
+  var ADMIN_EMAIL = "admin@ministry-ai.org";
+
+  // loc:null renders no location line (Touch Bible Ministry is an
+  // international headquarters, not a single-city presence).
+  var ORGS = [
+    { key: "touch",          name: "Touch Bible Ministry", loc: null,          signin: SIGNIN_SHEPHERD },
+    { key: "mission-pointe", name: "Mission Pointe Church", loc: "Concord, CA", signin: SIGNIN_SHEPHERD }
+  ];
+
+  /* ── Helpers ───────────────────────────────────────────────────── */
+
+  var stage = document.getElementById("stage");
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function orgByKey(k) {
+    for (var i = 0; i < ORGS.length; i++) { if (ORGS[i].key === k) return ORGS[i]; }
+    return null;
+  }
+
+  function go(route) { location.hash = route; }
+
+  function backBar(label, route) {
+    return '<div class="back"><button type="button" data-go="' + esc(route) + '">' + esc(label) + '</button></div>';
+  }
+
+  function mailto(subject, lines) {
+    var body = lines.filter(function (l) { return l !== null; }).join("\n");
+    return "mailto:" + ADMIN_EMAIL +
+           "?subject=" + encodeURIComponent(subject) +
+           "&body=" + encodeURIComponent(body);
+  }
+
+  function val(id) {
+    var el = document.getElementById(id);
+    return el ? el.value.trim() : "";
+  }
+
+  /* ── Screens ───────────────────────────────────────────────────── */
+
+  function screenWorkspaces() {
+    return '' +
+      '<div class="head">' +
+        '<div class="tag">Workspaces</div>' +
+        '<h1>Sign in to MinistryAI</h1>' +
+        '<p>Choose the workspace you need. You&rsquo;ll be taken to a secure sign-in page to enter your email and password.</p>' +
+      '</div>' +
+      '<div class="ws-grid">' +
+        '<button type="button" class="ws" data-go="#/cornerstone">' +
+          '<span class="ws-status">Available today</span>' +
+          '<span class="ws-name">Cornerstone Bible Study</span>' +
+          '<span class="ws-meta">General discipleship study, open to anyone &mdash; no church or organizational affiliation required. Every answer is drawn from ingested teaching, and cited.</span>' +
+          '<span class="ws-go">Continue &rarr;</span>' +
+        '</button>' +
+        '<button type="button" class="ws alt" data-go="#/shepherd">' +
+          '<span class="ws-status">Pilot churches</span>' +
+          '<span class="ws-name">Shepherd Studio</span>' +
+          '<span class="ws-meta">Organization-based workspace for pastors and church staff. Each church keeps its own materials, members and oversight.</span>' +
+          '<span class="ws-go">Continue &rarr;</span>' +
+        '</button>' +
+      '</div>';
+  }
+
+  function screenCornerstone() {
+    return '' +
+      '<div class="head">' +
+        '<h1>Cornerstone Bible Study</h1>' +
+        '<p>Open to anyone. No church or organizational affiliation needed.</p>' +
+      '</div>' +
+      '<div class="card">' +
+        '<a class="btn" href="' + SIGNIN_CORNERSTONE + '">Sign in &rarr;</a>' +
+        '<div class="divider">or</div>' +
+        '<button type="button" class="btn ghost" data-go="#/cornerstone/join">Join the Bible Study</button>' +
+        '<p class="note">Signing in takes you to MinistryAI&rsquo;s secure identity service. Your password is never entered on this page.</p>' +
+      '</div>' +
+      backBar("← Choose a different workspace", "#/");
+  }
+
+  function screenJoin() {
+    return '' +
+      '<div class="head">' +
+        '<h1>Join the Bible Study</h1>' +
+        '<p>Tell us who you are and we&rsquo;ll set up your access.</p>' +
+      '</div>' +
+      '<form class="card" id="form-join">' +
+        '<div class="field-row">' +
+          '<div class="field"><label for="j1">First name</label><input id="j1" type="text" autocomplete="given-name" required></div>' +
+          '<div class="field"><label for="j2">Last name</label><input id="j2" type="text" autocomplete="family-name" required></div>' +
+        '</div>' +
+        '<div class="field"><label for="j3">Email address</label><input id="j3" type="email" autocomplete="email" placeholder="you@example.com" required></div>' +
+        '<button type="submit" class="btn">Send request &rarr;</button>' +
+        '<p class="note">Your request goes to the Cornerstone Bible Study administrator, who will send you a sign-in invitation.</p>' +
+      '</form>' +
+      backBar("← Back", "#/cornerstone");
+  }
+
+  function screenShepherd() {
+    var rows = ORGS.map(function (o) {
+      return '<button type="button" class="row" data-go="#/shepherd/' + esc(o.key) + '">' +
+               '<span>' +
+                 '<span class="row-name">' + esc(o.name) + '</span>' +
+                 (o.loc ? '<span class="row-loc">' + esc(o.loc) + '</span>' : '') +
+               '</span>' +
+               '<span class="row-go" aria-hidden="true">&rarr;</span>' +
+             '</button>';
+    }).join("");
+
+    var n = ORGS.length;
+
+    return '' +
+      '<div class="head">' +
+        '<h1>Shepherd Studio</h1>' +
+        '<p>Select your church or ministry to continue.</p>' +
+      '</div>' +
+      '<div class="roster-head">' +
+        '<h2>Churches and ministries</h2>' +
+        '<span class="roster-count">' + n + (n === 1 ? ' organization' : ' organizations') + ' onboarded</span>' +
+      '</div>' +
+      '<div class="rows">' +
+        rows +
+        '<button type="button" class="row new" data-go="#/shepherd/new">' +
+          '<span class="row-name">Church not listed? Request a workspace</span>' +
+          '<span class="row-go" aria-hidden="true">&rarr;</span>' +
+        '</button>' +
+      '</div>' +
+      backBar("← Choose a different workspace", "#/");
+  }
+
+  function screenOrg(o) {
+    return '' +
+      '<div class="head">' +
+        '<h1>' + esc(o.name) + '</h1>' +
+        '<p>You&rsquo;ll sign in with your ' + esc(o.name) + ' account and land in your church&rsquo;s workspace.</p>' +
+      '</div>' +
+      '<div class="card">' +
+        '<a class="btn gold" href="' + o.signin + '">Sign in &rarr;</a>' +
+        '<p class="note">Signing in takes you to MinistryAI&rsquo;s secure identity service. Your password is never entered on this page.</p>' +
+      '</div>' +
+      backBar("← Choose a different church", "#/shepherd");
+  }
+
+  function screenNewChurch() {
+    return '' +
+      '<div class="head">' +
+        '<h1>Request a Shepherd Studio workspace</h1>' +
+        '<p>Tell us about your church. We&rsquo;ll set up a dedicated workspace with you.</p>' +
+      '</div>' +
+      '<form class="card" id="form-church">' +
+        '<div class="field-row">' +
+          '<div class="field"><label for="n1">Admin first name</label><input id="n1" type="text" autocomplete="given-name" required></div>' +
+          '<div class="field"><label for="n2">Admin last name</label><input id="n2" type="text" autocomplete="family-name" required></div>' +
+        '</div>' +
+        '<div class="field"><label for="n3">Admin email</label><input id="n3" type="email" autocomplete="email" required></div>' +
+        '<div class="field"><label for="n4">Church or ministry name</label><input id="n4" type="text" required></div>' +
+        '<div class="field"><label for="n5">Church address</label><textarea id="n5"></textarea></div>' +
+        '<div class="field"><label for="n6">Church contact (phone or email)</label><input id="n6" type="text"></div>' +
+        '<div class="field-row">' +
+          '<div class="field"><label for="n7">Pastor name (recommended)</label><input id="n7" type="text"></div>' +
+          '<div class="field"><label for="n8">Pastor email (recommended)</label><input id="n8" type="email" placeholder="pastor@yourchurch.org"></div>' +
+        '</div>' +
+        '<button type="submit" class="btn gold">Send request &rarr;</button>' +
+        '<p class="note">We&rsquo;ll follow up to set up your church&rsquo;s workspace, ingest your materials, and provision sign-in for your pastors and members.</p>' +
+      '</form>' +
+      backBar("← Back", "#/shepherd");
+  }
+
+  function screenSent(back) {
+    return '' +
+      '<div class="head">' +
+        '<div class="tag">Request ready</div>' +
+        '<h1>Almost there</h1>' +
+        '<p>Your email app should have opened with the request filled in &mdash; press send and we&rsquo;ll take it from there.</p>' +
+      '</div>' +
+      '<div class="card">' +
+        '<p class="note" style="margin-top:0;">If nothing opened, email <a href="mailto:' + ADMIN_EMAIL + '" style="color:var(--gold-2);">' + ADMIN_EMAIL + '</a> directly and include the same details.</p>' +
+      '</div>' +
+      backBar("← Back", back);
+  }
+
+  /* ── Router ────────────────────────────────────────────────────── */
+
+  function render() {
+    var hash = location.hash || "#/";
+    var parts = hash.replace(/^#\/?/, "").split("/").filter(Boolean);
+    var html;
+
+    if (parts[0] === "cornerstone") {
+      html = parts[1] === "join" ? screenJoin()
+           : parts[1] === "sent" ? screenSent("#/cornerstone")
+           : screenCornerstone();
+    } else if (parts[0] === "shepherd") {
+      if (parts[1] === "new")       html = screenNewChurch();
+      else if (parts[1] === "sent") html = screenSent("#/shepherd");
+      else if (parts[1]) {
+        var o = orgByKey(parts[1]);
+        html = o ? screenOrg(o) : screenShepherd();
+      } else html = screenShepherd();
+    } else {
+      html = screenWorkspaces();
+    }
+
+    stage.innerHTML = html;
+    wire();
+  }
+
+  function wire() {
+    var navs = stage.querySelectorAll("[data-go]");
+    for (var i = 0; i < navs.length; i++) {
+      navs[i].addEventListener("click", function () { go(this.getAttribute("data-go")); });
+    }
+
+    var join = document.getElementById("form-join");
+    if (join) {
+      join.addEventListener("submit", function (e) {
+        e.preventDefault();
+        location.href = mailto("Join Cornerstone Bible Study", [
+          "Please add me to the Cornerstone Bible Study workspace.",
+          "",
+          "First name: " + val("j1"),
+          "Last name:  " + val("j2"),
+          "Email:      " + val("j3")
+        ]);
+        go("#/cornerstone/sent");
+      });
+    }
+
+    var church = document.getElementById("form-church");
+    if (church) {
+      church.addEventListener("submit", function (e) {
+        e.preventDefault();
+        location.href = mailto("Shepherd Studio workspace request — " + val("n4"), [
+          "We'd like to set up a Shepherd Studio workspace.",
+          "",
+          "Church / ministry: " + val("n4"),
+          "Address:           " + (val("n5") || "—"),
+          "Church contact:    " + (val("n6") || "—"),
+          "",
+          "Admin:             " + val("n1") + " " + val("n2"),
+          "Admin email:       " + val("n3"),
+          "",
+          "Pastor:            " + (val("n7") || "—"),
+          "Pastor email:      " + (val("n8") || "—")
+        ]);
+        go("#/shepherd/sent");
+      });
+    }
+  }
+
+  window.addEventListener("hashchange", function () {
+    render();
+    window.scrollTo(0, 0);
+  });
+
+  render();
+})();
+</script>
 
 </body>
 </html>
