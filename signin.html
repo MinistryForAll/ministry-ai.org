@@ -29,98 +29,81 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css">
 <style>
-  /* Page-specific styles only. Tokens, nav and footer live in site.css. */
+  /* One screen, one decision. Space instead of boxes and rules. */
   body { display: flex; flex-direction: column; min-height: 100vh; }
-  main { flex: 1; }
+  main { flex: 1; display: flex; align-items: center; }
 
-  .stage { max-width: 1040px; margin: 0 auto; padding: 46px 48px 84px; }
-  @media (max-width: 880px) { .stage { padding: 32px 20px 64px; } }
+  .stage { width: 100%; max-width: 40rem; margin: 0 auto; padding: 56px 24px 96px; }
+  @media (max-width: 640px) { .stage { padding: 32px 20px 72px; } }
 
-  /* Step rail */
-  .rail { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 34px; font-size: 12px; }
-  .step { display: flex; align-items: center; gap: 7px; color: var(--muted); }
-  .step .num {
-    width: 21px; height: 21px; border-radius: 50%;
-    display: grid; place-items: center; border: 1px solid var(--line-2);
-    font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums;
+  .head h1 {
+    font-size: clamp(30px, 5vw, 42px); font-weight: 700;
+    letter-spacing: -0.022em; line-height: 1.08; color: var(--ink);
   }
-  .step.on { color: var(--ink); font-weight: 500; }
-  .step.on .num { background: var(--green-2); border-color: var(--green-2); color: var(--paper); }
-  .step.done .num { background: var(--green-pale); border-color: var(--green); color: var(--green-2); }
-  .rail .sep { width: 16px; height: 1px; background: var(--line-2); }
-  @media (max-width: 640px) { .rail .sep { display: none; } .rail { gap: 12px; } }
-
-  .head { max-width: 62ch; margin-bottom: 30px; }
-  .head h1 { font-size: clamp(27px, 4vw, 34px); font-weight: 700; letter-spacing: -0.012em; }
   .head h1:focus { outline: none; }
-  .head p { color: var(--ink-2); font-size: 16.5px; margin: 11px 0 0; }
+  .head p { margin-top: 14px; font-size: 17.5px; font-weight: 300; color: var(--ink-2); line-height: 1.6; }
 
-  /* Choice cards */
-  .choices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-  @media (max-width: 900px) { .choices { grid-template-columns: 1fr; } }
-  .choices.two { grid-template-columns: repeat(2, 1fr); }
-  @media (max-width: 720px) { .choices.two { grid-template-columns: 1fr; } }
-  .choice {
-    display: block; width: 100%; text-align: left;
-    background: var(--paper); border: 1px solid var(--line); border-radius: 12px;
-    padding: 26px 24px; cursor: pointer; font-family: var(--sans);
-    transition: border-color .15s, transform .15s;
+  /* The two doors. Each goes straight to sign-in — no confirmation step. */
+  .doors { margin-top: 40px; display: flex; flex-direction: column; gap: 14px; }
+  .door {
+    display: flex; align-items: center; gap: 20px;
+    padding: 26px 28px; border-radius: 16px;
+    background: var(--paper); border: 1px solid var(--line);
+    text-decoration: none; color: inherit;
+    transition: border-color .15s, transform .15s, box-shadow .15s;
   }
-  .choice:hover { border-color: var(--green); transform: translateY(-2px); }
-  .choice .tag {
-    display: inline-block; font-size: 10.5px; font-weight: 700;
-    letter-spacing: .12em; text-transform: uppercase;
-    padding: 4px 9px; border-radius: 3px; margin-bottom: 13px;
-    background: var(--green-pale); color: var(--green-2);
+  .door:hover {
+    border-color: var(--green); transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(44,42,36,0.07);
   }
-  .choice .tag.soon { background: var(--gold-pale); color: var(--gold-3); }
-  .choice .tag.neutral { background: var(--cream-2); color: var(--ink-2); }
-  .choice h2 { font-family: var(--serif); font-size: 21px; font-weight: 700; margin-bottom: 7px; color: var(--ink); }
-  .choice p { margin: 0; font-size: 14.5px; color: var(--ink-2); line-height: 1.6; }
-  .choice .go { display: inline-block; margin-top: 16px; font-size: 14px; font-weight: 500; color: var(--green-2); }
+  .door-text { flex: 1; min-width: 0; }
+  .door-name {
+    display: block; font-family: var(--serif); font-size: 22px;
+    font-weight: 700; color: var(--ink); letter-spacing: -0.01em;
+  }
+  .door-sub { display: block; margin-top: 5px; font-size: 14.5px; color: var(--ink-2); line-height: 1.55; }
+  .door-arw {
+    flex: 0 0 auto; font-size: 20px; color: var(--muted);
+    transition: transform .15s, color .15s;
+  }
+  .door:hover .door-arw { transform: translateX(3px); color: var(--green-2); }
 
-  /* Church list */
-  .panel { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; max-width: 620px; overflow: hidden; }
-  .row {
-    display: flex; align-items: center; gap: 13px; width: 100%; text-align: left;
-    padding: 16px 18px; background: none; border: none;
-    border-bottom: 1px solid var(--line); cursor: pointer;
-    font-family: var(--sans); color: var(--ink);
+  /* Everything that is not signing in lives quietly below a rule. */
+  .more { margin-top: 44px; padding-top: 30px; border-top: 1px solid var(--line); }
+  .more p { font-size: 15px; color: var(--ink-2); line-height: 1.75; margin-bottom: 10px; }
+  .more p:last-child { margin-bottom: 0; }
+  .more button, .more a {
+    background: none; border: none; padding: 0; font: inherit;
+    color: var(--green-2); text-decoration: underline; cursor: pointer;
+    text-underline-offset: 3px;
   }
-  .row:hover { background: var(--cream-2); }
-  .row:last-child { border-bottom: none; }
-  .row .init {
-    flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%;
-    background: var(--green-pale); color: var(--green-2);
-    display: grid; place-items: center; font-size: 12.5px; font-weight: 700;
+  .more button:hover, .more a:hover { color: var(--ink); }
+
+  /* Secondary views: join, request a workspace */
+  .backlink { margin-bottom: 26px; }
+  .backlink button {
+    background: none; border: none; padding: 0; font: inherit;
+    font-size: 14px; color: var(--muted); cursor: pointer;
   }
-  .row .nm { display: block; font-size: 15.5px; font-weight: 500; line-height: 1.35; }
-  .row .lo { display: block; font-size: 13px; color: var(--muted); line-height: 1.35; }
-  .row .arw { margin-left: auto; color: var(--muted); font-size: 15px; }
-  .notlisted { margin-top: 16px; font-size: 14.5px; color: var(--ink-2); }
-  .notlisted button { background: none; border: none; padding: 0; font: inherit; color: var(--green-2); text-decoration: underline; cursor: pointer; }
+  .backlink button:hover { color: var(--ink); }
 
-  /* Summary pills */
-  .sum { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 26px; }
-  .pill { background: var(--paper); border: 1px solid var(--line); border-radius: 20px; padding: 6px 14px; font-size: 13px; color: var(--ink-2); }
-  .pill b { color: var(--ink); font-weight: 600; }
-
-  /* Forms */
-  .card { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 28px 26px; max-width: 540px; }
-  .field { margin-bottom: 17px; }
-  .field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--ink-2); }
+  .form { margin-top: 34px; }
+  .field { margin-bottom: 20px; }
+  .field label { display: block; font-size: 13.5px; font-weight: 600; margin-bottom: 7px; color: var(--ink-2); }
   .field input {
-    width: 100%; font-family: var(--sans); font-size: 15px; padding: 11px 13px;
-    border: 1px solid var(--line-2); border-radius: 4px;
-    background: var(--cream); color: var(--ink);
+    width: 100%; font-family: var(--sans); font-size: 16px; padding: 13px 15px;
+    border: 1px solid var(--line-2); border-radius: 10px;
+    background: var(--paper); color: var(--ink);
+    transition: border-color .15s;
   }
-  .field .hint { margin-top: 5px; font-size: 12.5px; color: var(--muted); }
-  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .field input:focus { border-color: var(--green); }
+  .field .hint { margin-top: 6px; font-size: 12.5px; color: var(--muted); }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   @media (max-width: 520px) { .field-row { grid-template-columns: 1fr; } }
 
   .btn {
     display: inline-block; font-family: var(--sans); font-size: 15px; font-weight: 500;
-    padding: 13px 24px; border-radius: 4px;
+    padding: 15px 36px; border-radius: 999px;
     border: 1px solid var(--green-2); background: var(--green-2); color: var(--white);
     cursor: pointer; text-decoration: none; text-align: center;
   }
@@ -129,31 +112,30 @@
   .btn.ghost:hover { background: none; border-color: var(--gold-2); color: var(--gold-3); }
   .btn.wide { display: block; width: 100%; }
 
-  .note { margin-top: 18px; padding: 13px 15px; background: var(--gold-pale); border-radius: 6px; font-size: 13.5px; color: var(--ink-2); line-height: 1.6; }
-  .note b { color: var(--gold-3); }
-  .note a { color: var(--gold-3); }
+  .note { margin-top: 20px; font-size: 13.5px; color: var(--muted); line-height: 1.7; }
+  .note a { color: var(--green-2); }
 
-  .back { margin-top: 26px; }
-  .back button { background: none; border: none; padding: 0; font: inherit; font-size: 14px; color: var(--muted); cursor: pointer; }
-  .back button:hover { color: var(--ink); }
-
-  .done { max-width: 560px; margin: 10px auto; text-align: center; }
+  /* Confirmation */
+  .done { text-align: center; }
   .done .tick {
-    width: 52px; height: 52px; border-radius: 50%;
+    width: 54px; height: 54px; border-radius: 50%;
     background: var(--green-pale); color: var(--green-2);
-    display: grid; place-items: center; font-size: 25px; margin: 0 auto 18px;
+    display: grid; place-items: center; font-size: 26px; margin: 0 auto 24px;
   }
-  .done h1 { font-size: 24px; font-weight: 700; margin-bottom: 10px; }
-  .done p { color: var(--ink-2); font-size: 15px; margin: 0 auto 20px; max-width: 46ch; }
+  .done h1 {
+    font-size: clamp(26px, 4vw, 32px); font-weight: 700;
+    letter-spacing: -0.02em; color: var(--ink);
+  }
+  .done h1:focus { outline: none; }
+  .done > p { margin: 14px auto 0; max-width: 40ch; color: var(--ink-2); font-size: 16px; }
   .draft {
-    text-align: left; background: var(--cream); border: 1px solid var(--line);
-    border-radius: 8px; padding: 16px; font-size: 13.5px; color: var(--ink-2);
-    white-space: pre-wrap; line-height: 1.6; margin-bottom: 18px;
+    text-align: left; margin-top: 28px;
+    background: var(--paper); border: 1px solid var(--line);
+    border-radius: 12px; padding: 20px;
+    font-size: 13.5px; color: var(--ink-2);
+    white-space: pre-wrap; line-height: 1.65;
   }
-  .done-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-
-  .help { margin-top: 40px; font-size: 14.5px; color: var(--ink-2); }
-  .help a { color: var(--green-2); }
+  .done-actions { margin-top: 26px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 </style>
 </head>
 <body>
@@ -233,125 +215,131 @@
      these into realm URLs.
 
      Passwords are never collected on ministry-ai.org. Each screen only
-     ever shows a button; the identity service does the rest.
+     ever shows a link; the identity service does the rest.
 
-     While a value is empty, the page says sign-in is not yet connected
-     and offers a contact route, rather than a button that goes nowhere.
+     While a value is empty, the door says sign-in is not yet connected
+     and offers a contact route, rather than a link that goes nowhere.
 
      Verified working 2026-09-15. These are Azure Container Apps
      hostnames tied to the current ACA environment — when the stacks move
-     to the MinistryAI Azure account, update the three authUrl values
-     below, plus NEXTAUTH_URL and the Keycloak client redirect URIs on
-     each stack to match.
+     to the MinistryAI Azure account, update the two values below, plus
+     NEXTAUTH_URL and the Keycloak client redirect URIs on each stack to
+     match.
      ------------------------------------------------------------------ */
   var ADMIN_EMAIL = 'admin@ministry-ai.org';
 
   var CORNERSTONE_SIGNIN = 'https://nextjs-ui.proudmeadow-c311a161.eastus2.azurecontainerapps.io/api/auth/signin?callbackUrl=%2Fcornerstone';
   var SHEPHERD_SIGNIN    = 'https://nextjs-ui.lemonmushroom-a6ac3cf7.eastus2.azurecontainerapps.io/api/auth/signin?callbackUrl=%2Fstudio';
 
-  var WORKSPACES = {
-    cornerstone: {
-      name: 'Cornerstone Bible Study',
-      tag: 'Available today',
-      blurb: 'General discipleship study, open to anyone — no church or organization affiliation required. Every answer is drawn from ingested teaching, cited.',
-      authUrl: CORNERSTONE_SIGNIN
-    },
-    shepherd: {
-      name: 'Shepherd Studio',
-      tag: 'Opening to pilot churches',
-      blurb: 'Organization-based workspace for pastors. Each church signs in through its own tenant, with its own data and oversight.',
-      authUrl: null /* per-church, see ORGS */
-    }
-  };
+  /* Every Shepherd church signs in through the same endpoint; the
+     member's church is resolved from their account after sign-in, so
+     they land in their own workspace. The church names are shown as
+     reassurance, not as a choice — making them a separate step added a
+     click that changed nothing. If churches are ever split into their
+     own realms, this becomes a real picker again. */
+  var SHEPHERD_CHURCHES = 'Touch Bible Ministry · Mission Pointe Church';
 
-  /* Every Shepherd church currently signs in through the same endpoint;
-     the member's church is resolved from their account after sign-in, so
-     they land in their own workspace. The church rows are wayfinding, not
-     separate destinations. If churches are ever split into their own
-     realms, give each entry its own authUrl. */
-  var ORGS = [
-    { key: 'touch',        name: 'Touch Bible Ministry',  loc: null,          authUrl: SHEPHERD_SIGNIN },
-    { key: 'missionpointe', name: 'Mission Pointe Church', loc: 'Concord, CA', authUrl: SHEPHERD_SIGNIN }
-  ];
-
-  /* ---------------------------------------------------------------- */
-
-  var st = { step: 0, path: null, mode: null, org: null };
   var stage = document.getElementById('stage');
 
   function esc(s) {
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
                     .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
-  function initials(n) {
-    return n.split(/\s+/).filter(function (w) { return /[A-Za-z]/.test(w); })
-            .slice(0, 2).map(function (w) { return w[0]; }).join('').toUpperCase();
-  }
-  function orgByKey(k) {
-    for (var i = 0; i < ORGS.length; i++) { if (ORGS[i].key === k) return ORGS[i]; }
-    return null;
-  }
   function val(id) {
     var el = document.getElementById(id);
     return el ? el.value.trim() : '';
   }
+  /* Move focus to the new heading when the view CHANGES, so a keyboard or
+     screen-reader user is told where they are. Not on first paint — that
+     would steal the skip link's tab stop. */
+  var painted = false;
+  function focusHeading() {
+    if (!painted) { painted = true; return; }
+    var hd = stage.querySelector('h1');
+    if (hd) { hd.setAttribute('tabindex', '-1'); hd.focus({ preventScroll: true }); }
+  }
+  function backTo(label) {
+    return '<div class="backlink"><button type="button" data-view="home">&larr; ' + esc(label) + '</button></div>';
+  }
 
-  function railLabels() {
-    if (st.path === 'cornerstone') {
-      return ['Workspace', 'Sign in or join', st.mode === 'login' ? 'Sign in' : 'Request access'];
+  /* A door goes straight to the identity service. When a URL is not yet
+     configured it stays a plain, honest line rather than a dead link. */
+  function door(name, sub, url) {
+    if (!url) {
+      return '<div class="door" style="opacity:.65">'
+           + '<span class="door-text"><span class="door-name">' + esc(name) + '</span>'
+           + '<span class="door-sub">Sign-in is being connected — write to '
+           + '<a href="mailto:' + ADMIN_EMAIL + '">' + ADMIN_EMAIL + '</a> and we will set up your access.</span></span>'
+           + '</div>';
     }
-    if (st.path === 'shepherd') {
-      return ['Workspace', 'Your church', st.org === '__new__' ? 'New church' : 'Sign in'];
+    return '<a class="door" href="' + esc(url) + '">'
+         + '<span class="door-text"><span class="door-name">' + esc(name) + '</span>'
+         + '<span class="door-sub">' + esc(sub) + '</span></span>'
+         + '<span class="door-arw" aria-hidden="true">&rarr;</span></a>';
+  }
+
+  /* Views ------------------------------------------------------------ */
+  var views = {
+
+    /* One screen. Two ways in. Everything else is quiet. */
+    home: function () {
+      return '<div class="head"><h1>Sign in to MinistryAI</h1>'
+        + '<p>Choose your workspace. You will enter your password on our secure sign-in, never on this page.</p></div>'
+        + '<div class="doors">'
+        + door('Cornerstone Bible Study',
+               'Open to anyone — no church affiliation needed',
+               CORNERSTONE_SIGNIN)
+        + door('Shepherd Studio',
+               'For pastors and church staff — ' + SHEPHERD_CHURCHES,
+               SHEPHERD_SIGNIN)
+        + '</div>'
+        + '<div class="more">'
+        + '<p>New to Cornerstone? <button type="button" data-view="join">Join the Bible study</button></p>'
+        + '<p>Your church not using MinistryAI yet? <button type="button" data-view="newchurch">Request a workspace</button></p>'
+        + '<p>Trouble signing in? Write to <a href="mailto:' + ADMIN_EMAIL + '">' + ADMIN_EMAIL + '</a></p>'
+        + '</div>';
+    },
+
+    join: function () {
+      return backTo('Sign in')
+        + '<div class="head"><h1>Join Cornerstone Bible Study</h1>'
+        + '<p>No church affiliation is required. Send us your name and email, and our admin will set up your access.</p></div>'
+        + '<div class="form">'
+        + '<div class="field-row">'
+        + '<div class="field"><label for="j-first">First name</label><input id="j-first" type="text" autocomplete="given-name"></div>'
+        + '<div class="field"><label for="j-last">Last name</label><input id="j-last" type="text" autocomplete="family-name"></div>'
+        + '</div>'
+        + '<div class="field"><label for="j-email">Email</label><input id="j-email" type="email" autocomplete="email"></div>'
+        + '<button class="btn wide" type="button" data-submit="join">Send request</button>'
+        + '<p class="note">Once approved, you will receive an email to set your password and sign in.</p>'
+        + '</div>';
+    },
+
+    newchurch: function () {
+      return backTo('Sign in')
+        + '<div class="head"><h1>Request a workspace for your church</h1>'
+        + '<p>Tell us about your church and we will build a workspace with you. There is no cost.</p></div>'
+        + '<div class="form">'
+        + '<div class="field-row">'
+        + '<div class="field"><label for="n-first">Admin first name</label><input id="n-first" type="text" autocomplete="given-name"></div>'
+        + '<div class="field"><label for="n-last">Admin last name</label><input id="n-last" type="text" autocomplete="family-name"></div>'
+        + '</div>'
+        + '<div class="field"><label for="n-email">Admin email</label><input id="n-email" type="email" autocomplete="email"></div>'
+        + '<div class="field"><label for="n-church">Church name</label><input id="n-church" type="text"></div>'
+        + '<div class="field"><label for="n-address">Church address</label><input id="n-address" type="text"></div>'
+        + '<div class="field"><label for="n-contact">Church contact information</label><input id="n-contact" type="text" placeholder="Main phone or office email"></div>'
+        + '<div class="field"><label for="n-pastor">Pastor name</label><input id="n-pastor" type="text">'
+        + '<div class="hint">Recommended, if different from the admin above.</div></div>'
+        + '<div class="field"><label for="n-pastor-email">Pastor email</label><input id="n-pastor-email" type="email"></div>'
+        + '<button class="btn wide" type="button" data-submit="church">Send request</button>'
+        + '<p class="note">We will follow up to set up your church&rsquo;s workspace, ingest your materials, and provision sign-in for your pastors and members.</p>'
+        + '</div>';
     }
-    if (st.path === 'newchurch') return ['Workspace', 'New church'];
-    return ['Workspace'];
-  }
+  };
 
-  function rail() {
-    var labels = railLabels();
-    var h = '<div class="rail">';
-    labels.forEach(function (L, i) {
-      var cls = i === st.step ? 'step on' : (i < st.step ? 'step done' : 'step');
-      h += '<div class="' + cls + '"' + (i === st.step ? ' aria-current="step"' : '') + '>'
-         + '<span class="num">' + (i < st.step ? '&#10003;' : (i + 1)) + '</span>' + L + '</div>';
-      if (i < labels.length - 1) h += '<span class="sep"></span>';
-    });
-    return h + '</div>';
-  }
-
-  function sum() {
-    if (st.step === 0) return '';
-    var h = '<div class="sum">';
-    if (st.path && WORKSPACES[st.path]) h += '<span class="pill"><b>' + esc(WORKSPACES[st.path].name) + '</b></span>';
-    if (st.path === 'cornerstone' && st.mode) h += '<span class="pill">' + (st.mode === 'login' ? 'Returning' : 'First time') + '</span>';
-    if (st.path === 'shepherd' && st.org) {
-      var o = orgByKey(st.org);
-      h += '<span class="pill"><b>' + esc(o ? o.name : 'New church') + '</b></span>';
-    }
-    return h + '</div>';
-  }
-
-  function back(label) {
-    return '<div class="back"><button type="button" data-back="1">&larr; ' + esc(label) + '</button></div>';
-  }
-
-  function helpLine() {
-    return '<p class="help">Not sure which workspace is yours, or having trouble signing in? '
-         + 'Write to <a href="mailto:' + ADMIN_EMAIL + '">' + ADMIN_EMAIL + '</a>.</p>';
-  }
-
-  /* Sign-in hand-off ------------------------------------------------- */
-  function signInBlock(label, authUrl, who) {
-    if (authUrl) {
-      return '<a class="btn wide" href="' + esc(authUrl) + '">' + esc(label) + ' &rarr;</a>'
-           + '<div class="note">Your password is never entered on this page. The button opens '
-           + 'MinistryAI&rsquo;s secure sign-in service, which signs you in and brings you back.</div>';
-    }
-    return '<button class="btn wide" type="button" disabled style="opacity:.55;cursor:not-allowed">'
-         + esc(label) + '</button>'
-         + '<div class="note"><b>Sign-in is being connected.</b> ' + esc(who)
-         + ' does not have its secure sign-in switched on yet. Write to '
-         + '<a href="mailto:' + ADMIN_EMAIL + '">' + ADMIN_EMAIL + '</a> and we will set up your access directly.</div>';
+  function render(name) {
+    stage.innerHTML = views[name]();
+    focusHeading();
   }
 
   /* Requests without a backend: compose the message, let the person
@@ -365,138 +353,17 @@
     stage.innerHTML =
       '<div class="done">'
       + '<div class="tick" aria-hidden="true">&#10003;</div>'
-      + '<h1 tabindex="-1">One step left — send it</h1>'
-      + '<p>Your details are ready below. Send them to our admin and we will confirm your access by email.</p>'
+      + '<h1>One step left</h1>'
+      + '<p>Your details are ready. Send them to our admin and we will confirm your access by email.</p>'
       + '<div class="draft">' + esc(body) + '</div>'
       + '<div class="done-actions">'
       + '<a class="btn" href="' + esc(mailto) + '">Open in email</a>'
       + '<button class="btn ghost copy-btn" type="button" data-copy="' + esc(body) + '">Copy details</button>'
       + '</div>'
-      + '<p class="help">No email app? Copy the details above and send them to '
+      + '<p class="note">No email app? Copy the details above and send them to '
       + '<a href="mailto:' + ADMIN_EMAIL + '">' + ADMIN_EMAIL + '</a>.</p>'
-      + '<div class="back"><button type="button" data-restart="1">&larr; Start over</button></div>'
+      + '<div class="done-actions"><button class="btn ghost" type="button" data-view="home">Back to sign in</button></div>'
       + '</div>';
-    focusHeading();
-  }
-
-  function focusHeading() {
-    var hd = stage.querySelector('h1');
-    if (hd) { hd.setAttribute('tabindex', '-1'); hd.focus({ preventScroll: true }); }
-  }
-
-  /* Views ------------------------------------------------------------ */
-  function view() {
-    var h = rail() + sum();
-
-    /* Step 0 — pick a workspace */
-    if (st.step === 0) {
-      h += '<div class="head"><h1>Sign in to MinistryAI</h1>'
-        + '<p>Cornerstone Bible Study is open to anyone. Shepherd Studio signs in through your church.</p></div>'
-        + '<div class="choices">'
-        + '<button class="choice" type="button" data-path="cornerstone">'
-        + '<span class="tag">' + esc(WORKSPACES.cornerstone.tag) + '</span>'
-        + '<h2>' + esc(WORKSPACES.cornerstone.name) + '</h2>'
-        + '<p>' + esc(WORKSPACES.cornerstone.blurb) + '</p>'
-        + '<span class="go">Continue &rarr;</span></button>'
-        + '<button class="choice" type="button" data-path="shepherd">'
-        + '<span class="tag soon">' + esc(WORKSPACES.shepherd.tag) + '</span>'
-        + '<h2>' + esc(WORKSPACES.shepherd.name) + '</h2>'
-        + '<p>' + esc(WORKSPACES.shepherd.blurb) + '</p>'
-        + '<span class="go">Continue &rarr;</span></button>'
-        + '<button class="choice" type="button" data-path="newchurch">'
-        + '<span class="tag neutral">New to MinistryAI</span>'
-        + '<h2>My church doesn&rsquo;t use MinistryAI yet</h2>'
-        + '<p>Bring MinistryAI to your congregation. Tell us about your church and we will build a workspace with you — free.</p>'
-        + '<span class="go">Request a workspace &rarr;</span></button>'
-        + '</div>'
-        + helpLine();
-    }
-
-    /* Cornerstone — sign in or join */
-    else if (st.path === 'cornerstone' && st.step === 1) {
-      h += '<div class="head"><h1>Cornerstone Bible Study</h1>'
-        + '<p>No church or organization affiliation is needed here. Are you returning, or joining for the first time?</p></div>'
-        + '<div class="choices two">'
-        + '<button class="choice" type="button" data-mode="login"><span class="tag">Returning</span>'
-        + '<h2>Sign in</h2><p>You already have a Cornerstone account. Sign in with your email and password.</p>'
-        + '<span class="go">Sign in &rarr;</span></button>'
-        + '<button class="choice" type="button" data-mode="join"><span class="tag neutral">First time</span>'
-        + '<h2>Join Bible Study</h2><p>New here? Send your name and email, and our admin will set up your access.</p>'
-        + '<span class="go">Get started &rarr;</span></button>'
-        + '</div>' + back('Choose a different workspace');
-    }
-
-    else if (st.path === 'cornerstone' && st.step === 2 && st.mode === 'login') {
-      var cs = WORKSPACES.cornerstone;
-      h += '<div class="head"><h1>Sign in to Cornerstone</h1>'
-        + '<p>You will enter your email and password on MinistryAI&rsquo;s secure sign-in page.</p></div>'
-        + '<div class="card">'
-        + signInBlock('Sign in', cs.authUrl, 'Cornerstone Bible Study')
-        + '</div>' + back('Back');
-    }
-
-    else if (st.path === 'cornerstone' && st.step === 2 && st.mode === 'join') {
-      h += '<div class="head"><h1>Join Cornerstone Bible Study</h1>'
-        + '<p>Tell us who you are. Your request goes to the Cornerstone admin, who will confirm your access by email.</p></div>'
-        + '<div class="card">'
-        + '<div class="field-row">'
-        + '<div class="field"><label for="j-first">First name</label><input id="j-first" type="text" autocomplete="given-name"></div>'
-        + '<div class="field"><label for="j-last">Last name</label><input id="j-last" type="text" autocomplete="family-name"></div>'
-        + '</div>'
-        + '<div class="field"><label for="j-email">Email</label><input id="j-email" type="email" autocomplete="email"></div>'
-        + '<button class="btn wide" type="button" data-submit="join">Send request to admin</button>'
-        + '<div class="note">No church affiliation is required to join Cornerstone. Once approved, you will receive an email to set your password and sign in.</div>'
-        + '</div>' + back('Back');
-    }
-
-    /* Shepherd Studio — church picker */
-    else if (st.path === 'shepherd' && st.step === 1) {
-      h += '<div class="head"><h1>Find your church</h1>'
-        + '<p>Shepherd Studio signs in through your church&rsquo;s own workspace. Choose your church below.</p></div>'
-        + '<div class="panel">';
-      ORGS.forEach(function (o) {
-        h += '<button class="row" type="button" data-org="' + esc(o.key) + '">'
-          + '<span class="init" aria-hidden="true">' + initials(o.name) + '</span>'
-          + '<span><span class="nm">' + esc(o.name) + '</span>'
-          + (o.loc ? '<span class="lo">' + esc(o.loc) + '</span>' : '') + '</span>'
-          + '<span class="arw" aria-hidden="true">&rarr;</span></button>';
-      });
-      h += '</div>'
-        + '<p class="notlisted">Church not listed? <button type="button" data-org="__new__">Request a workspace for your church</button></p>'
-        + back('Choose a different workspace');
-    }
-
-    else if (st.path === 'shepherd' && st.step === 2 && st.org && st.org !== '__new__') {
-      var o = orgByKey(st.org);
-      h += '<div class="head"><h1>Sign in &mdash; ' + esc(o.name) + '</h1>'
-        + '<p>You are signing in to Shepherd Studio for ' + esc(o.name) + '.</p></div>'
-        + '<div class="card">'
-        + signInBlock('Sign in with your ' + o.name + ' account', o.authUrl, o.name)
-        + '</div>' + back('Choose a different church');
-    }
-
-    /* New church request — reachable from step 0 and from the church list */
-    else if (st.step >= 1 && (st.path === 'newchurch' || st.org === '__new__')) {
-      h += '<div class="head"><h1>Request a workspace for your church</h1>'
-        + '<p>Tell us about your church and we will set up a dedicated workspace and sign-in with you. There is no cost.</p></div>'
-        + '<div class="card">'
-        + '<div class="field-row">'
-        + '<div class="field"><label for="n-first">Admin first name</label><input id="n-first" type="text" autocomplete="given-name"></div>'
-        + '<div class="field"><label for="n-last">Admin last name</label><input id="n-last" type="text" autocomplete="family-name"></div>'
-        + '</div>'
-        + '<div class="field"><label for="n-email">Admin email</label><input id="n-email" type="email" autocomplete="email"></div>'
-        + '<div class="field"><label for="n-church">Church name</label><input id="n-church" type="text"></div>'
-        + '<div class="field"><label for="n-address">Church address</label><input id="n-address" type="text"></div>'
-        + '<div class="field"><label for="n-contact">Church contact information</label><input id="n-contact" type="text" placeholder="Main phone or office email"></div>'
-        + '<div class="field"><label for="n-pastor">Pastor name</label><input id="n-pastor" type="text">'
-        + '<div class="hint">Recommended, if different from the admin above.</div></div>'
-        + '<div class="field"><label for="n-pastor-email">Pastor email</label><input id="n-pastor-email" type="email"></div>'
-        + '<button class="btn wide" type="button" data-submit="church">Send request to MinistryAI</button>'
-        + '<div class="note">We will follow up to set up your church&rsquo;s workspace, ingest your materials, and provision sign-in for your pastors and members.</div>'
-        + '</div>' + back('Back');
-    }
-
-    stage.innerHTML = h;
     focusHeading();
   }
 
@@ -505,24 +372,7 @@
     var b = e.target.closest ? e.target.closest('button') : null;
     if (!b) return;
 
-    if (b.dataset.path) {
-      st.path = b.dataset.path; st.mode = null; st.org = null; st.step = 1;
-      return view();
-    }
-    if (b.dataset.mode) { st.mode = b.dataset.mode; st.step = 2; return view(); }
-    if (b.dataset.org)  { st.org  = b.dataset.org;  st.step = 2; return view(); }
-
-    if (b.dataset.back) {
-      if (st.step === 2) {
-        if (st.path === 'cornerstone') st.mode = null; else st.org = null;
-        st.step = 1;
-      } else {
-        st = { step: 0, path: null, mode: null, org: null };
-      }
-      return view();
-    }
-
-    if (b.dataset.restart) { st = { step: 0, path: null, mode: null, org: null }; return view(); }
+    if (b.dataset.view) return render(b.dataset.view);
 
     if (b.dataset.submit === 'join') {
       return sendRequest('Cornerstone Bible Study — join request', [
@@ -550,7 +400,7 @@
     }
   });
 
-  view();
+  render('home');
 })();
 </script>
 </body>
