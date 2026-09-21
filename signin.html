@@ -231,13 +231,44 @@
   var CORNERSTONE_SIGNIN = 'https://nextjs-ui.proudmeadow-c311a161.eastus2.azurecontainerapps.io/api/auth/signin?callbackUrl=%2Fcornerstone';
   var SHEPHERD_SIGNIN    = 'https://nextjs-ui.lemonmushroom-a6ac3cf7.eastus2.azurecontainerapps.io/api/auth/signin?callbackUrl=%2Fstudio';
 
-  /* Every Shepherd church signs in through the same endpoint; the
-     member's church is resolved from their account after sign-in, so
-     they land in their own workspace. The church names are shown as
-     reassurance, not as a choice — making them a separate step added a
-     click that changed nothing. If churches are ever split into their
-     own realms, this becomes a real picker again. */
-  var SHEPHERD_CHURCHES = 'Touch Bible Ministry · Mission Pointe Church';
+  /* ------------------------------------------------------------------
+     Per-church sign-in pages.
+
+     Every Shepherd church still signs in through the SAME endpoint — the
+     member's church is resolved from their account after sign-in, so they
+     land in their own workspace either way. That is why the front door
+     below is unchanged: putting a church picker in the main path would
+     add a click that changes nothing.
+
+     What each church does get is its own ADDRESS. Send a church
+     signin.html?org=<slug> and its members land on a page that names
+     them, with one way in:
+
+       https://ministry-ai.org/signin.html?org=touch-bible-ministry
+       https://ministry-ai.org/signin.html?org=mission-pointe-church
+
+     This is wayfinding and reassurance, not isolation: a member of one
+     church opening another church's link still signs in normally and
+     still lands in their own workspace. Only separate Keycloak realms
+     would make the door itself church-specific.
+
+     ADDING A CHURCH: add one entry below. The front door's subtitle and
+     the church list both read from this array.
+     ------------------------------------------------------------------ */
+  var ORGS = [
+    {
+      slug: 'touch-bible-ministry',
+      name: 'Touch Bible Ministry',
+      note: 'An international ministry, headquartered in Seoul.',
+      signin: SHEPHERD_SIGNIN
+    },
+    {
+      slug: 'mission-pointe-church',
+      name: 'Mission Pointe Church',
+      note: 'Concord, California.',
+      signin: SHEPHERD_SIGNIN
+    }
+  ];
 
   var stage = document.getElementById('stage');
 
@@ -248,6 +279,13 @@
   function val(id) {
     var el = document.getElementById(id);
     return el ? el.value.trim() : '';
+  }
+  function orgBySlug(slug) {
+    for (var i = 0; i < ORGS.length; i++) { if (ORGS[i].slug === slug) return ORGS[i]; }
+    return null;
+  }
+  function churchNames() {
+    return ORGS.map(function (o) { return o.name; }).join(' · ');
   }
   /* Move focus to the new heading when the view CHANGES, so a keyboard or
      screen-reader user is told where they are. Not on first paint — that
@@ -290,13 +328,33 @@
                'Open to anyone — no church affiliation needed',
                CORNERSTONE_SIGNIN)
         + door('Shepherd Studio',
-               'For pastors and church staff — ' + SHEPHERD_CHURCHES,
+               'For pastors and church staff — ' + churchNames(),
                SHEPHERD_SIGNIN)
         + '</div>'
         + '<div class="more">'
+        + '<p>Signing in for a particular church? <button type="button" data-view="churches">See your church&rsquo;s page</button></p>'
         + '<p>New to Cornerstone? <button type="button" data-view="join">Join the Bible study</button></p>'
         + '<p>Your church not using MinistryAI yet? <button type="button" data-view="newchurch">Request a workspace</button></p>'
         + '<p>Trouble signing in? Write to <a href="mailto:' + ADMIN_EMAIL + '">' + ADMIN_EMAIL + '</a></p>'
+        + '</div>';
+    },
+
+    /* The churches, each linking to its own page. Reached from the quiet
+       section, never in the way of someone who just wants to sign in. */
+    churches: function () {
+      var doors = ORGS.map(function (o) {
+        return '<a class="door" href="?org=' + esc(o.slug) + '" data-org="' + esc(o.slug) + '">'
+             + '<span class="door-text"><span class="door-name">' + esc(o.name) + '</span>'
+             + '<span class="door-sub">' + esc(o.note) + '</span></span>'
+             + '<span class="door-arw" aria-hidden="true">&rarr;</span></a>';
+      }).join('');
+
+      return backTo('Sign in')
+        + '<div class="head"><h1>Shepherd Studio churches</h1>'
+        + '<p>Each church has its own page. Members of any church can also sign in straight from the main page — everyone lands in their own workspace.</p></div>'
+        + '<div class="doors">' + doors + '</div>'
+        + '<div class="more">'
+        + '<p>Your church not listed? <button type="button" data-view="newchurch">Request a workspace</button></p>'
         + '</div>';
     },
 
@@ -337,10 +395,59 @@
     }
   };
 
-  function render(name) {
+  /* A church's own page: its name at the top, one way in. */
+  function churchView(o) {
+    return backTo('All workspaces')
+      + '<div class="head"><h1>' + esc(o.name) + '</h1>'
+      + '<p>Sign in to your Shepherd Studio workspace. You will enter your password on our secure sign-in, never on this page.</p></div>'
+      + '<div class="doors">'
+      + door('Sign in to Shepherd Studio', esc(o.note), o.signin)
+      + '</div>'
+      + '<div class="more">'
+      + '<p>Not your church? <button type="button" data-view="churches">See the other churches</button></p>'
+      + '<p>Trouble signing in? Write to <a href="mailto:' + ADMIN_EMAIL + '">' + ADMIN_EMAIL + '</a></p>'
+      + '</div>';
+  }
+
+  /* Routing ---------------------------------------------------------- */
+  /* A church page is a real address, so it can be sent to a congregation,
+     bookmarked, and reached with the browser's Back button. */
+  function slugFromLocation() {
+    var m = /[?&]org=([A-Za-z0-9_-]+)/.exec(location.search)
+         || /[#&]org=([A-Za-z0-9_-]+)/.exec(location.hash);
+    return m ? m[1] : null;
+  }
+
+  function paint(slug) {
+    var o = slug ? orgBySlug(slug) : null;
+    stage.innerHTML = o ? churchView(o) : views.home();
+    focusHeading();
+  }
+
+  function goToOrg(slug, push) {
+    var o = orgBySlug(slug);
+    if (!o) return render('home');
+    if (push && window.history && history.pushState) {
+      history.pushState({ org: slug }, '', 'signin.html?org=' + slug);
+    }
+    paint(slug);
+  }
+
+  function render(name, push) {
+    if (name === 'home') {
+      if (push && window.history && history.pushState) {
+        history.pushState({ org: null }, '', 'signin.html');
+      }
+      paint(null);
+      return;
+    }
     stage.innerHTML = views[name]();
     focusHeading();
   }
+
+  window.addEventListener('popstate', function () {
+    paint(slugFromLocation());
+  });
 
   /* Requests without a backend: compose the message, let the person
      send it by mail client or copy it if they have none. ------------- */
@@ -368,11 +475,20 @@
   }
 
   /* Events ----------------------------------------------------------- */
+  /* Church links are real anchors, so middle-click and "open in new tab"
+     work. Plain left-clicks are handled here to keep it a single page. */
   stage.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[data-org]') : null;
+    if (a) {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+      e.preventDefault();
+      return goToOrg(a.getAttribute('data-org'), true);
+    }
+
     var b = e.target.closest ? e.target.closest('button') : null;
     if (!b) return;
 
-    if (b.dataset.view) return render(b.dataset.view);
+    if (b.dataset.view) return render(b.dataset.view, b.dataset.view === 'home');
 
     if (b.dataset.submit === 'join') {
       return sendRequest('Cornerstone Bible Study — join request', [
@@ -400,7 +516,7 @@
     }
   });
 
-  render('home');
+  paint(slugFromLocation());
 })();
 </script>
 </body>
