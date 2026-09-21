@@ -68,6 +68,24 @@
   }
   .door:hover .door-arw { transform: translateX(3px); color: var(--green-2); }
 
+  /* Two spaces on one screen. Each space names itself, then lists the ways
+     in beneath it — Cornerstone: sign in or join; Shepherd Studio: one row
+     per church, plus the request row. Nothing is behind a second click. */
+  .spaces { margin-top: 38px; display: flex; flex-direction: column; gap: 38px; }
+  .space-head h2 {
+    font-family: var(--serif); font-size: 21px; font-weight: 700;
+    color: var(--ink); letter-spacing: -0.01em;
+  }
+  .space-head p { margin-top: 5px; font-size: 14.5px; color: var(--ink-2); line-height: 1.55; }
+  .rows { margin-top: 15px; display: flex; flex-direction: column; gap: 10px; }
+  /* No width:100% — .rows is a flex column, so rows stretch on their own.
+     Setting an explicit width overflows wherever box-sizing is content-box. */
+  .rows .door { padding: 18px 22px; border-radius: 12px; text-align: left; font: inherit; cursor: pointer; }
+  .rows .door-name { font-family: var(--sans); font-size: 16.5px; font-weight: 600; }
+  .rows .door-sub { margin-top: 3px; font-size: 13.5px; }
+  .rows .door.quiet { background: none; border-style: dashed; }
+  .rows .door.quiet .door-name { font-weight: 500; color: var(--ink-2); }
+
   /* Everything that is not signing in lives quietly below a rule. */
   .more { margin-top: 44px; padding-top: 30px; border-top: 1px solid var(--line); }
   .more p { font-size: 15px; color: var(--ink-2); line-height: 1.75; margin-bottom: 10px; }
@@ -284,9 +302,6 @@
     for (var i = 0; i < ORGS.length; i++) { if (ORGS[i].slug === slug) return ORGS[i]; }
     return null;
   }
-  function churchNames() {
-    return ORGS.map(function (o) { return o.name; }).join(' · ');
-  }
   /* Move focus to the new heading when the view CHANGES, so a keyboard or
      screen-reader user is told where they are. Not on first paint — that
      would steal the skip link's tab stop. */
@@ -316,25 +331,66 @@
          + '<span class="door-arw" aria-hidden="true">&rarr;</span></a>';
   }
 
+  /* A row inside a space. `href` makes it a link straight to the identity
+     service; `view` makes it a button that opens one of the local forms.
+     `quiet` is for the rows that are not signing in (join, request). */
+  function row(name, sub, opts) {
+    var inner = '<span class="door-text"><span class="door-name">' + esc(name) + '</span>'
+              + '<span class="door-sub">' + esc(sub) + '</span></span>'
+              + '<span class="door-arw" aria-hidden="true">&rarr;</span>';
+    var cls = 'door' + (opts.quiet ? ' quiet' : '');
+
+    if (opts.href) {
+      return '<a class="' + cls + '" href="' + esc(opts.href) + '">' + inner + '</a>';
+    }
+    if (opts.view) {
+      return '<button type="button" class="' + cls + '" data-view="' + esc(opts.view) + '">' + inner + '</button>';
+    }
+    /* No destination configured yet — say so rather than offer a dead row. */
+    return '<div class="door" style="opacity:.65">'
+         + '<span class="door-text"><span class="door-name">' + esc(name) + '</span>'
+         + '<span class="door-sub">Sign-in is being connected — write to '
+         + '<a href="mailto:' + ADMIN_EMAIL + '">' + ADMIN_EMAIL + '</a>.</span></span></div>';
+  }
+
   /* Views ------------------------------------------------------------ */
   var views = {
 
-    /* One screen. Two ways in. Everything else is quiet. */
+    /* One screen, both spaces, every way in visible. Per David Lee
+       2026-09-21: the churches belong UNDER Shepherd Studio on the same
+       page, not behind a click. Cornerstone lists its two ways in the same
+       way, so the two spaces read alike. */
     home: function () {
+      var shepherdRows = ORGS.map(function (o) {
+        return row(o.name, o.note, { href: o.signin });
+      }).join('');
+
       return '<div class="head"><h1>Sign in to MinistryAI</h1>'
-        + '<p>Choose your workspace. You will enter your password on our secure sign-in, never on this page.</p></div>'
-        + '<div class="doors">'
-        + door('Cornerstone Bible Study',
-               'Open to anyone — no church affiliation needed',
-               CORNERSTONE_SIGNIN)
-        + door('Shepherd Studio',
-               'For pastors and church staff — ' + churchNames(),
-               SHEPHERD_SIGNIN)
+        + '<p>Choose your space. You will enter your password on our secure sign-in, never on this page.</p></div>'
+
+        + '<div class="spaces">'
+
+        + '<section class="space">'
+        + '<div class="space-head"><h2>Cornerstone Bible Study</h2>'
+        + '<p>General discipleship study, open to anyone — no church or organization affiliation needed.</p></div>'
+        + '<div class="rows">'
+        + row('Sign in', 'You already have a Cornerstone account', { href: CORNERSTONE_SIGNIN })
+        + row('Join the Bible study', 'First time here — send your name and email', { view: 'join', quiet: true })
         + '</div>'
+        + '</section>'
+
+        + '<section class="space">'
+        + '<div class="space-head"><h2>Shepherd Studio</h2>'
+        + '<p>For pastors and church staff. Choose your church to sign in.</p></div>'
+        + '<div class="rows">'
+        + shepherdRows
+        + row('My church isn’t listed', 'Request a Shepherd Studio workspace — there is no cost', { view: 'newchurch', quiet: true })
+        + '</div>'
+        + '</section>'
+
+        + '</div>'
+
         + '<div class="more">'
-        + '<p>Signing in for a particular church? <button type="button" data-view="churches">See your church&rsquo;s page</button></p>'
-        + '<p>New to Cornerstone? <button type="button" data-view="join">Join the Bible study</button></p>'
-        + '<p>Your church not using MinistryAI yet? <button type="button" data-view="newchurch">Request a workspace</button></p>'
         + '<p>Trouble signing in? Write to <a href="mailto:' + ADMIN_EMAIL + '">' + ADMIN_EMAIL + '</a></p>'
         + '</div>';
     },
